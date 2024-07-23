@@ -1,0 +1,13 @@
+/** Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&family=Noto+Nastaliq+Urdu:wght@700&display=swap");
+
+/** 變數引用 */
+@import "./variable";
+/** 基本引用 */
+@import "./base";
+/** antd 引用覆蓋 */
+@import "./antd";
+/** Header 引用 */
+@import "./features/layouts/Header/header";
+/** Home 引用 */
+@import "./features/Home/home";

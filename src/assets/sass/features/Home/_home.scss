@@ -1,0 +1,155 @@
+#home {
+  #banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: calc(100vh - 64px);
+    background-color: $light-blue;
+
+    .banner-container {
+      padding: 0 10vh;
+      height: calc(60vh - 32px);
+      width: 100%;
+
+      h1 {
+        font-size: 64px;
+      }
+
+      .banner-image-container {
+        position: absolute;
+        left: 15%;
+        height: 525px;
+        width: 325px;
+        border-radius: 50px;
+        transform-origin: left bottom;
+        background-size: cover;
+
+        &--1 {
+          z-index: 5;
+          @extend .banner-image-container;
+        }
+
+        &--2 {
+          background-color: $blue;
+          transform: rotate(5deg);
+          z-index: 4;
+          @extend .banner-image-container;
+        }
+        &--3 {
+          background-color: $light-blue;
+          transform: rotate(10deg);
+          z-index: 3;
+          @extend .banner-image-container;
+        }
+      }
+
+      .search-container {
+        width: 75%;
+        position: relative;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        height: 60px;
+        border-radius: 30px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+        .vl {
+          border-left: 2px solid $dark-blue;
+          height: 40px;
+        }
+
+        button {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          right: 5px;
+        }
+      }
+    }
+
+    img {
+      position: absolute;
+      right: -450px;
+      top: -100px;
+      transform: rotate(35deg);
+      z-index: 1;
+    }
+  }
+
+  #step {
+    position: relative;
+    padding: 3% 10%;
+    background-color: $whitesmoke;
+    z-index: 2;
+
+    .step-container {
+      margin: 0 5%;
+
+      svg {
+        padding: 16px;
+        background-color: $light-blue;
+        fill: $dark-blue;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  #value {
+    padding: 2.5% 10%;
+    height: 60vh;
+    background: linear-gradient(to bottom, $whitesmoke, $light-blue);
+
+    img {
+      position: absolute;
+    }
+  }
+
+  #number {
+    padding: 2.5% 10%;
+    height: 60vh;
+    background: linear-gradient(to bottom, $light-blue, $whitesmoke);
+
+    img {
+      position: absolute;
+    }
+  }
+
+  #holder {
+    padding: 2.5% 10%;
+    background-color: $whitesmoke;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .holder-card-container {
+      position: relative;
+      border-radius: 32px;
+      background-color: #fff;
+      height: 200px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+      .holder-image-container {
+        position: absolute;
+        top: -25px;
+        left: calc(50% - 25px);
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 50%;
+
+        img {
+          width: 50px;
+          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+      }
+    }
+  }
+
+  #footer {
+    height: 20vh;
+    // background-color: $dark-blue;
+    background: linear-gradient(to bottom, $whitesmoke, $light-blue);
+  }
+}
