@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
+import { ROUTES } from '../core/enums/routerPath';
 import Home from './Home';
 import CreateYourCV from './CreateYourCV';
 import FindJobs from './FindJobs';
@@ -9,11 +10,11 @@ import Faq from './Faq';
 const FeaturesRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/create-your-cv" element={<CreateYourCV />} />
-      <Route path="/find-jobs" element={<FindJobs />} />
-      <Route path="/salary-information" element={<SalaryInfomation />} />
-      <Route path="/faq" element={<Faq />} />
+      <Route path={ROUTES.FEATURES__HOME} element={<Home />} />
+      <Route path="*" element={<CreateYourCV />} />
+      <Route path={ROUTES.FEATURES__FIND_JOBS} element={<FindJobs />} />
+      <Route path={ROUTES.FEATURES__SALARY_INFORMATION} element={<SalaryInfomation />} />
+      <Route path={ROUTES.FEATURES__FAQ} element={<Faq />} />
     </Routes>
   )
 }

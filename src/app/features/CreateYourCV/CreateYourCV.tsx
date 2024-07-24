@@ -1,10 +1,9 @@
 import React from 'react'
+import CreateYourCVRoutes from './CreateYourCVRoutes';
 
 const CreateYourCV: React.FC = () => {
   return (
-    <div>
-      CreateYourCV
-    </div>
+    <CreateYourCVRoutes />
   )
 }
 

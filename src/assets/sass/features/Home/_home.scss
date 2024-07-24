@@ -96,22 +96,55 @@
   }
 
   #value {
-    padding: 2.5% 10%;
-    height: 60vh;
+    padding: 2.5% 12.5%;
+    height: 75vh;
     background: linear-gradient(to bottom, $whitesmoke, $light-blue);
 
-    img {
-      position: absolute;
+    .value-swiper-container {
+      height: calc(75vh - 66px);
+
+      .swiper-image {
+        position: absolute;
+        overflow: hidden;
+        & img {
+          object-fit: cover;
+        }
+        &-1 {
+          @extend .swiper-image;
+          top: 0px;
+          right: 0px;
+          width: 300px;
+          height: 400px;
+          border-radius: 15% 15% 70% 15%;
+        }
+        &-2 {
+          @extend .swiper-image;
+          top: 50px;
+          right: 330px;
+          width: 100px;
+          height: 100px;
+          border-radius: 20%;
+        }
+        &-3 {
+          @extend .swiper-image;
+          top: 175px;
+          right: 330px;
+          width: 200px;
+          height: 300px;
+          border-radius: 15% 15% 15% 80%;
+        }
+      }
     }
   }
 
   #number {
     padding: 2.5% 10%;
-    height: 60vh;
+    height: 80vh;
     background: linear-gradient(to bottom, $light-blue, $whitesmoke);
 
     img {
       position: absolute;
+      top: 300px;
     }
   }
 
@@ -124,6 +157,7 @@
     justify-content: space-between;
 
     .holder-card-container {
+      padding: 1rem;
       position: relative;
       border-radius: 32px;
       background-color: #fff;
@@ -149,7 +183,6 @@
 
   #footer {
     height: 20vh;
-    // background-color: $dark-blue;
     background: linear-gradient(to bottom, $whitesmoke, $light-blue);
   }
 }

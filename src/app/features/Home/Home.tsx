@@ -1,17 +1,22 @@
 import React from 'react'
-import Banner from '../../../assets/image/Rectangle 1.png';
+import Banner from '../../../assets/image/Rectangle 2.png';
 import Business from '../../../assets/image/business1.jpeg';
 import Holder1 from '../../../assets/image/holder1.jpeg';
 import Holder2 from '../../../assets/image/holder2.jpeg';
 import Holder3 from '../../../assets/image/holder3.jpeg';
+import Value1 from '../../../assets/image/value1.jpeg';
+import Value2 from '../../../assets/image/value2.jpeg';
+import Laptop from '../../../assets/image/laptop.jpeg';
 import Pic from '../../../assets/image/pic.png';
-import Shape from '../../../assets/image/shape.png';
+import Shape from '../../../assets/image/shape2.png';
 import { Button, Col, Row, Input, Select } from 'antd';
 import { MdSupervisorAccount } from "react-icons/md";
 import { MdOutlineWork } from "react-icons/md";
 import { IoDocument } from "react-icons/io5";
 import { SearchOutlined } from '@ant-design/icons';
 import { IconSizeEnum } from '../../core/enums/iconSize';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const Home: React.FC = () => {
   return (
@@ -95,29 +100,69 @@ const Home: React.FC = () => {
       <section id="value" className="p-relative">
         <h2 className="text-center">Core Values of Our Job Platform</h2>
         <p className="text-center">Guiding Principles that Drive Our Commitment to Your Career Success</p>
-        <img src={Shape} width={350} style={{ top: '180px' }}></img>
-        <img src={Pic} width={350}></img>
         
+        <Swiper
+          spaceBetween={30}
+          pagination={{
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[Pagination, Autoplay]}
+          className="value-swiper-container"
+        >
+          <SwiperSlide className="p-relative">
+            <div className="h-100 w-50 d-flex flex-column justify-between">
+              <div>
+                <h3>User-Friendly Interface</h3>
+                <p>Provide a simple and intuitive interface to help users quickly find the information they need.</p>
 
+              </div>
+              <div>
+                Learn More
+              </div>
+            </div>
+            {/** Image */}
+            <div className="swiper-image-1">
+              <img src={Value1} width={300} height={400}></img>
+            </div>
+            <div className="swiper-image-2">
+              <img src={Laptop} width={100} height={100}></img>
+            </div>
+            
+            <div className="swiper-image-3">
+              <img src={Value2} width={200} height={300}></img>
+            </div>
+
+          </SwiperSlide>
+          {/* <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>Slide 3</SwiperSlide> */}
+        </Swiper>
       </section>
-
       {/**  */}
       <div style={{ height: '5vh', background: '#dde7ef' }}></div>
 
       {/** Number */}
-      <section id="number">
+      <section id="number" className="p-relative">
         <h2 className="text-center">A Journey of Growth Together: Partnering for Success and Advancement</h2>
+        <img src={Shape} width={350} style={{ top: '250px' }}></img>
+        <img src={Pic} width={350}></img>
       </section>
 
       {/** What a Job Holder Say us */}
       <section id="holder">
-        <div>
+        <div className="mb-5">
           <h2 className="text-center">What a job holder says About Us</h2>
           <p className="text-center">Discover Our Story: The Journey and Passion Behind Our Success</p>
         </div>
         <Row gutter={32}>
           <Col span="8">
             <div className="holder-card-container">
+              <h4 className="fs-3 text-center">Oliver Smith</h4>
+              <p className="fs-2 text-justify">I really love this theme. It has a beautiful design. From the web developer point of view, it's also really simple to use. And above all, customer support is awsome.</p>
+              
               <div className="holder-image-container">
                 <img src={Holder1}></img>
               </div>
@@ -125,6 +170,9 @@ const Home: React.FC = () => {
           </Col>
           <Col span="8">
             <div className="holder-card-container">
+              <h4 className="fs-3 text-center">Emily Brown</h4>
+              <p className="fs-2 text-justify">The website is incredibly user-friendly and offers a fantastic variety of CV templates. The job search functionality is intuitive and efficient, making it easy to find relevant opportunities. Great work!</p>
+
               <div className="holder-image-container">
                 <img src={Holder2}></img>
               </div>
@@ -132,6 +180,9 @@ const Home: React.FC = () => {
           </Col>
           <Col span="8">
             <div className="holder-card-container">
+              <h4 className="fs-3 text-center">James Johnson</h4>
+              <p className="fs-2 text-justify">The diverse range of CV templates is impressive and really helps job seekers stand out. The search feature is seamless and effective, providing relevant job listings quickly. Excellent job!</p>
+
               <div className="holder-image-container">
                 <img src={Holder3}></img>
               </div>

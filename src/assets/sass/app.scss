@@ -8,6 +8,12 @@
 /** antd 引用覆蓋 */
 @import "./antd";
 /** Header 引用 */
-@import "./features/layouts/Header/header";
+@import "./common/layouts/Header/header";
 /** Home 引用 */
 @import "./features/Home/home";
+/** Find Jobs 引用 */
+@import "./features/FindJobs/find-jobs";
+/** Create CV Template 引用 */
+@import "./features/CreateYourCV/choose-template";
+/** FAQ 引用 */
+@import "./features/FAQ/faq";

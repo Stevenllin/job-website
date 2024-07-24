@@ -1,0 +1,57 @@
+#find-jobs {
+  background-color: $whitesmoke;
+  #header {
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $dark-blue;
+    height: 80px;
+    border-top: 0.5px solid $grey;
+
+    .header-icon {
+      border: 1px solid $grey;
+      border-radius: 50%;
+      padding: 8px;
+      fill: #ffffff;
+    }
+
+    .ant-select {
+      width: 100%;
+    }
+
+    .vl {
+      border-left: 0.5px solid $grey;
+      height: 40px;
+    }
+
+    .header-range-container {
+      width: 25%;
+      color: #ffffff;
+      letter-spacing: 0.1rem;
+
+      .ant-slider-rail {
+        background-color: $grey;
+      }
+      .ant-slider-track {
+        background-color: $blue;
+      }
+    }
+
+    /** antd */
+    .ant-select-selection-item {
+      color: #ffffff;
+      font-weight: $fw-light;
+      letter-spacing: 0.1rem;
+    }
+    .ant-select-selection-placeholder {
+      color: $grey;
+      font-weight: $fw-light;
+      letter-spacing: 0.1rem;
+    }
+
+    .ant-select-arrow {
+      color: $grey;
+    }
+  }
+}
