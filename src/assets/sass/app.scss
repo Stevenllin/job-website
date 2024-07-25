@@ -15,5 +15,15 @@
 @import "./features/FindJobs/find-jobs";
 /** Create CV Template 引用 */
 @import "./features/CreateYourCV/choose-template";
+/** Create CV Template（common） 引用 */
+@import "./features/CreateYourCV/common";
+/** General Info 引用 */
+@import "./features/CreateYourCV/general-info";
+/** Work History 引用 */
+@import "./features/CreateYourCV/work-history";
 /** FAQ 引用 */
 @import "./features/FAQ/faq";
+/** ProgressBar */
+@import "./common/components/CompoundComponent/progress-bar";
+/** Template Background */
+@import "./common/layouts/TemplateBackground/template-background";

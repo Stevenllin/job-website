@@ -1,4 +1,6 @@
 header {
+  position: relative;
+  z-index: 100;
   background-color: $dark-blue;
 
   ul {
@@ -27,7 +29,7 @@ header {
 
   &.home {
     background-color: $light-blue;
-
+    position: unset;
     svg {
       fill: $dark-blue;
     }

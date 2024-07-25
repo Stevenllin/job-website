@@ -142,7 +142,7 @@ const Home: React.FC = () => {
         </Swiper>
       </section>
       {/**  */}
-      <div style={{ height: '5vh', background: '#dde7ef' }}></div>
+      <div style={{ height: '5vh', background: '#ebf6ff' }}></div>
 
       {/** Number */}
       <section id="number" className="p-relative">

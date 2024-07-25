@@ -1,0 +1,18 @@
+// background-color: $whitesmoke;
+#template-background.banner {
+  padding: 1.5% 10%;
+  width: 50vw;
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+    margin: 0;
+    z-index: 2;
+  }
+  .subtitle {
+    text-align: center;
+  }
+  img {
+    position: absolute;
+  }
+}
