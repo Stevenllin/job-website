@@ -10,43 +10,64 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import commonService from '../../../core/services/commonService';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const WorkHistory: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
-  console.log('state', state);
+  /** 取得緩存 */
+  const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  const hasWorkHistory = cache[ProcessStepTextEnum.WorkHistory];
+  /** 判斷使用者輸入過沒有 */
+  let isEditing = false;
 
   /** 
    * @description 載入緩存並設置 Form 表單
    */
   useEffect(() => {
-    /** 編輯模式代入表單 */
-    if (state.isEditMode) {
-      /** 取得緩存 */
-      const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
-      const history = cache[ProcessStepTextEnum.WorkHistory] ? cache[ProcessStepTextEnum.WorkHistory][0] : {};
-      const updated = {
-        ...history,
-        start_date: history.start_date && dayjs(commonService.convertDateFormat(history.start_date), 'YYYY-MM'),
-        end_date: history.end_date && dayjs(commonService.convertDateFormat(history.end_date), 'YYYY-MM'),
-      }
-      /** 設定 form */
-      form.setFieldsValue(updated)
+    const history = cache[ProcessStepTextEnum.WorkHistory] ? state.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : [];
+    const updated = {
+      ...history,
+      start_date: history.start_date && dayjs(commonService.convertDateFormat(history.start_date), 'YYYY-MM'),
+      end_date: history.end_date && dayjs(commonService.convertDateFormat(history.end_date), 'YYYY-MM'),
     }
+    /** 設定 form */
+    form.setFieldsValue(updated)
   }, [])
 
   /**
    * @description 更新緩存
   */
-  const handleChange = async (_: any, all: any) => {
-    /** 取得緩存 */
-    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  const handleChange = async (val: any, all: any) => {
     /** 更新緩存 */
-    const updated = { ...cache, [ProcessStepTextEnum.WorkHistory]: [all] }
+    let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
+    const updated = { ...cache };
+    const key = Object.keys(val)[0];
+    const value = Object.values(val)[0];
+  
+    if (!hasWorkHistory || (!state.isEditMode && !isEditing)) {
+      /** 這是首次沒有緩存時 或 Add new position 首次輸入時 */
+      work_history.push({ id: uuidv4(), ...all });
+    } else if (state.isEditMode) {
+      /** 這是編輯模式時 */
+      work_history = work_history.map((item: any) =>
+        item.id === state.data.id ? { id: item.id, ...all } : item
+      );
+    } else if (isEditing) {
+      /** 這是 Add new position 之後的輸入 */
+      work_history[work_history.length - 1] = {
+        ...work_history[work_history.length - 1],
+        [key]: value
+      };
+    }
+  
+    updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
-  }
+  
+    isEditing = true;
+  };
 
   const onFinish = () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);

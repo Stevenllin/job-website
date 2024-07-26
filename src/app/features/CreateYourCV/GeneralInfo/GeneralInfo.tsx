@@ -16,6 +16,8 @@ const GeneralInfo: React.FC = () => {
   const navigate = useNavigate()
   const country = useSelector((state: RootState) => state.common.country_flag);
   const [cities, setCities] = useState([])
+  /** 取得緩存 */
+  const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
 
   /** 
    * @description 載入緩存
@@ -48,7 +50,12 @@ const GeneralInfo: React.FC = () => {
   };
 
   const onFinish = async () => {
-    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: false } });
+    const histories = cache[ProcessStepTextEnum.WorkHistory];
+    if (histories && histories.length > 0) {
+      navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);
+    } else {
+      navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: false } });
+    }
   };
 
   return (
