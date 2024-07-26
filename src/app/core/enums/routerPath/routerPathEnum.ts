@@ -16,6 +16,8 @@ export enum ROUTES {
   FEATURES__CREATE_YOUR_CV__GENERAL_INFO = '/create-your-cv/general-info',
   /** Work History 功能頁 */
   FEATURES__CREATE_YOUR_CV__WORK_HISTORY = '/create-your-cv/work-history',
+  /** Work Summary 功能頁 */
+  FEATURES__CREATE_YOUR_CV__WORK_SUMMARY = '/create-your-cv/work-summary',
   /** Education 功能頁 */
   FEATURES__CREATE_YOUR_CV__EDUCATION = '/create-your-cv/education',
   /** Skills 功能頁 */

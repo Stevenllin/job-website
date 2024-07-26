@@ -6,8 +6,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './assets/sass/app.scss';
 
+// Remove StrictMode
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />
 )

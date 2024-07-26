@@ -11,14 +11,33 @@
   height: 56px;
 }
 
+.ant-picker-input {
+  input {
+    letter-spacing: 1px;
+  }
+}
+
 .ant-picker {
   width: 100%;
   height: 56px;
-  &:hover {
-    border: 1.5px solid $dark-blue;
-  }
-  &:focus {
-    border: 1.5px solid $dark-blue;
-    box-shadow: unset;
-  }
+  // &:hover {
+  //   border: 1.5px solid $dark-blue;
+  // }
+  // &:focus {
+  //   border: 1.5px solid $dark-blue;
+  //   box-shadow: unset;
+  // }
+}
+
+.ant-select {
+  height: 56px;
+  // .ant-select-selector {
+  //   &:hover {
+  //     border: 1.5px solid $dark-blue;
+  //   }
+  //   &:focus {
+  //     border: 1.5px solid $dark-blue;
+  //     box-shadow: unset;
+  //   }
+  // }
 }

@@ -3,6 +3,6 @@
  */
 export enum IconSizeEnum {
   Large = '64px',
-  Medium = '28px',
+  Medium = '24px',
   Small = '18px'
 }

@@ -31,6 +31,10 @@ button {
   }
 }
 
+textarea {
+  letter-spacing: 1px;
+}
+
 .btn-primary-outline {
   border: 1px solid rgba(128, 128, 128, 0.4509803922);
 }
@@ -91,6 +95,9 @@ button {
 }
 
 .mb {
+  &-0 {
+    margin-bottom: 0px;
+  }
   &-1 {
     margin-bottom: 8px;
   }
@@ -168,5 +175,14 @@ button {
   }
   &-5 {
     font-size: 236px;
+  }
+}
+
+.fw {
+  &-dark {
+    font-weight: $fw-dark;
+  }
+  &-light {
+    font-weight: $fw-light;
   }
 }

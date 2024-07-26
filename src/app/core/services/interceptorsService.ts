@@ -5,7 +5,6 @@ import axios, { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from 'ax
 */
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    config.baseURL = 'https://www.themuse.com'
     return config;
   },
   (error: AxiosError): Promise<AxiosError> => {

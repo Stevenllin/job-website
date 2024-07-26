@@ -10,6 +10,8 @@ export enum ProccessStepCodesEnum {
   GeneralInfo = '2',
   /** Work History */
   WorkHistory = '3',
+  /** WorkSummary */
+  WorkSummary = '3',
   /** Education */
   Education = '4',
   /** Skills */
@@ -50,6 +52,8 @@ export const ProcessRouteMatchesStep: Readonly<Record<string, ProccessStepCodesE
   [ROUTES.FEATURES__CREATE_YOUR_CV__GENERAL_INFO]: ProccessStepCodesEnum.GeneralInfo,
   /** Work History */
   [ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY]: ProccessStepCodesEnum.WorkHistory,
+  /** Work Summary */
+  [ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY]: ProccessStepCodesEnum.WorkSummary,
   /** Education */
   [ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION]: ProccessStepCodesEnum.Education,
   /** Skills */

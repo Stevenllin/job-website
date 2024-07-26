@@ -1,0 +1,57 @@
+#work-summary {
+  .work-list {
+    height: 450px;
+
+    &--item {
+      position: relative;
+      border: 1px solid $dark-blue;
+      border-radius: 8px;
+      padding: 20px;
+
+      .number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        background-color: $light-blue;
+        border-radius: 8px;
+        font-weight: $fw-dark;
+      }
+
+      span {
+      }
+
+      .icon-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+        svg {
+          margin: 0 5px;
+          padding: 10px;
+          fill: $blue;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $light-blue;
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+  }
+  .add-position {
+    margin-top: 25px;
+    height: 60px;
+    width: 100%;
+    border-radius: 16px;
+    font-size: 16px;
+    background-color: $blue;
+    color: #ffffff;
+
+    &:hover {
+      background-color: $blue;
+    }
+  }
+}
