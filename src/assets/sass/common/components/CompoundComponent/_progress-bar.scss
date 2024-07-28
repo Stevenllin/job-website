@@ -4,21 +4,21 @@
     background-color: $light-blue;
     position: fixed;
     top: 0px;
-    width: 300px;
+    width: 250px;
     height: 100%;
 
     .progress-bar-container {
       position: absolute;
       top: 200px;
       padding: 15px 30px;
-      width: 300px;
+      width: 250px;
       box-sizing: border-box;
       height: calc(100% - 250px);
 
       .progress-item {
         display: flex;
         justify-content: space-between;
-        margin: 50px 0px;
+        margin: 45px 0px;
         font-weight: $fw-normal;
 
         .number {

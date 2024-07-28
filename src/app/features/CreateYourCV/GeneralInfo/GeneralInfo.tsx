@@ -13,7 +13,7 @@ import { StorageKeysEnum } from '../../../core/enums/storage';
 
 const GeneralInfo: React.FC = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const country = useSelector((state: RootState) => state.common.country_flag);
   const [cities, setCities] = useState([])
   /** 取得緩存 */

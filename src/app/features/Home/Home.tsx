@@ -6,9 +6,10 @@ import Holder2 from '../../../assets/image/holder2.jpeg';
 import Holder3 from '../../../assets/image/holder3.jpeg';
 import Value1 from '../../../assets/image/value1.jpeg';
 import Value2 from '../../../assets/image/value2.jpeg';
+import Value3 from '../../../assets/image/value3.jpeg';
 import Laptop from '../../../assets/image/laptop.jpeg';
 import Pic from '../../../assets/image/pic.png';
-import Shape from '../../../assets/image/shape2.png';
+import Shape from '../../../assets/image/shape.png';
 import { Button, Col, Row, Input, Select } from 'antd';
 import { MdSupervisorAccount } from "react-icons/md";
 import { MdOutlineWork } from "react-icons/md";
@@ -17,6 +18,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import { IconSizeEnum } from '../../core/enums/iconSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { TbHexagonNumber1Filled, TbHexagonNumber2Filled, TbHexagonNumber3Filled } from "react-icons/tb";
 
 const Home: React.FC = () => {
   return (
@@ -74,7 +77,7 @@ const Home: React.FC = () => {
           <Col span="8">
             <div className="step-container">
               <div className="icon-container">
-                <MdSupervisorAccount style={{ 'fontSize': IconSizeEnum.Large }} />
+                <MdSupervisorAccount style={{ 'fontSize': IconSizeEnum.Largest }} />
                 <h3>Create Account</h3>
                 <p className="fs-3">Lease fill in the details below to create your account.</p>
               </div>
@@ -82,14 +85,14 @@ const Home: React.FC = () => {
           </Col>
           <Col span="8">
             <div className="step-container">
-              <IoDocument style={{ 'fontSize': IconSizeEnum.Large }} />
+              <IoDocument style={{ 'fontSize': IconSizeEnum.Largest }} />
               <h3>Cv/Resume</h3>
               <p className="fs-3">Offer multiple CV templates for you to use.</p>
             </div>
           </Col>
           <Col span="8">
             <div className="step-container">
-              <MdOutlineWork style={{ 'fontSize': IconSizeEnum.Large }} />
+              <MdOutlineWork style={{ 'fontSize': IconSizeEnum.Largest }} />
               <h3>Search Jobs</h3>
               <p className="fs-3">Explore a wide range of job opportunities</p>
             </div>
@@ -99,7 +102,7 @@ const Home: React.FC = () => {
       {/** Core Value */}
       <section id="value" className="p-relative">
         <h2 className="text-center">Core Values of Our Job Platform</h2>
-        <p className="text-center">Guiding Principles that Drive Our Commitment to Your Career Success</p>
+        <p className="text-center fs-3">Guiding Principles that Drive Our Commitment to Your Career Success</p>
         
         <Swiper
           spaceBetween={30}
@@ -113,32 +116,88 @@ const Home: React.FC = () => {
           modules={[Pagination, Autoplay]}
           className="value-swiper-container"
         >
-          <SwiperSlide className="p-relative">
-            <div className="h-100 w-50 d-flex flex-column justify-between">
+          {/** Swiper 1 */}
+          {/* <SwiperSlide className="p-relative">
+            <div className="h-100 w-50 d-flex flex-column justify-between fs-3">
               <div>
-                <h3>User-Friendly Interface</h3>
+                <h3 className="fs-4">User-Friendly Interface</h3>
                 <p>Provide a simple and intuitive interface to help users quickly find the information they need.</p>
-
+                <div className="d-flex align-center">
+                  <TbHexagonNumber1Filled style={{ fill: '#a22626', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#a22626' }} className="ms-2 fw-dark">Professional Resume Templates</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Offer a variety of professional resume templates to help users easily create outstanding resumes.</p>
+                <div className="d-flex align-center">
+                  <TbHexagonNumber2Filled style={{ fill: '#ff6600', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#ff6600' }} className="ms-2 fw-dark">Diverse Job Opportunities</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Cover job opportunities across various industries and regions to meet the needs of different job seekers.</p>
+                <div className="d-flex align-center">
+                  <TbHexagonNumber3Filled style={{ fill: '#ffc800', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#ffc800' }} className="ms-2 fw-dark">Market Insights</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Provide insights into job market trends and salary data to help job seekers make informed career decisions.</p>
               </div>
               <div>
-                Learn More
+                <Button
+                  type="link"
+                  className="fs-3"
+                  icon={<ArrowRightOutlined />}
+                  iconPosition="end"
+                  style={{ float: 'right' }}
+                >Learn More</Button>
               </div>
             </div>
-            {/** Image */}
             <div className="swiper-image-1">
               <img src={Value1} width={300} height={400}></img>
             </div>
             <div className="swiper-image-2">
               <img src={Laptop} width={100} height={100}></img>
             </div>
-            
             <div className="swiper-image-3">
               <img src={Value2} width={200} height={300}></img>
             </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Row className="h-100">
+              <Col span="12">
+                <div className="swiper-image-4">
+                  <img src={Value3} width={450}></img>
+                </div>
+              </Col>
+              <Col span="12" className="fs-3 p-relative">
+                <h3 className="fs-4">Corporate Social Responsibility</h3>
+                <p>Enhancing the company's trust and reputation among job seekers and the community</p>
+                <div className="d-flex align-center">
+                  <TbHexagonNumber1Filled style={{ fill: '#a22626', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#a22626' }} className="ms-2 fw-dark">Diversity and Inclusion</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Committed to fostering a diverse and inclusive job market by providing equal opportunities for all candidates, regardless of their background or identity.</p>
+                <div className="d-flex align-center">
+                  <TbHexagonNumber2Filled style={{ fill: '#ff6600', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#ff6600' }} className="ms-2 fw-dark">Environmental Sustainability</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Dedicated to eco-friendly practices by reducing the platform's carbon footprint and promoting remote work to minimize environmental impact.</p>
+                <div className="d-flex align-center">
+                  <TbHexagonNumber3Filled style={{ fill: '#ffc800', 'fontSize': IconSizeEnum.Large }} />
+                  <p style={{ color: '#ffc800' }} className="ms-2 fw-dark">Ethical Standards</p>
+                </div>
+                <p className="ps-5 mt-0 mb-0">Uphold high ethical standards by ensuring transparency, fairness, and non-discrimination in all job postings and hiring processes.</p>
+                <Button
+                  type="link"
+                  className="fs-3"
+                  icon={<ArrowRightOutlined />}
+                  iconPosition="end"
+                  style={{ position: 'absolute', right: '0px', bottom: '0px' }}
+                >Learn More</Button>
+              </Col>
+            </Row>
+          </SwiperSlide> */}
+          <SwiperSlide>
+            <img src={Shape} width={350} style={{ top: '250px' }}></img>
+            <img src={Pic} width={350}></img>
 
           </SwiperSlide>
-          {/* <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide> */}
         </Swiper>
       </section>
       {/**  */}
@@ -147,8 +206,6 @@ const Home: React.FC = () => {
       {/** Number */}
       <section id="number" className="p-relative">
         <h2 className="text-center">A Journey of Growth Together: Partnering for Success and Advancement</h2>
-        <img src={Shape} width={350} style={{ top: '250px' }}></img>
-        <img src={Pic} width={350}></img>
       </section>
 
       {/** What a Job Holder Say us */}

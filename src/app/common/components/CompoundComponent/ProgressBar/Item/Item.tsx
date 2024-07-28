@@ -11,7 +11,7 @@ const Item: React.FC<ItemProps> = (props) => {
         {props.value}
         <div className="circle"></div>
       </div>
-      <div className="text">{props.children}</div>
+      <div className="text d-felx" style={{ alignSelf: 'center' }}>{props.children}</div>
     </div>
   )
 }

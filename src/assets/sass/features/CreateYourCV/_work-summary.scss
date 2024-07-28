@@ -1,12 +1,14 @@
 #work-summary {
   .work-list {
     height: 450px;
+    overflow-y: scroll;
 
     &--item {
       position: relative;
       border: 1px solid $dark-blue;
       border-radius: 8px;
       padding: 20px;
+      margin: 25px 0px;
 
       .number {
         display: flex;

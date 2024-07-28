@@ -36,9 +36,13 @@ const WorkSummary: React.FC = () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: true, data: history } });
   }
 
+  const handleClickNext = () => {
+    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION)
+  }
+
   return (
     <div id="work-summary">
-      {/* <PreviewTemplate /> */}
+      <PreviewTemplate />
       <TemplateBackground
         title="Work history summary"
         subtitle="Further Enhance Your Experience"
@@ -52,6 +56,7 @@ const WorkSummary: React.FC = () => {
               <span className="fs-3 fw-dark">{history.job_title}, {history.employer}</span>
               <br></br>
               <span>{history.location} | {commonService.convertDateFormat(history.start_date)} - {commonService.convertDateFormat(history.end_date)}</span>
+              <span></span>
               <div className="icon-container">
                 <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />
                 <FaTrash style={{ 'fontSize': IconSizeEnum.Medium }}  />
@@ -65,6 +70,7 @@ const WorkSummary: React.FC = () => {
           icon={<ArrowRightOutlined />}
           iconPosition="end"
           htmlType="submit"
+          onClick={handleClickNext}
         >Next</Button>
       </section>
     </div>

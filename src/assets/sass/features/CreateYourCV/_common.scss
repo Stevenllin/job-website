@@ -1,6 +1,9 @@
 #info,
 #work-history,
-#work-summary {
+#work-summary,
+#education,
+#skills,
+#summary {
   position: relative;
   section {
     position: relative;
@@ -11,16 +14,6 @@
     label {
       font-weight: $fw-dark;
       font-size: 16px;
-    }
-
-    .ant-input {
-      // &:hover {
-      //   border: 1.5px solid $dark-blue;
-      // }
-      // &:focus {
-      //   border: 1.5px solid $dark-blue;
-      //   box-shadow: unset;
-      // }
     }
 
     button[type="submit"] {

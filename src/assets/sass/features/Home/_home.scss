@@ -89,7 +89,7 @@
       svg {
         padding: 16px;
         background-color: $light-blue;
-        fill: $dark-blue;
+        fill: $blue;
         border-radius: 8px;
       }
     }
@@ -133,6 +133,24 @@
           height: 300px;
           border-radius: 15% 15% 15% 80%;
         }
+        &-4 {
+          @extend .swiper-image;
+          background-color: $blue;
+          z-index: 2;
+          bottom: 0px;
+          border-radius: 300px 300px 0px 0px;
+          width: 450px;
+          height: 450px;
+          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+          & img {
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            object-fit: cover;
+            opacity: 0.7;
+          }
+        }
       }
     }
   }
@@ -157,7 +175,7 @@
     justify-content: space-between;
 
     .holder-card-container {
-      padding: 1rem;
+      padding: 1rem 2rem;
       position: relative;
       border-radius: 32px;
       background-color: #fff;

@@ -1,0 +1,48 @@
+#skills {
+  section {
+    width: 65vw;
+
+    .search-container {
+      padding: 8px;
+      height: 535px;
+
+      .select {
+        display: block;
+      }
+
+      .data {
+        height: 464px;
+        overflow-y: scroll;
+
+        .skills-container {
+          margin: 20px 0px;
+          display: flex;
+          align-items: center;
+
+          svg {
+            cursor: pointer;
+            margin-right: 15px;
+            fill: $dark-blue;
+          }
+
+          p {
+            margin: 0px;
+          }
+          span {
+            padding: 5px 10px;
+            color: #ffffff;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+
+    .inputs-container {
+      padding: 20px;
+      height: 535px;
+      border-radius: 8px;
+      background-color: $whitesmoke;
+      overflow-y: scroll;
+    }
+  }
+}

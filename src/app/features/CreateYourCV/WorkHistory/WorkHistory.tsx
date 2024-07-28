@@ -79,7 +79,7 @@ const WorkHistory: React.FC = () => {
     <div id="work-history">
       <PreviewTemplate />
       <TemplateBackground
-        title="Tell us about your most recent job"
+        title="Tell us about your recent job"
         subtitle="We’ll start there and work backward."
       />
       <section>

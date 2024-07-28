@@ -10,16 +10,16 @@ body {
 
 h1 {
   font-size: 48px;
-
   line-height: 4rem;
 }
 
 h2 {
-  font-size: 32px;
+  font-size: 36px;
+  line-height: 4rem;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 28px;
 }
 
 button {
@@ -77,6 +77,9 @@ textarea {
 }
 
 .mt {
+  &-0 {
+    margin-top: 0px;
+  }
   &-1 {
     margin-top: 8px;
   }
@@ -116,6 +119,9 @@ textarea {
 }
 
 .ms {
+  &-0 {
+    margin-left: 0px;
+  }
   &-1 {
     margin-left: 8px;
   }
@@ -130,6 +136,27 @@ textarea {
   }
   &-5 {
     margin-left: 64px;
+  }
+}
+
+.me {
+  &-0 {
+    margin-right: 0px;
+  }
+  &-1 {
+    margin-right: 8px;
+  }
+  &-2 {
+    margin-right: 16px;
+  }
+  &-3 {
+    margin-right: 24px;
+  }
+  &-4 {
+    margin-right: 32px;
+  }
+  &-5 {
+    margin-right: 64px;
   }
 }
 
@@ -151,12 +178,33 @@ textarea {
   }
 }
 
+.ps {
+  &-1 {
+    padding-left: 8px;
+  }
+  &-2 {
+    padding-left: 16px;
+  }
+  &-3 {
+    padding-left: 24px;
+  }
+  &-4 {
+    padding-left: 32px;
+  }
+  &-5 {
+    padding-left: 64px;
+  }
+}
+
 .text {
   &-center {
     text-align: center;
   }
   &-justify {
     text-align: justify;
+  }
+  &--blue {
+    color: $blue;
   }
 }
 
