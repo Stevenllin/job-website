@@ -4,9 +4,13 @@ import Business from '../../../assets/image/business1.jpeg';
 import Holder1 from '../../../assets/image/holder1.jpeg';
 import Holder2 from '../../../assets/image/holder2.jpeg';
 import Holder3 from '../../../assets/image/holder3.jpeg';
+import Holder4 from '../../../assets/image/holder4.png';
+import Holder5 from '../../../assets/image/holder5.jpeg';
 import Value1 from '../../../assets/image/value1.jpeg';
 import Value2 from '../../../assets/image/value2.jpeg';
 import Value3 from '../../../assets/image/value3.jpeg';
+import Value4 from '../../../assets/image/value4.jpeg';
+import Background from '../../../assets/image/background1.jpeg';
 import Laptop from '../../../assets/image/laptop.jpeg';
 import Pic from '../../../assets/image/pic.png';
 import Shape from '../../../assets/image/shape.png';
@@ -72,8 +76,8 @@ const Home: React.FC = () => {
       {/** Step */}
       <section id="step">
         <h2 className="text-center">Easy 3 steps to New Capabilities</h2>
-        <p className="text-center">Achieve Greater Capabilities with Minimal Effort and Maximum Impact</p>
-        <Row gutter={32}>
+        <p className="text-center fs-4">Achieve Greater Capabilities with Minimal Effort and Maximum Impact</p>
+        <Row gutter={32} className="mt-5">
           <Col span="8">
             <div className="step-container">
               <div className="icon-container">
@@ -102,7 +106,7 @@ const Home: React.FC = () => {
       {/** Core Value */}
       <section id="value" className="p-relative">
         <h2 className="text-center">Core Values of Our Job Platform</h2>
-        <p className="text-center fs-3">Guiding Principles that Drive Our Commitment to Your Career Success</p>
+        <p className="text-center fs-4">Guiding Principles that Drive Our Commitment to Your Career Success</p>
         
         <Swiper
           spaceBetween={30}
@@ -117,7 +121,7 @@ const Home: React.FC = () => {
           className="value-swiper-container"
         >
           {/** Swiper 1 */}
-          {/* <SwiperSlide className="p-relative">
+          <SwiperSlide className="p-relative">
             <div className="h-100 w-50 d-flex flex-column justify-between fs-3">
               <div>
                 <h3 className="fs-4">User-Friendly Interface</h3>
@@ -192,7 +196,7 @@ const Home: React.FC = () => {
                 >Learn More</Button>
               </Col>
             </Row>
-          </SwiperSlide> */}
+          </SwiperSlide>
           <SwiperSlide>
             <img src={Shape} width={350} style={{ top: '250px' }}></img>
             <img src={Pic} width={350}></img>
@@ -206,15 +210,64 @@ const Home: React.FC = () => {
       {/** Number */}
       <section id="number" className="p-relative">
         <h2 className="text-center">A Journey of Growth Together: Partnering for Success and Advancement</h2>
+        <p className="text-center fs-4">Empowering Job Seekers and Companies with High Satisfaction and Success Rates</p>
+        <div className="p-relative w-100 h-100">
+          {/* <div className="circle-1"></div>
+          <div className="circle-2"></div>
+          <div className="circle-3"></div> */}
+        </div>
       </section>
 
       {/** What a Job Holder Say us */}
       <section id="holder">
         <div className="mb-5">
           <h2 className="text-center">What a job holder says About Us</h2>
-          <p className="text-center">Discover Our Story: The Journey and Passion Behind Our Success</p>
+          <p className="text-center fs-4">Discover Our Story: The Journey and Passion Behind Our Success</p>
         </div>
-        <Row gutter={32}>
+
+        <div className="holders">
+          <div className="holder" style={{ width: '100px', height: '100px', left: '5%', top: '15%' }}>
+            <img src={Holder1} style={{ width: '100px' }}></img>
+          </div>
+          <div className="text-container" style={{ left: '-10%', top: 'calc(15% + 120px)' }}>
+            <h4 className="fs-3 text-center">Oliver Smith</h4>
+            <p className="fs-2 text-justify">I really love this theme. It has a beautiful design. From the web developer point of view, it's also really simple to use. And above all, customer support is awsome.</p>
+          </div>
+
+          <div className="holder" style={{ width: '125px', height: '125px', left: '15%', bottom: '5%' }}>
+            <img src={Holder2} style={{ width: '125px' }}></img>
+          </div>
+          <div className="text-container" style={{ left: '', bottom: 'calc(5% + 150px)' }}>
+            <h4 className="fs-3 text-center">Emily Brown</h4>
+            <p className="fs-2 text-justify">The website is incredibly user-friendly and offers a fantastic variety of CV templates. The job search functionality is intuitive and efficient, making it easy to find relevant opportunities. Great work!</p>
+          </div>
+
+          <div className="holder" style={{ width: '85px', left: '55%', top: '30%', height: '85px', }}>
+            <img src={Holder3} style={{ width: '85px' }}></img>
+          </div>
+          <div className="text-container" style={{ left: '40%', top: 'calc(30% + 100px)' }}>
+            <h4 className="fs-3 text-center">James Johnson</h4>
+            <p className="fs-2 text-justify">The diverse range of CV templates is impressive and really helps job seekers stand out. The search feature is seamless and effective, providing relevant job listings quickly. Excellent job!</p>
+          </div>
+
+          <div className="holder" style={{ width: '125px', left: '45%', top: '5%', height: '125px' }}>
+            <img src={Holder4} style={{ width: '125px' }}></img>
+          </div>
+          <div className="text-container" style={{ left: '55%', top: '5%' }}>
+            <h4 className="fs-3 text-center">William Harris</h4>
+            <p className="fs-2 text-justify">The variety of CV templates is remarkable, making it easier for job seekers to distinguish themselves. The search functionality is smooth and efficient, delivering pertinent job listings promptly. Great work!</p>
+          </div>
+
+          <div className="holder" style={{ width: '150px', left: '85%', bottom: '35%', height: '150px' }}>
+            <img src={Holder5} style={{ width: '150px' }}></img>
+          </div>
+          <div className="text-container" style={{ left: '70%', bottom: '15%' }}>
+            <h4 className="fs-3 text-center">Charlotte Brown</h4>
+            <p className="fs-2 text-justify">The extensive selection of CV templates is outstanding, greatly aiding job seekers in making a unique impression. The search feature is intuitive and efficient, offering relevant job listings swiftly. Fantastic job!</p>
+          </div>
+        </div>
+
+        {/* <Row gutter={32}>
           <Col span="8">
             <div className="holder-card-container">
               <h4 className="fs-3 text-center">Oliver Smith</h4>
@@ -245,11 +298,8 @@ const Home: React.FC = () => {
               </div>
             </div>
           </Col>
-        </Row>
+        </Row> */}
       </section>
-      {/** Jobs */}
-      {/** CV */}
-      {/** Footer */}
       <section id="footer">
       </section>
     </div>

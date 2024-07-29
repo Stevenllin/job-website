@@ -44,7 +44,7 @@ const WorkSummary: React.FC = () => {
     <div id="work-summary">
       <PreviewTemplate />
       <TemplateBackground
-        title="Work history summary"
+        title="Work History Summary"
         subtitle="Further Enhance Your Experience"
       />
       <section>
