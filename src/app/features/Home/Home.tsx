@@ -15,20 +15,22 @@ import Laptop from '../../../assets/image/laptop.jpeg';
 import Pic from '../../../assets/image/pic.png';
 import Shape from '../../../assets/image/shape.png';
 import { Button, Col, Row, Input, Select } from 'antd';
-import { MdSupervisorAccount } from "react-icons/md";
-import { MdOutlineWork } from "react-icons/md";
+import { MdSupervisorAccount, MdOutlineWork, MdFeedback } from "react-icons/md";
 import { IoDocument } from "react-icons/io5";
 import { SearchOutlined } from '@ant-design/icons';
+import { RiSearchLine } from "react-icons/ri";
+import { FaUser, FaCity, FaChartSimple } from "react-icons/fa6";
 import { IconSizeEnum } from '../../core/enums/iconSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { BiWorld } from "react-icons/bi";
 import { TbHexagonNumber1Filled, TbHexagonNumber2Filled, TbHexagonNumber3Filled } from "react-icons/tb";
 
 const Home: React.FC = () => {
   return (
     <div id="home">
-      {/** Banner */}
+      {/** Banner 區塊 */}
       <section id="banner">
         <div className="banner-container">
           <Row>
@@ -73,7 +75,8 @@ const Home: React.FC = () => {
         </div>
         <img src={Banner}></img>
       </section>
-      {/** Step */}
+
+      {/** Step 區塊 */}
       <section id="step">
         <h2 className="text-center">Easy 3 steps to New Capabilities</h2>
         <p className="text-center fs-4">Achieve Greater Capabilities with Minimal Effort and Maximum Impact</p>
@@ -103,11 +106,14 @@ const Home: React.FC = () => {
           </Col>
         </Row>
       </section>
-      {/** Core Value */}
+
+      {/** Core Value 區塊 */}
       <section id="value" className="p-relative">
+        {/** Title */}
         <h2 className="text-center">Core Values of Our Job Platform</h2>
         <p className="text-center fs-4">Guiding Principles that Drive Our Commitment to Your Career Success</p>
         
+        {/** Swipers */}
         <Swiper
           spaceBetween={30}
           pagination={{
@@ -204,28 +210,79 @@ const Home: React.FC = () => {
           </SwiperSlide>
         </Swiper>
       </section>
-      {/**  */}
-      <div style={{ height: '5vh', background: '#ebf6ff' }}></div>
 
-      {/** Number */}
+      {/**  */}
+      <div style={{ height: '10vh', background: '#ebf6ff' }}></div>
+
+      {/** Number 區塊 */}
       <section id="number" className="p-relative">
         <h2 className="text-center">A Journey of Growth Together: Partnering for Success and Advancement</h2>
         <p className="text-center fs-4">Empowering Job Seekers and Companies with High Satisfaction and Success Rates</p>
-        <div className="p-relative w-100 h-100">
+        <div className="flex-container w-100 h-100">
+          <div className="hover flex d-flex align-center">
+            <RiSearchLine style={{ 'fontSize': IconSizeEnum.Largest }} />
+            <p className="fw-dark">Job Seeker</p>
+            <div className="mt-3 text-container text-center">
+              <p>Registered job seekers: <span className="fw-dark">50,000+</span></p>
+              <p>New job seekers per month: <span className="fw-dark">5,000+</span></p>
+              <p>Job seekers who received interview invitations: <span className="fw-dark">10,000+</span></p>
+              <p>Job seekers who successfully found jobs: <span className="fw-dark">8,000+</span></p>
+            </div>
+          </div>
+          <div className="hover flex d-flex align-center">
+            <FaUser style={{ 'fontSize': IconSizeEnum.Largest }} />         
+            <p className="fw-dark">Company and Job</p>
+            <div className="mt-3 text-container text-center">
+              <p>Registered companies: <span className="fw-dark">2,000+</span></p>
+              <p>Job postings: <span className="fw-dark">10,000+</span></p>
+              <p>New job postings per month: <span className="fw-dark">1,000+</span></p>
+              <p>Popular companies (most followed by job seekers): <span className="fw-dark">100+</span></p>
+            </div>
+          </div>
+          <div className="hover flex d-flex align-center">
+            <FaCity style={{ 'fontSize': IconSizeEnum.Largest }} />
+            <p className="fw-dark">Industry Distribution</p>
+            <div className="mt-3 text-container text-center">
+              <p>Industries covered: <span className="fw-dark">50+</span></p>
+              <p>Popular industries: <span className="fw-dark">Technology, Finance, Healthcare, Education, Manufacturing, etc.</span></p>
+              <p>Average salary by industry: Technology $80,000+, Finance $75,000+, etc.</p>
+            </div>
+          </div>
+          <div className="hover flex d-flex align-center">
+            <MdFeedback style={{ 'fontSize': IconSizeEnum.Largest }} />
+            <p className="fw-dark">User Feedback</p>
+            <div className="mt-3 text-container text-center">
+              <p>User satisfaction rate: <span className="fw-dark">95%</span></p>
+              <p>User recommendation rate: <span className="fw-dark">90%</span></p>
+              <p>Resume template usage: <span className="fw-dark">20,000+</span></p>
+              <p>Job search success rate: <span className="fw-dark">75%</span></p>
+            </div>
+          </div>
+          <div className="hover flex d-flex align-center">
+            <BiWorld style={{ 'fontSize': IconSizeEnum.Largest }} />
+            <p className="fw-dark">Geographic Distribution</p>
+            <div className="mt-3 text-container text-center">
+              <p>Regions covered: Worldwide</p>
+              <p>Popular job search regions: <span className="fw-dark">North America, Europe, Asia, etc.</span></p>
+              <p>Average salary by region: North America $70,000+, Europe $65,000+, etc.</p>
+            </div>
+          </div>
+        </div>
           {/* <div className="circle-1"></div>
           <div className="circle-2"></div>
           <div className="circle-3"></div> */}
-        </div>
       </section>
 
-      {/** What a Job Holder Say us */}
+      {/** Holder 區塊 */}
       <section id="holder">
+        {/** Title */}
         <div className="mb-5">
           <h2 className="text-center">What a job holder says About Us</h2>
           <p className="text-center fs-4">Discover Our Story: The Journey and Passion Behind Our Success</p>
         </div>
-
+        {/** Holders 區塊 */}
         <div className="holders">
+          {/** Holder 1 */}
           <div className="holder" style={{ width: '100px', height: '100px', left: '5%', top: '15%' }}>
             <img src={Holder1} style={{ width: '100px' }}></img>
           </div>
@@ -234,6 +291,7 @@ const Home: React.FC = () => {
             <p className="fs-2 text-justify">I really love this theme. It has a beautiful design. From the web developer point of view, it's also really simple to use. And above all, customer support is awsome.</p>
           </div>
 
+          {/** Holder 2 */}
           <div className="holder" style={{ width: '125px', height: '125px', left: '15%', bottom: '5%' }}>
             <img src={Holder2} style={{ width: '125px' }}></img>
           </div>
@@ -242,6 +300,7 @@ const Home: React.FC = () => {
             <p className="fs-2 text-justify">The website is incredibly user-friendly and offers a fantastic variety of CV templates. The job search functionality is intuitive and efficient, making it easy to find relevant opportunities. Great work!</p>
           </div>
 
+          {/** Holder 3 */}
           <div className="holder" style={{ width: '85px', left: '55%', top: '30%', height: '85px', }}>
             <img src={Holder3} style={{ width: '85px' }}></img>
           </div>
@@ -250,6 +309,7 @@ const Home: React.FC = () => {
             <p className="fs-2 text-justify">The diverse range of CV templates is impressive and really helps job seekers stand out. The search feature is seamless and effective, providing relevant job listings quickly. Excellent job!</p>
           </div>
 
+          {/** Holder 4 */}
           <div className="holder" style={{ width: '125px', left: '45%', top: '5%', height: '125px' }}>
             <img src={Holder4} style={{ width: '125px' }}></img>
           </div>
@@ -258,6 +318,7 @@ const Home: React.FC = () => {
             <p className="fs-2 text-justify">The variety of CV templates is remarkable, making it easier for job seekers to distinguish themselves. The search functionality is smooth and efficient, delivering pertinent job listings promptly. Great work!</p>
           </div>
 
+          {/** Holder 5 */}
           <div className="holder" style={{ width: '150px', left: '85%', bottom: '35%', height: '150px' }}>
             <img src={Holder5} style={{ width: '150px' }}></img>
           </div>
@@ -266,40 +327,9 @@ const Home: React.FC = () => {
             <p className="fs-2 text-justify">The extensive selection of CV templates is outstanding, greatly aiding job seekers in making a unique impression. The search feature is intuitive and efficient, offering relevant job listings swiftly. Fantastic job!</p>
           </div>
         </div>
-
-        {/* <Row gutter={32}>
-          <Col span="8">
-            <div className="holder-card-container">
-              <h4 className="fs-3 text-center">Oliver Smith</h4>
-              <p className="fs-2 text-justify">I really love this theme. It has a beautiful design. From the web developer point of view, it's also really simple to use. And above all, customer support is awsome.</p>
-              
-              <div className="holder-image-container">
-                <img src={Holder1}></img>
-              </div>
-            </div>
-          </Col>
-          <Col span="8">
-            <div className="holder-card-container">
-              <h4 className="fs-3 text-center">Emily Brown</h4>
-              <p className="fs-2 text-justify">The website is incredibly user-friendly and offers a fantastic variety of CV templates. The job search functionality is intuitive and efficient, making it easy to find relevant opportunities. Great work!</p>
-
-              <div className="holder-image-container">
-                <img src={Holder2}></img>
-              </div>
-            </div>
-          </Col>
-          <Col span="8">
-            <div className="holder-card-container">
-              <h4 className="fs-3 text-center">James Johnson</h4>
-              <p className="fs-2 text-justify">The diverse range of CV templates is impressive and really helps job seekers stand out. The search feature is seamless and effective, providing relevant job listings quickly. Excellent job!</p>
-
-              <div className="holder-image-container">
-                <img src={Holder3}></img>
-              </div>
-            </div>
-          </Col>
-        </Row> */}
       </section>
+
+      {/** Footer 區塊 */}
       <section id="footer">
       </section>
     </div>

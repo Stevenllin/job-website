@@ -1,5 +1,12 @@
 import { SkillsNameEnum, SkillsTypeTextEnum, SkillsTypeCodeEnum, SkillsTypeBackgroundEnum } from '../../../core/enums/skills';
 
+export interface InputType {
+  id: string;
+  input: string;
+  rate: number;
+  [key: string]: any; // 添加索引簽名以允許動態屬性
+}
+
 export interface Skill {
   name: SkillsNameEnum;
   id: number;
@@ -15,6 +22,7 @@ export interface SkillsType {
 
 // 定義 Skills 背景顏色
 export const SkillsTypeBackgroundDefines: Readonly<Record<SkillsTypeTextEnum, SkillsTypeBackgroundEnum>> = {
+  [SkillsTypeTextEnum.ALL]: SkillsTypeBackgroundEnum.ALL,
   [SkillsTypeTextEnum.SOFTWARE_ENGINEER]: SkillsTypeBackgroundEnum.SOFTWARE_ENGINEER,
   [SkillsTypeTextEnum.DESIGNER]: SkillsTypeBackgroundEnum.DESIGNER,
   [SkillsTypeTextEnum.MARKETING]: SkillsTypeBackgroundEnum.MARKETING,
@@ -25,6 +33,7 @@ export const SkillsTypeBackgroundDefines: Readonly<Record<SkillsTypeTextEnum, Sk
 
 // 定義技能類型
 export const SkillsTypeDefines: SkillsType[] = [
+  { label: SkillsTypeTextEnum.ALL, value: SkillsTypeCodeEnum.ALL },
   { label: SkillsTypeTextEnum.SOFTWARE_ENGINEER, value: SkillsTypeCodeEnum.SOFTWARE_ENGINEER },
   { label: SkillsTypeTextEnum.DESIGNER, value: SkillsTypeCodeEnum.DESIGNER },
   { label: SkillsTypeTextEnum.MARKETING, value: SkillsTypeCodeEnum.MARKETING },

@@ -2,10 +2,11 @@
  * @description 定義 Skills Code 類型
  */
 export enum SkillsTypeCodeEnum {
-  SOFTWARE_ENGINEER = 1,
-  DESIGNER = 2,
-  PM = 3,
-  MARKETING = 4,
-  FINANCE = 5,
-  OTHER = 6
+  ALL = 1,
+  SOFTWARE_ENGINEER = 2,
+  DESIGNER = 3,
+  PM = 4,
+  MARKETING = 5,
+  FINANCE = 6,
+  OTHER = 7
 }
