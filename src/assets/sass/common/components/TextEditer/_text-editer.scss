@@ -1,0 +1,22 @@
+.text-editer-container {
+  .ql-toolbar {
+    border: 2px solid $d-blue;
+    border-radius: 15px 15px 0px 0px;
+
+    button {
+      display: flex;
+      justify-content: end;
+
+      svg {
+      }
+    }
+  }
+
+  .ql-container {
+    border: 2px solid $d-blue;
+    border-radius: 0px 0px 15px 15px;
+    .ql-editor {
+      letter-spacing: 0.1rem;
+    }
+  }
+}

@@ -62,6 +62,9 @@ const Skills: React.FC = () => {
     }
   }, [])
 
+  /** 
+   * @description 這裡的 render 次數可以再優化一下
+   */
   useEffect(() => {
     const ids = skills.map(skill => skill.id);
     // 過濾 skills 中的元素
@@ -165,7 +168,7 @@ const Skills: React.FC = () => {
   }
 
   const onFinish = async () => {
-    // navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SUMMARY);
+    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SUMMARY);
   }
 
   return (
