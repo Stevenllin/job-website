@@ -10,7 +10,6 @@ let rootMiddleware;
 rootMiddleware = appReduxMiddlewares;
 const store = createStore(rootReducer, rootMiddleware);
 
-
 reduxSagaMiddleware.run(rootSaga);
 
 export default store;

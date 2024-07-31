@@ -29,7 +29,7 @@ const WorkSummary: React.FC = () => {
   }, [])
 
   const handleAddPosition = () => {
-    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: false } });
+    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isCreateNewMode: true } });
   }
   
   const handleEditPosition = (history: WorkHistory) => {
@@ -37,34 +37,44 @@ const WorkSummary: React.FC = () => {
   }
 
   const handleClickNext = () => {
-    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION)
+    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION);
   }
 
   return (
     <div id="work-summary">
-      <PreviewTemplate />
       <TemplateBackground
         title="Work History Summary"
         subtitle="Further Enhance Your Experience"
       />
       <section>
-        <div className="work-list">
-          {histories.map((history, index) => (
-            <div className="work-list--item" key={index}>
-              <div className="number fs-3">{index+1}</div>
-              {/** Job title and Employer */}
-              <span className="fs-3 fw-dark">{history.job_title}, {history.employer}</span>
-              <br></br>
-              <span>{history.location} | {commonService.convertDateFormat(history.start_date)} - {commonService.convertDateFormat(history.end_date)}</span>
-              <span></span>
-              <div className="icon-container">
-                <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />
-                <FaTrash style={{ 'fontSize': IconSizeEnum.Medium }}  />
+        <div className="d-flex">
+          <div className="w-100 pa-2">
+            <div className="summary-container">
+              <div className="work-list">
+                {histories.map((history, index) => (
+                  <div className="work-list--item" key={index}>
+                    <div className="number fs-3">{index+1}</div>
+                    {/** Job title and Employer */}
+                    <span className="fs-3 fw-dark">{history.job_title}, {history.employer}</span>
+                    <br></br>
+                    <span>{history.location} | {commonService.convertDateFormat(history.start_date)} - {commonService.convertDateFormat(history.end_date)}</span>
+                    <span></span>
+                    <div className="icon-container">
+                      <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />
+                      <FaTrash style={{ 'fontSize': IconSizeEnum.Medium }}  />
+                    </div>
+                  </div>
+                ))}
               </div>
+              <Button type="text" className="add-position" onClick={handleAddPosition}>Add new position</Button>
             </div>
-          ))}
+          </div>
+          {/** Preview Template */}
+          <div className="pa-2">
+            <PreviewTemplate />
+          </div>
         </div>
-        <Button type="text" className="add-position" onClick={handleAddPosition}>Add new position</Button>
+        {/** Submit Button */}
         <Button
           type="primary"
           icon={<ArrowRightOutlined />}

@@ -10,6 +10,7 @@ import { RootState } from '../../../store/types';
 import { ProcessStepTextEnum } from '../types';
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
+import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 
 const GeneralInfo: React.FC = () => {
   const [form] = Form.useForm();
@@ -70,124 +71,131 @@ const GeneralInfo: React.FC = () => {
           onFinish={onFinish}
           onValuesChange={handleChange}
         >
-          <div>
-            <Row gutter={32}>
-              {/** First Name */}
-              <Col span="12">
-                <Form.Item
-                  name="first_name"
-                  label="First Name"
-                  layout="vertical"
-                >
-                  <Input
-                    placeholder="e.g. John"
-                    className="custom-input"
-                    style={{ letterSpacing: '0.1rem' }}
-                  />
-                </Form.Item>
-              </Col>
-              {/** Last Name */}
-              <Col span="12">
-                <Form.Item
-                  name="last_name"
-                  label="Last Name"
-                  layout="vertical"
+          <div className="d-flex">
+            <div className="pa-2">
+              <Row gutter={32}>
+                {/** First Name */}
+                <Col span="12">
+                  <Form.Item
+                    name="first_name"
+                    label="First Name"
+                    layout="vertical"
                   >
-                  <Input
-                    placeholder="e.g. Smith"
-                    className="custom-input"
-                    style={{ letterSpacing: '0.1rem' }}
-                  />
-                </Form.Item>
-              </Col>
-              {/** Profession */}
-              <Col span="24">
-                <Form.Item
-                  name="profession"
-                  label="Profession"
-                  layout="vertical"
-                >
-                  <Input
-                    placeholder="e.g. Software Engineer"
-                    className="custom-input"
-                    style={{ letterSpacing: '0.1rem' }}
-                  />
-                </Form.Item>
-              </Col>
-              {/** Country */}
-              <Col span="12">
-                <Form.Item
-                  name="country"
-                  label="Country"
-                  layout="vertical"
-                >
-                  <Select
-                    placeholder="e.g. Taiwan"
-                    options={country}
-                    fieldNames={{ label: 'name', value: 'name' }}
+                    <Input
+                      placeholder="e.g. John"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Last Name */}
+                <Col span="12">
+                  <Form.Item
+                    name="last_name"
+                    label="Last Name"
+                    layout="vertical"
+                    >
+                    <Input
+                      placeholder="e.g. Smith"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Profession */}
+                <Col span="24">
+                  <Form.Item
+                    name="profession"
+                    label="Profession"
+                    layout="vertical"
                   >
-                  </Select>
-                </Form.Item>
-              </Col>
-              {/** City */}
-              <Col span="12">
-                <Form.Item
-                  name="city"
-                  label="City"
-                  layout="vertical"
-                >
-                  <Select
-                    placeholder="e.g. Taipei"
-                    options={cities}
+                    <Input
+                      placeholder="e.g. Software Engineer"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Country */}
+                <Col span="12">
+                  <Form.Item
+                    name="country"
+                    label="Country"
+                    layout="vertical"
                   >
-                  </Select>
-                </Form.Item>
-              </Col>
-              {/** Phone */}
-              <Col span="12">
-                <Form.Item
-                  name="phone"
-                  label="Phone"
-                  layout="vertical"
-                  rules={[
-                    {
-                      pattern: /^[0-9]{10}$/,
-                      message: 'Please enter a valid phone number!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="e.g. 0978345950"
-                    className="custom-input"
-                    style={{ letterSpacing: '0.1rem' }}
-                  />
-                </Form.Item>
-              </Col>
-              {/** Email */}
-              <Col span="12">
-                <Form.Item
-                  name="email"
-                  label="Email"
-                  layout="vertical"
-                  rules={[
-                    { type: 'email', message: 'The input is not valid E-mail!', },
-                  ]}
-                >
-                  <Input
-                    placeholder="e.g. example@gmail.com"
-                    className="custom-input"
-                    style={{ letterSpacing: '0.1rem' }}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+                    <Select
+                      placeholder="e.g. Taiwan"
+                      options={country}
+                      fieldNames={{ label: 'name', value: 'name' }}
+                    >
+                    </Select>
+                  </Form.Item>
+                </Col>
+                {/** City */}
+                <Col span="12">
+                  <Form.Item
+                    name="city"
+                    label="City"
+                    layout="vertical"
+                  >
+                    <Select
+                      placeholder="e.g. Taipei"
+                      options={cities}
+                    >
+                    </Select>
+                  </Form.Item>
+                </Col>
+                {/** Phone */}
+                <Col span="12">
+                  <Form.Item
+                    name="phone"
+                    label="Phone"
+                    layout="vertical"
+                    rules={[
+                      {
+                        pattern: /^[0-9]{10}$/,
+                        message: 'Please enter a valid phone number!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="e.g. 0978345950"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Email */}
+                <Col span="12">
+                  <Form.Item
+                    name="email"
+                    label="Email"
+                    layout="vertical"
+                    rules={[
+                      { type: 'email', message: 'The input is not valid E-mail!', },
+                    ]}
+                  >
+                    <Input
+                      placeholder="e.g. example@gmail.com"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </div>
+            {/** Preview Template */}
+            <div className="pa-2">
+              <PreviewTemplate />
+            </div>
+            {/** Submit Button */}
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              iconPosition="end"
+              htmlType="submit"
+            >Next: Work History</Button>
           </div>
-          <Button
-            type="primary"
-            icon={<ArrowRightOutlined />}
-            iconPosition="end"
-            htmlType="submit"
-          >Next: Work History</Button>
         </Form>
       </section>
     </div>

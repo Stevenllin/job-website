@@ -13,6 +13,7 @@ import { ROUTES } from '../../../core/enums/routerPath';
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextEnum } from '../types';
+import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 
 const Skills: React.FC = () => {
   const [form] = Form.useForm();
@@ -183,67 +184,75 @@ const Skills: React.FC = () => {
           onFinish={onFinish}
           onValuesChange={handleChangeForm}
         >
-          <Row className="justify-between">
-            {/** Search Container */}
-            <Col span="10" className="search-container">
-              {/** Skills Type */}
-              <div className="select mb-2">
-                <Select
-                  placeholder="e.g. Select"
-                  options={SkillsTypeDefines}
-                  style={{ width: '250px' }}
-                  onChange={handleChangeOptions}
-                >
-                </Select>
-              </div>
-              {/** Skills Data */}
-              <div className="data">
-                {skills.map((item, index) => (
-                  <div className="skills-container fs-3" key={index}>
-                    {
-                      item.checked ?
-                      <FaCheckSquare style={{ fill: '#0766bc', 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                      :
-                      <FaSquarePlus style={{ 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                    }
-                    <div>
-                      <p className="fs-2 fw-dark">{item.name}</p>
-                      <span className="fs-1">{item.typeText}</span>
-                    </div>
+          <div className="d-flex">
+            <div className="pa-2 w-100">
+              <Row className="justify-between">
+                {/** Search Container */}
+                <Col span="10" className="search-container">
+                  {/** Skills Type */}
+                  <div className="select mb-2">
+                    <Select
+                      placeholder="e.g. Select"
+                      options={SkillsTypeDefines}
+                      style={{ width: '250px' }}
+                      onChange={handleChangeOptions}
+                    >
+                    </Select>
                   </div>
-                ))}
-              </div>
-            </Col>
-            {/** Input and Rate */}
-            <Col span="8" className="inputs-container">
-              {inputs.map((item, index) => (
-                <div key={item.id}>
-                  <Form.Item
-                    name={`input_${item.id}`}
-                    label={`Skills ${index + 1}`}
-                    layout="vertical"
-                  >
-                    <Input
-                      placeholder="e.g. MySQL"
-                      className="custom-input"
-                      style={{ letterSpacing: '0.1rem' }}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name={`rate_${item.id}`}
-                  >
-                    <Rate />
-                  </Form.Item>
-                </div>
-              ))}
-              <Button
-                type="link"
-                icon={<PlusOutlined />}
-                iconPosition="start"
-                onClick={handleAddSkills}
-              >Add more skills</Button>
-            </Col>
-          </Row>
+                  {/** Skills Data */}
+                  <div className="data">
+                    {skills.map((item, index) => (
+                      <div className="skills-container fs-3" key={index}>
+                        {
+                          item.checked ?
+                          <FaCheckSquare style={{ fill: '#0766bc', 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
+                          :
+                          <FaSquarePlus style={{ 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
+                        }
+                        <div>
+                          <p className="fs-2 fw-dark">{item.name}</p>
+                          <span className="fs-1">{item.typeText}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Col>
+                {/** Input and Rate */}
+                <Col span="8" className="inputs-container">
+                  {inputs.map((item, index) => (
+                    <div key={item.id}>
+                      <Form.Item
+                        name={`input_${item.id}`}
+                        label={`Skills ${index + 1}`}
+                        layout="vertical"
+                      >
+                        <Input
+                          placeholder="e.g. MySQL"
+                          className="custom-input"
+                          style={{ letterSpacing: '0.1rem' }}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name={`rate_${item.id}`}
+                      >
+                        <Rate />
+                      </Form.Item>
+                    </div>
+                  ))}
+                  <Button
+                    type="link"
+                    icon={<PlusOutlined />}
+                    iconPosition="start"
+                    onClick={handleAddSkills}
+                  >Add more skills</Button>
+                </Col>
+              </Row>
+            </div>
+            {/** Preview Template */}
+            <div className="pa-2">
+              <PreviewTemplate />
+            </div>
+          </div>
           {/** Submit Button */}
           <Button
             type="primary"

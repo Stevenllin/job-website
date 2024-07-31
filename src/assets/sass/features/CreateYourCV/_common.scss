@@ -6,9 +6,11 @@
 #summary {
   position: relative;
   section {
-    position: relative;
-    margin: 0 auto;
-    width: 50vw;
+    box-sizing: border-box;
+    padding: 2rem;
+    position: absolute;
+    left: 250px;
+    width: calc(100% - 250px);
     height: calc(100vh - 275px);
 
     label {
@@ -19,7 +21,7 @@
     button[type="submit"] {
       position: absolute;
       bottom: 0px;
-      right: 0px;
+      right: 48px;
       height: 56px;
       font-size: 16px;
     }

@@ -11,7 +11,7 @@ const useCheckHomePage = () => {
       const pathname = location.pathname;
       setIsHomePage(pathname === ROUTES.FEATURES__HOME)
     })()
-  }, [location])
+  }, [location.pathname])
 
   return isHomePage;
 }

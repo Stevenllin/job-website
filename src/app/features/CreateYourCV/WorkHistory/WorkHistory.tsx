@@ -27,11 +27,13 @@ const WorkHistory: React.FC = () => {
    * @description 載入緩存並設置 Form 表單
    */
   useEffect(() => {
-    const history = cache[ProcessStepTextEnum.WorkHistory] ? state.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : [];
+    const history = cache[ProcessStepTextEnum.WorkHistory] ? state?.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : {};
+    /** 待優化：若從 edit 過來，編輯完後 refresh 頁面，緩存成功，但一直用 state.data 顯示編輯前的資料 是否需要用 redux 暫存最新的資料 */
+    const updatedHistory = Array.isArray(history) ? state?.isCreateNewMode ? {} : history[0] : history
     const updated = {
-      ...history,
-      start_date: history.start_date && dayjs(commonService.convertDateFormat(history.start_date), 'YYYY-MM'),
-      end_date: history.end_date && dayjs(commonService.convertDateFormat(history.end_date), 'YYYY-MM'),
+      ...updatedHistory,
+      start_date: updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date), 'YYYY-MM'),
+      end_date: updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date), 'YYYY-MM'),
     }
     /** 設定 form */
     form.setFieldsValue(updated)
@@ -47,10 +49,10 @@ const WorkHistory: React.FC = () => {
     const key = Object.keys(val)[0];
     const value = Object.values(val)[0];
   
-    if (!hasWorkHistory || (!state.isEditMode && !isEditing)) {
-      /** 這是首次沒有緩存時 或 Add new position 首次輸入時 */
-      work_history.push({ id: uuidv4(), ...all });
-    } else if (state.isEditMode) {
+    /** 這是首次沒有緩存時 或 Add new position 首次輸入時 */
+    if (!hasWorkHistory || (state?.isCreateNewMode && !isEditing)) {
+        work_history.push({ id: uuidv4(), ...all });
+    } else if (state?.isEditMode) {
       /** 這是編輯模式時 */
       work_history = work_history.map((item: any) =>
         item.id === state.data.id ? { id: item.id, ...all } : item
@@ -61,7 +63,7 @@ const WorkHistory: React.FC = () => {
         ...work_history[work_history.length - 1],
         [key]: value
       };
-    }
+    } 
   
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
@@ -77,7 +79,6 @@ const WorkHistory: React.FC = () => {
 
   return (
     <div id="work-history">
-      <PreviewTemplate />
       <TemplateBackground
         title="Tell us about your recent job"
         subtitle="We’ll start there and work backward."
@@ -88,97 +89,106 @@ const WorkHistory: React.FC = () => {
           onFinish={onFinish}
           onValuesChange={handleChange}
         >
-          <Row gutter={32}>
-            {/** Job Title */}
-            <Col span="12">
-              <Form.Item
-                name="job_title"
-                label="Job Title"
-                layout="vertical"
-              >
-                <Input
-                  placeholder="e.g. Customer Service Representative"
-                  className="custom-input"
-                  style={{ letterSpacing: '0.1rem' }}
-                />
-              </Form.Item>
-            </Col>
-            {/** Employer */}
-            <Col span="12">
-              <Form.Item
-                name="employer"
-                label="Employer"
-                layout="vertical"
-              >
-                <Input
-                  placeholder="e.g. ACME Technologies"
-                  className="custom-input"
-                  style={{ letterSpacing: '0.1rem' }}
-                />
-              </Form.Item>
-            </Col>
-            {/** Location */}
-            <Col span="12">
-              <Form.Item
-                name="location"
-                label="Location"
-                layout="vertical"
-              >
-                <Input
-                  placeholder="e.g. San Francisco, California or CA"
-                  className="custom-input"
-                  style={{ letterSpacing: '0.1rem' }}
-                />
-              </Form.Item>
-            </Col>
-            <br></br>
-            {/** Remote */}
-            <Col span="12" className="d-flex align-center">
-              <Form.Item
-                name="remote"
-                label=""
-                layout="vertical"
-                className="mb-0"
-                valuePropName="checked"
-              >
-                <Checkbox >Remote</Checkbox>
-              </Form.Item>
-            </Col>
-            {/** Start Date */}
-            <Col span="12">
-              <Form.Item
-                name="start_date"
-                label="Start Date"
-                layout="vertical"
-              >
-                <DatePicker format="YYYY/MM" picker="month"></DatePicker>
-              </Form.Item>
-            </Col>
-            {/** End Date */}
-            <Col span="12">
-              <Form.Item
-                name="end_date"
-                label="End Date"
-                layout="vertical"
-              >
-                <DatePicker format="YYYY/MM" picker="month"></DatePicker>
-              </Form.Item>
-            </Col>
-            {/** Job Description */}
-            <Col span="24">
-              <Form.Item
-                name="job_description"
-                label="Job Description"
-                layout="vertical"
-              >
-                <TextArea
-                  placeholder="Controlled autosize"
-                  autoSize={{ minRows: 8, maxRows: 10 }}
-                >
-                </TextArea>
-              </Form.Item>
-            </Col>
-          </Row>
+          <div className="d-flex">
+            <div className="pa-2">
+              <Row gutter={32}>
+                {/** Job Title */}
+                <Col span="12">
+                  <Form.Item
+                    name="job_title"
+                    label="Job Title"
+                    layout="vertical"
+                  >
+                    <Input
+                      placeholder="e.g. Customer Service Representative"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Employer */}
+                <Col span="12">
+                  <Form.Item
+                    name="employer"
+                    label="Employer"
+                    layout="vertical"
+                  >
+                    <Input
+                      placeholder="e.g. ACME Technologies"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                {/** Location */}
+                <Col span="12">
+                  <Form.Item
+                    name="location"
+                    label="Location"
+                    layout="vertical"
+                  >
+                    <Input
+                      placeholder="e.g. San Francisco, California or CA"
+                      className="custom-input"
+                      style={{ letterSpacing: '0.1rem' }}
+                    />
+                  </Form.Item>
+                </Col>
+                <br></br>
+                {/** Remote */}
+                <Col span="12" className="d-flex align-center">
+                  <Form.Item
+                    name="remote"
+                    label=""
+                    layout="vertical"
+                    className="mb-0"
+                    valuePropName="checked"
+                  >
+                    <Checkbox >Remote</Checkbox>
+                  </Form.Item>
+                </Col>
+                {/** Start Date */}
+                <Col span="12">
+                  <Form.Item
+                    name="start_date"
+                    label="Start Date"
+                    layout="vertical"
+                  >
+                    <DatePicker format="YYYY/MM" picker="month"></DatePicker>
+                  </Form.Item>
+                </Col>
+                {/** End Date */}
+                <Col span="12">
+                  <Form.Item
+                    name="end_date"
+                    label="End Date"
+                    layout="vertical"
+                  >
+                    <DatePicker format="YYYY/MM" picker="month"></DatePicker>
+                  </Form.Item>
+                </Col>
+                {/** Job Description */}
+                <Col span="24">
+                  <Form.Item
+                    name="job_description"
+                    label="Job Description"
+                    layout="vertical"
+                  >
+                    <TextArea
+                      placeholder="Controlled autosize"
+                      autoSize={{ minRows: 8, maxRows: 10 }}
+                    >
+                    </TextArea>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </div>
+            {/** Preview Template */}
+            <div className="pa-2">
+              <PreviewTemplate />
+            </div>
+          </div>
+          {/** Submit Button */}
           <Button
             type="primary"
             icon={<ArrowRightOutlined />}
