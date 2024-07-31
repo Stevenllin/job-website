@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ROUTES } from '../../../core/enums/routerPath';
 import { useNavigate, useLocation } from 'react-router-dom';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
@@ -19,6 +19,8 @@ const WorkHistory: React.FC = () => {
   const { state } = location;
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  /** 為了更新 Preview Template */
+  const [template, setTemplate] = useState(cache)
   const hasWorkHistory = cache[ProcessStepTextEnum.WorkHistory];
   /** 判斷使用者輸入過沒有 */
   let isEditing = false;
@@ -67,6 +69,7 @@ const WorkHistory: React.FC = () => {
   
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
   
     isEditing = true;
   };
@@ -185,7 +188,7 @@ const WorkHistory: React.FC = () => {
             </div>
             {/** Preview Template */}
             <div className="pa-2">
-              <PreviewTemplate />
+              <PreviewTemplate template={template} />
             </div>
           </div>
           {/** Submit Button */}

@@ -9,11 +9,15 @@ import type { CollapseProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../core/enums/routerPath';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
+import useAppDispatch from '../../../core/hooks/useAppDispatch';
+import { setModalVisibleAction } from '../../../store/ui/actions';
+import { ModalNameEnum } from '../../../core/enums/modalName';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const navigate = useNavigate()
+  const reduxDispatch = useAppDispatch();
 
   const handleToggle = () => {
     setIsExpand(prev => !prev)
@@ -40,11 +44,16 @@ const Education: React.FC = () => {
   const onFinish = async () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS);
   }
+
+  const handleCheckSampleRef = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    reduxDispatch(setModalVisibleAction(ModalNameEnum.EducationSampleRef, true))
+  }
   
   return (
     <div id="education">
       <TemplateBackground
-        title="Tell us about your education"
+        title="Tell us about your Education"
         subtitle="Enter your education experience so far, even if you are a current student or did not graduate."
       />
       <section>
@@ -130,7 +139,7 @@ const Education: React.FC = () => {
                     }
                     <span className="ms-2">Add any additional coursework you're pround to showcase</span>
                   </div>
-                  <span className="text--blue">Look here sample reference</span>
+                  <span className="text--blue" onClick={handleCheckSampleRef}>Look here sample reference</span>
                 </div>
                 {/** Content */}
                 <div className="content">
@@ -160,12 +169,14 @@ const Education: React.FC = () => {
             </div>
           </div>
           {/** Submit Button */}
-          <Button
-            type="primary"
-            icon={<ArrowRightOutlined />}
-            iconPosition="end"
-            htmlType="submit"
-          >Next: Skills</Button>
+          <div className="pa-2 d-flex justify-end">
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              iconPosition="end"
+              htmlType="submit"
+            >Next: Skills</Button>
+          </div>
         </Form>
       </section>
     </div>

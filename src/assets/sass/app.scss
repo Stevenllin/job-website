@@ -15,10 +15,10 @@
 @import "./features/Home/home";
 /** Find Jobs 引用 */
 @import "./features/FindJobs/find-jobs";
-/** Create CV Template 引用 */
-@import "./features/CreateYourCV/choose-template";
 /** Create CV Template（common） 引用 */
 @import "./features/CreateYourCV/common";
+/** Create CV Template 引用 */
+@import "./features/CreateYourCV/choose-template";
 /** General Info 引用 */
 @import "./features/CreateYourCV/general-info";
 /** Work History 引用 */
@@ -37,3 +37,5 @@
 @import "./common/components/TextEditer/text-editer";
 /** Template Background */
 @import "./common/layouts/TemplateBackground/template-background";
+/** 共用 Modal 引用 */
+@import "./common/components/Modal/modal";

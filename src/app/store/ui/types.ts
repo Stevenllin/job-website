@@ -8,6 +8,7 @@ export interface UIState {
 
 interface ModalState {
   previewTemplateVisible: boolean;
+  educationSampleRefVisible: boolean;
 }
 
 interface SpinnerState {

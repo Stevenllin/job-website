@@ -1,3 +1,4 @@
+
 export interface ProgressBarProps {
   children: any;
   currentStep: string;
@@ -8,6 +9,7 @@ export interface Step {
   title: string;
   value: string;
   visible: boolean;
+  url: string;
 }
 
 export interface ProgressBarContextValues {

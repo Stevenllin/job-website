@@ -19,6 +19,8 @@ const GeneralInfo: React.FC = () => {
   const [cities, setCities] = useState([])
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  /** 為了更新 Preview Template */
+  const [template, setTemplate] = useState(cache)
 
   /** 
    * @description 載入緩存
@@ -44,10 +46,11 @@ const GeneralInfo: React.FC = () => {
       setCities(updated)
     }
     /** 取得緩存 */
-    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '');
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 更新緩存 */
     const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: all }    
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
   };
 
   const onFinish = async () => {
@@ -186,7 +189,7 @@ const GeneralInfo: React.FC = () => {
             </div>
             {/** Preview Template */}
             <div className="pa-2">
-              <PreviewTemplate />
+              <PreviewTemplate template={template} />
             </div>
             {/** Submit Button */}
             <Button

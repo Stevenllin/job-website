@@ -188,7 +188,7 @@ const Skills: React.FC = () => {
             <div className="pa-2 w-100">
               <Row className="justify-between">
                 {/** Search Container */}
-                <Col span="10" className="search-container">
+                <Col span="12" className="search-container">
                   {/** Skills Type */}
                   <div className="select mb-2">
                     <Select
@@ -201,20 +201,24 @@ const Skills: React.FC = () => {
                   </div>
                   {/** Skills Data */}
                   <div className="data">
-                    {skills.map((item, index) => (
-                      <div className="skills-container fs-3" key={index}>
-                        {
-                          item.checked ?
-                          <FaCheckSquare style={{ fill: '#0766bc', 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                          :
-                          <FaSquarePlus style={{ 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                        }
-                        <div>
-                          <p className="fs-2 fw-dark">{item.name}</p>
-                          <span className="fs-1">{item.typeText}</span>
-                        </div>
-                      </div>
-                    ))}
+                    <Row>              
+                      {skills.map((item, index) => (
+                        <Col span="12" key={item.name}>
+                          <div className="skills-container fs-3" key={index}>
+                            {
+                              item.checked ?
+                              <FaCheckSquare style={{ fill: '#0766bc', 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
+                              :
+                              <FaSquarePlus style={{ 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
+                            }
+                            <div>
+                              <p className="fs-2 fw-dark">{item.name}</p>
+                              <span className="fs-1">{item.typeText}</span>
+                            </div>
+                          </div>
+                        </Col>
+                      ))}
+                    </Row>
                   </div>
                 </Col>
                 {/** Input and Rate */}

@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import Header from '../Header'
-import { useDispatch } from 'react-redux';
 import { initFetchCommonDataAction } from '../../../store/common/actions';
 import { MainLayoutProps } from './types';
-import { CommonActions } from '../../../store/common/types'
+import useAppDispatch from '../../../core/hooks/useAppDispatch';
+import ModalCollection from '../../components/Modals/ModalCollection';
+
 /**
  * 
  * @description 主要共用 Layout、路由
  */
 const MainLayout: React.FC<MainLayoutProps> = (props) => {
-  const reduxDispatch = useDispatch();
+  const reduxDispatch = useAppDispatch();
   /**
    * @description 組件初始化後執行的 Effect
   */
@@ -25,6 +26,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
       <main>
         {props.children}
       </main>
+      <ModalCollection />
     </>
   )
 }

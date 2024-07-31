@@ -9,7 +9,6 @@ import Education from './Education';
 import Skills from './Skills';
 import Summary from './Summary';
 import Finalize from './Finalize';
-import CreateTemplateGuard from '../../core/router/guard/CreateTemplateGuard';
 
 const CreateYourCVRoutes: React.FC = () => {
   return (

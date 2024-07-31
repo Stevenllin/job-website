@@ -4,6 +4,7 @@ import { Progress } from 'antd';
 import type { ProgressProps } from 'antd';
 import Container from './Container';
 import ProgressBarContext from './ProgressBarContext';
+import useTemplateProgressBar from '../../../../core/hooks/useTemplateProgressBar';
 
 const colors: ProgressProps['strokeColor'] = {
   '0%': '#108ee9',
@@ -11,6 +12,8 @@ const colors: ProgressProps['strokeColor'] = {
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
+  const progress: number = useTemplateProgressBar();
+
   return (
     <section id="progress-bar">
       <div className="progress-bar">
@@ -20,7 +23,7 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
               {
                 props.step.map((step, index) => (
                   step.visible ? (
-                    <Container.Item value={step.value} key={index}>
+                    <Container.Item value={step.value} key={index} url={step.url}>
                       {step.title}
                     </Container.Item>
                   ) : null
@@ -30,7 +33,7 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
           </ProgressBarContext.Provider>
           <div className="percentage">
             <span className="fs-1 fw-dark">RESUME COMPLETENESS:</span>
-            <Progress percent={99.9} strokeColor={colors} />
+            <Progress percent={progress} strokeColor={colors} />
           </div>
         </div>
       </div>

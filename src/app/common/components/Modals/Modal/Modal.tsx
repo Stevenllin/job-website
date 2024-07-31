@@ -1,7 +1,9 @@
 import { useRef } from 'react';
-import { setModalVisibleAction } from '../../../store/ui/actions';
+import { setModalVisibleAction } from '../../../../store/ui/actions';
 import { ModalProps } from './types';
-import useAppDispatch from '../../../core/hooks/useAppDispatch';
+import useAppDispatch from '../../../../core/hooks/useAppDispatch';
+import { IoCloseOutline } from "react-icons/io5";
+import { IconSizeEnum } from '../../../../core/enums/iconSize';
 
 const Modal: React.FC<ModalProps> = (props) => {
   const modalElemRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,9 @@ const Modal: React.FC<ModalProps> = (props) => {
             {/** Title and Close Button */}
             <div className="modal-header">
               <h4 className="modal-title">{props.title}</h4>
-              <button type="button" className="btn-close" onClick={handleClose}></button>
+              <IoCloseOutline className="btn-close" style={{ 'fontSize': IconSizeEnum.Large }} onClick={handleClose} />
+
+              {/* <button type="button" className="btn-close" ></button> */}
             </div>
             {/** Modal Body Children */}
             <div className="modal-body">
@@ -50,12 +54,16 @@ const Modal: React.FC<ModalProps> = (props) => {
             </div>
             {/** Modal Footer */}
             <div className="modal-footer">
-              <button className="" onClick={handleClose}>
-                {props.cancelBtnText}
-              </button>
-              <button onClick={handleConfirm}>
-                {props.confirmBtnText}
-              </button>
+              {props.cancelBtnText && (
+                <button className="" onClick={handleClose}>
+                  {props.cancelBtnText}
+                </button>
+              )}
+              {props.confirmBtnText && (
+                <button className="" onClick={handleConfirm}>
+                  {props.confirmBtnText}
+                </button>
+              )}
             </div>
           </div>
         </div>

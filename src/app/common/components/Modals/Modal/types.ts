@@ -1,4 +1,4 @@
-import { ModalNameEnum } from "../../../core/enums/modalName";
+import { ModalNameEnum } from "../../../../core/enums/modalName";
 
 export interface ModalProps {
   name: ModalNameEnum;
@@ -6,8 +6,8 @@ export interface ModalProps {
   children: any;
   className?: string;
   visible: boolean;
-  confirmBtnText: string | JSX.Element;
-  cancelBtnText: string | JSX.Element;
+  confirmBtnText?: string | JSX.Element;
+  cancelBtnText?: string | JSX.Element;
   onConfirm?: () => void;
   onCancel?: () => void;
 }

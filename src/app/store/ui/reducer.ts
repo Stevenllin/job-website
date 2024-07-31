@@ -7,7 +7,8 @@ import { UIState, UIActions, UI_MODALS__SET_MODAL_VISIBLE } from './types';
 const initialState: UIState = {
   spinners: {},
   modals: {
-    previewTemplateVisible: false
+    previewTemplateVisible: false,
+    educationSampleRefVisible: false
   }
 }
 

@@ -14,13 +14,11 @@ const Summary: React.FC = () => {
 
   useEffect(() => {
     const summary = cache[ProcessStepTextEnum.Summary] ?? {};
-    console.log('summary', summary);
   }, [])
 
   const handleSubmit = () => {
     if (editorRef.current) {
       const content = editorRef.current.getEditorContent();
-      console.log('content', content);
     }
   }
 
