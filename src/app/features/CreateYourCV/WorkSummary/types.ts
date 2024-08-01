@@ -5,4 +5,5 @@ export interface WorkHistory {
   remote: boolean;
   end_date: string;
   start_date: string;
+  errors?: any;
 }

@@ -49,7 +49,7 @@ const GeneralInfo: React.FC = () => {
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 取得緩存 (這邊要取得最新的 info) */
     const info = cache[ProcessStepTextEnum.GeneralInfo];
-    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...all, errors: info.errors } }    
+    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...all, errors: info?.errors } }    
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     setTemplate(updated)
   };
@@ -57,8 +57,8 @@ const GeneralInfo: React.FC = () => {
   const handleSubmit = async () => {
     /** 更新緩存 */
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
-    /** 取得緩存 (這邊要取得最新的 info) */
     const histories = cache[ProcessStepTextEnum.WorkHistory];
+    /** 取得緩存 (這邊要取得最新的 info) */
     const info = cache[ProcessStepTextEnum.GeneralInfo];
     try {
       await form.validateFields();
@@ -79,7 +79,7 @@ const GeneralInfo: React.FC = () => {
       navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);
     } else {
       /** 至 Work History */
-      navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: false } });
+      navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isCreateNewMode: true } });
     }
   };
 

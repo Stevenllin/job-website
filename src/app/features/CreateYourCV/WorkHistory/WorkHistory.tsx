@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ROUTES } from '../../../core/enums/routerPath';
 import { useNavigate, useLocation } from 'react-router-dom';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
@@ -24,7 +24,9 @@ const WorkHistory: React.FC = () => {
   const [template, setTemplate] = useState(cache)
   const hasWorkHistory = cache[ProcessStepTextEnum.WorkHistory];
   /** 判斷使用者輸入過沒有 */
-  let isEditing = false;
+  const isEditing = useRef<boolean>(false);
+  /** 判斷目標輸入 id */
+  const selectedId = useRef<string>(state?.isEditMode ? state.data.id : uuidv4());
 
   /** 
    * @description 載入緩存並設置 Form 表單
@@ -45,40 +47,33 @@ const WorkHistory: React.FC = () => {
   /**
    * @description 更新緩存
   */
-  const handleChange = async (val: any, all: any) => {
+  const handleChange = async (_: any, all: any) => {
     /** 更新緩存 */
     let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
     const updated = { ...cache };
-    const key = Object.keys(val)[0];
-    const value = Object.values(val)[0];
-  
-    /** 這是首次沒有緩存時 或 Add new position 首次輸入時 */
-    if (!hasWorkHistory || (state?.isCreateNewMode && !isEditing)) {
-        work_history.push({ id: uuidv4(), ...all });
-    } else if (state?.isEditMode) {
-      /** 這是編輯模式時 */
+
+    /** 這是首次沒有緩存時 或 在 isCreateNewMode 首次輸入時 */
+    if (!hasWorkHistory || (state?.isCreateNewMode && !isEditing.current)) {
+      work_history.push({ id: selectedId.current, ...all });
+    } else {
+      /** 這是編輯模式時 或 在 isCreateNewMode 首次輸入之後 */
       work_history = work_history.map((item: any) =>
-        item.id === state.data.id ? { id: item.id, ...all } : item
+        item.id === selectedId.current ? { id: item.id, ...all } : item
       );
-    } else if (isEditing) {
-      /** 這是 Add new position 之後的輸入 */
-      work_history[work_history.length - 1] = {
-        ...work_history[work_history.length - 1],
-        [key]: value
-      };
-    } 
+    }
   
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     setTemplate(updated)
   
-    isEditing = true;
+    isEditing.current = true;
   };
 
   const handleSubmit = async () => {
     try {
       await form.validateFields();
     } catch (error) {
+      // const { errorFields } = error;
       console.log('error', error);
     }
     /** 至 Work Summary */
