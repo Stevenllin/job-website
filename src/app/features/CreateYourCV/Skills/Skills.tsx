@@ -14,6 +14,7 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextEnum } from '../types';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
+import CheckItem from '../../../common/components/CheckItem';
 
 const Skills: React.FC = () => {
   const [form] = Form.useForm();
@@ -201,20 +202,9 @@ const Skills: React.FC = () => {
                   {/** Skills Data */}
                   <div className="data">
                     <Row>              
-                      {skills.map((item, index) => (
+                      {skills.map((item) => (
                         <Col span="12" key={item.name}>
-                          <div className="skills-container fs-3" key={index}>
-                            {
-                              item.checked ?
-                              <FaCheckSquare style={{ fill: '#0766bc', 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                              :
-                              <FaSquarePlus style={{ 'fontSize': IconSizeEnum.Large }} onClick={() => handleCheck(item)} />
-                            }
-                            <div>
-                              <p className="fs-2 fw-dark">{item.name}</p>
-                              <span className="fs-1">{item.typeText}</span>
-                            </div>
-                          </div>
+                          <CheckItem item={item} onCheck={handleCheck} name={item.name} type={item.typeText} />
                         </Col>
                       ))}
                     </Row>

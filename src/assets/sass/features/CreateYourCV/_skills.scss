@@ -11,22 +11,6 @@
       .data {
         height: 496px;
         overflow-y: scroll;
-
-        .skills-container {
-          margin: 20px 0px;
-          display: flex;
-          align-items: center;
-
-          svg {
-            cursor: pointer;
-            margin-right: 15px;
-            fill: $dark-blue;
-          }
-
-          p {
-            margin: 0px;
-          }
-        }
       }
     }
 
