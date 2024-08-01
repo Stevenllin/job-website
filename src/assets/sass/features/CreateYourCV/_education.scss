@@ -32,7 +32,11 @@
           margin-top: 8px;
           display: block;
           box-sizing: border-box;
-          height: 260px;
+          height: 80%;
+
+          .ant-row {
+            height: 100%;
+          }
         }
       }
     }

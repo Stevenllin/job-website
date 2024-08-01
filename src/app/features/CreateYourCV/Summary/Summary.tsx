@@ -22,6 +22,15 @@ const Summary: React.FC = () => {
     }
   }
 
+  /** 
+   * @description 監聽 TextEditor 變化，暫存
+   */
+  const handleSaveSummary = (innerHTML: string) => {
+    /** 更新緩存 */
+    const updated = { ...cache, [ProcessStepTextEnum.Summary]: innerHTML }
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated))
+  }
+
   return (
     <div id="summary">
       <TemplateBackground
@@ -29,7 +38,7 @@ const Summary: React.FC = () => {
         subtitle="Choose from our pre-written examples below or write your own."
       />
       <section>
-        <TextEditer processStepText={ProcessStepTextEnum.Summary} ref={editorRef} />
+        <TextEditer ref={editorRef} default={cache[ProcessStepTextEnum.Summary]} onSave={handleSaveSummary} />
 
         {/** Submit Button */}
         <Button

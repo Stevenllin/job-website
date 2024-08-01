@@ -1,7 +1,6 @@
-import { ProcessStepTextEnum } from '../../../features/CreateYourCV/types';
-
 export interface TextEditerProps {
-  processStepText: ProcessStepTextEnum;
+  default: string;
+  onSave: (innerHTML: string) => void;
 }
 
 export interface TextEditorHandle {

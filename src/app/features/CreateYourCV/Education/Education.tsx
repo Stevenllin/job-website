@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { Form, Select, Input, Button, Row, Col } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
@@ -13,12 +13,15 @@ import useAppDispatch from '../../../core/hooks/useAppDispatch';
 import { setModalVisibleAction } from '../../../store/ui/actions';
 import { ModalNameEnum } from '../../../core/enums/modalName';
 import { getRequiredRule } from '../../../core/services/validationService';
+import TextEditer from '../../../common/components/TextEditer';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const navigate = useNavigate()
   const reduxDispatch = useAppDispatch();
+  const editorRef = useRef<{ getEditorContent: () => string }>(null);
+
 
   const handleToggle = () => {
     setIsExpand(prev => !prev)
@@ -44,6 +47,10 @@ const Education: React.FC = () => {
 
   const handleSubmit = async () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS);
+  }
+
+  const handleSaveSummary = (innerHTML: string) => {
+    console.log('innerHTML', innerHTML);
   }
 
   const handleCheckSampleRef = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -160,7 +167,7 @@ const Education: React.FC = () => {
                       </Collapse>
                     </Col>
                     <Col span="12">
-                      Education Description
+                      <TextEditer ref={editorRef} default="" onSave={handleSaveSummary} />
                     </Col>
                   </Row>
                 </div>
