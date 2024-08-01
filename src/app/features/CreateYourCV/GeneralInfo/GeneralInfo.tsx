@@ -11,6 +11,7 @@ import { ProcessStepTextEnum } from '../types';
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
+import { getRequiredRule, getMobileRule, getEmailRule } from '../../../core/services/validationService';
 
 const GeneralInfo: React.FC = () => {
   const [form] = Form.useForm();
@@ -19,6 +20,8 @@ const GeneralInfo: React.FC = () => {
   const [cities, setCities] = useState([])
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  /** 取得緩存 */
+  const info = cache[ProcessStepTextEnum.GeneralInfo];
   /** 為了更新 Preview Template */
   const [template, setTemplate] = useState(cache)
 
@@ -26,9 +29,6 @@ const GeneralInfo: React.FC = () => {
    * @description 載入緩存
    */
   useEffect(() => {
-    /** 取得緩存 */
-    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
-    const info = cache[ProcessStepTextEnum.GeneralInfo];
     /** 設定 form */
     form.setFieldsValue(info)
   }, [])
@@ -45,19 +45,40 @@ const GeneralInfo: React.FC = () => {
       })
       setCities(updated)
     }
-    /** 取得緩存 */
-    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 更新緩存 */
-    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: all }    
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 取得緩存 (這邊要取得最新的 info) */
+    const info = cache[ProcessStepTextEnum.GeneralInfo];
+    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...all, errors: info.errors } }    
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     setTemplate(updated)
   };
 
-  const onFinish = async () => {
+  const handleSubmit = async () => {
+    /** 更新緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 取得緩存 (這邊要取得最新的 info) */
     const histories = cache[ProcessStepTextEnum.WorkHistory];
+    const info = cache[ProcessStepTextEnum.GeneralInfo];
+    try {
+      await form.validateFields();
+      /** 成功也要更新 */
+      delete info.errors
+      const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...info }}
+      storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    } catch (error: any) {
+      /** 將錯誤 field name 資訊緩存 */
+      const { errorFields } = error;
+      const errors = errorFields.map((field: any) => (field.name[0]))
+      const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...info, errors }}
+      storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    }
+    /** 無論驗證失敗都會轉導 */
     if (histories && histories.length > 0) {
+      /** 至 Work Summary */
       navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);
     } else {
+      /** 至 Work History */
       navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY, { state: { isEditMode: false } });
     }
   };
@@ -71,7 +92,6 @@ const GeneralInfo: React.FC = () => {
       <section>
         <Form
           form={form}
-          onFinish={onFinish}
           onValuesChange={handleChange}
         >
           <div className="d-flex">
@@ -83,6 +103,7 @@ const GeneralInfo: React.FC = () => {
                     name="first_name"
                     label="First Name"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input your First Name')]}
                   >
                     <Input
                       placeholder="e.g. John"
@@ -97,7 +118,8 @@ const GeneralInfo: React.FC = () => {
                     name="last_name"
                     label="Last Name"
                     layout="vertical"
-                    >
+                    rules={[getRequiredRule('Please input your Last Name')]}
+                  >
                     <Input
                       placeholder="e.g. Smith"
                       className="custom-input"
@@ -154,12 +176,7 @@ const GeneralInfo: React.FC = () => {
                     name="phone"
                     label="Phone"
                     layout="vertical"
-                    rules={[
-                      {
-                        pattern: /^[0-9]{10}$/,
-                        message: 'Please enter a valid phone number!',
-                      },
-                    ]}
+                    rules={getMobileRule(false)}
                   >
                     <Input
                       placeholder="e.g. 0978345950"
@@ -174,9 +191,7 @@ const GeneralInfo: React.FC = () => {
                     name="email"
                     label="Email"
                     layout="vertical"
-                    rules={[
-                      { type: 'email', message: 'The input is not valid E-mail!', },
-                    ]}
+                    rules={getEmailRule(true)}
                   >
                     <Input
                       placeholder="e.g. example@gmail.com"
@@ -194,9 +209,10 @@ const GeneralInfo: React.FC = () => {
             {/** Submit Button */}
             <Button
               type="primary"
+              className="submit"
               icon={<ArrowRightOutlined />}
               iconPosition="end"
-              htmlType="submit"
+              onClick={handleSubmit}
             >Next: Work History</Button>
           </div>
         </Form>

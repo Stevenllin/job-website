@@ -168,7 +168,7 @@ const Skills: React.FC = () => {
     });
   }
 
-  const onFinish = async () => {
+  const handleSubmit = async () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SUMMARY);
   }
 
@@ -181,7 +181,6 @@ const Skills: React.FC = () => {
       <section>
         <Form
           form={form}
-          onFinish={onFinish}
           onValuesChange={handleChangeForm}
         >
           <div className="d-flex">
@@ -262,7 +261,8 @@ const Skills: React.FC = () => {
             type="primary"
             icon={<ArrowRightOutlined />}
             iconPosition="end"
-            htmlType="submit"
+            className="submit"
+            onClick={handleSubmit}
           >Next: Summary</Button>
         </Form>
       </section>

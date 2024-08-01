@@ -11,6 +11,7 @@ import { StorageKeysEnum } from '../../../core/enums/storage';
 import commonService from '../../../core/services/commonService';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+import { getRequiredRule, getStartDateRule, getEndDateRule } from '../../../core/services/validationService';
 
 const WorkHistory: React.FC = () => {
   const [form] = Form.useForm();
@@ -74,7 +75,13 @@ const WorkHistory: React.FC = () => {
     isEditing = true;
   };
 
-  const onFinish = () => {
+  const handleSubmit = async () => {
+    try {
+      await form.validateFields();
+    } catch (error) {
+      console.log('error', error);
+    }
+    /** 至 Work Summary */
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);
   };
 
@@ -89,7 +96,6 @@ const WorkHistory: React.FC = () => {
       <section>
         <Form
           form={form}
-          onFinish={onFinish}
           onValuesChange={handleChange}
         >
           <div className="d-flex">
@@ -101,6 +107,7 @@ const WorkHistory: React.FC = () => {
                     name="job_title"
                     label="Job Title"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the Job Title')]}
                   >
                     <Input
                       placeholder="e.g. Customer Service Representative"
@@ -115,6 +122,7 @@ const WorkHistory: React.FC = () => {
                     name="employer"
                     label="Employer"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the Employer')]}
                   >
                     <Input
                       placeholder="e.g. ACME Technologies"
@@ -156,6 +164,7 @@ const WorkHistory: React.FC = () => {
                     name="start_date"
                     label="Start Date"
                     layout="vertical"
+                    rules={getStartDateRule(true, form)}
                   >
                     <DatePicker format="YYYY/MM" picker="month"></DatePicker>
                   </Form.Item>
@@ -166,6 +175,7 @@ const WorkHistory: React.FC = () => {
                     name="end_date"
                     label="End Date"
                     layout="vertical"
+                    rules={getEndDateRule(true, form)}
                   >
                     <DatePicker format="YYYY/MM" picker="month"></DatePicker>
                   </Form.Item>
@@ -196,8 +206,9 @@ const WorkHistory: React.FC = () => {
             type="primary"
             icon={<ArrowRightOutlined />}
             iconPosition="end"
-            htmlType="submit"
-          >Next</Button>
+            className="submit"
+            onClick={handleSubmit}
+          >Next: Work Summary</Button>
         </Form>
       </section>
     </div>

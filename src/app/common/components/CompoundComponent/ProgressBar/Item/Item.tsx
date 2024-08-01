@@ -9,7 +9,6 @@ const Item: React.FC<ItemProps> = (props) => {
   const navigate = useNavigate()
 
   const handleRedirect = () => {
-    console.log(123123);
     navigate(props.url)
   }
 

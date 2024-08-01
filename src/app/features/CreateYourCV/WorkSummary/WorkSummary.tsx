@@ -79,9 +79,9 @@ const WorkSummary: React.FC = () => {
           type="primary"
           icon={<ArrowRightOutlined />}
           iconPosition="end"
-          htmlType="submit"
           onClick={handleClickNext}
-        >Next</Button>
+          className="submit"
+        >Next: Education</Button>
       </section>
     </div>
   )

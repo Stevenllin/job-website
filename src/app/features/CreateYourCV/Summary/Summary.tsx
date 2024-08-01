@@ -36,8 +36,8 @@ const Summary: React.FC = () => {
           type="primary"
           icon={<ArrowRightOutlined />}
           iconPosition="end"
-          htmlType="submit"
           onClick={handleSubmit}
+          className="submit"
         >Next: Finalize</Button>
       </section>
     </div>

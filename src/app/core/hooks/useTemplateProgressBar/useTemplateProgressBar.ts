@@ -11,8 +11,14 @@ const useTemplateProgressBar = () => {
   const [currentProgress, setCurrentProgress] = useState<number>(0);
 
   useEffect(() => {
-    const cacheKeys = Object.keys(cache);
-    setCurrentProgress(Math.ceil((cacheKeys.length/Object.keys(ProcessStepTextEnum).length)*100))
+    /** 儲存已驗證成功的頁面 */
+    const valid: string[] = [];
+    Object.entries(cache).forEach((item: any) => {
+      const { errors }  = item[1]
+      /** 若驗證成功 */
+      if (!errors || (errors && errors.length === 0)) valid.push(item[0])
+    })
+    setCurrentProgress(Math.ceil((valid.length/Object.keys(ProcessStepTextEnum).length)*100))
   }, [location.pathname])
 
   return currentProgress;

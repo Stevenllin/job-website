@@ -9,7 +9,7 @@ const PreviewTemplate: React.FC<PreviewTemplateProps> = (props) => {
   /** 取得緩存資料 */
   const cache = storageService.getItem(StorageKeysEnum.Template) ?? '{}';
   const { template, className } = props;
-  
+
   /** 
    * @description 繪製 Preview 圖 #383d47 #272931
    */

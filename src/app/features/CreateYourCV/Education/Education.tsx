@@ -12,6 +12,7 @@ import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 import useAppDispatch from '../../../core/hooks/useAppDispatch';
 import { setModalVisibleAction } from '../../../store/ui/actions';
 import { ModalNameEnum } from '../../../core/enums/modalName';
+import { getRequiredRule } from '../../../core/services/validationService';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
@@ -41,7 +42,7 @@ const Education: React.FC = () => {
     },
   ];
 
-  const onFinish = async () => {
+  const handleSubmit = async () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS);
   }
 
@@ -59,7 +60,6 @@ const Education: React.FC = () => {
       <section>
         <Form
           form={form}
-          onFinish={onFinish}
         >
           <div className="d-flex">
             <div className="pa-2 w-100">
@@ -70,6 +70,7 @@ const Education: React.FC = () => {
                     name="school_name"
                     label="School Name"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the school name')]}
                   >
                     <Input
                       placeholder="e.g. San Jose State"
@@ -84,6 +85,7 @@ const Education: React.FC = () => {
                     name="school_location"
                     label="School Location"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the school location')]}
                   >
                     <Input
                       placeholder="e.g. San Jose"
@@ -98,6 +100,7 @@ const Education: React.FC = () => {
                     name="degree"
                     label="Degree"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the degree')]}
                   >
                     <Select
                       placeholder="e.g. Select"
@@ -116,6 +119,7 @@ const Education: React.FC = () => {
                     name="field"
                     label="Field of Study"
                     layout="vertical"
+                    rules={[getRequiredRule('Please input the field')]}
                   >
                     <Input
                       placeholder="e.g. Accountant"
@@ -174,7 +178,8 @@ const Education: React.FC = () => {
               type="primary"
               icon={<ArrowRightOutlined />}
               iconPosition="end"
-              htmlType="submit"
+              className="submit"
+              onClick={handleSubmit}
             >Next: Skills</Button>
           </div>
         </Form>
