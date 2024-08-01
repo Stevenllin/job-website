@@ -13,10 +13,19 @@ const useTemplateProgressBar = () => {
   useEffect(() => {
     /** 儲存已驗證成功的頁面 */
     const valid: string[] = [];
+
     Object.entries(cache).forEach((item: any) => {
-      const { errors }  = item[1]
-      /** 若驗證成功 */
-      if (!errors || (errors && errors.length === 0)) valid.push(item[0])
+      if (!Array.isArray(item[1])) {
+        /** 若不是 GeneralInfo */
+        const { errors }  = item[1]
+        /** 若驗證成功 */
+        if (!errors || (errors && errors.length === 0)) valid.push(item[0])
+      } else {
+        /** 若是，Work History */
+        /** 檢查其中 errors 是否含有錯誤欄位 */
+        const isContainError = item[1].some(elem => elem.errors && elem.errors.length !== 0);
+        if (!isContainError) valid.push(item[0]);
+      }
     })
     setCurrentProgress(Math.ceil((valid.length/Object.keys(ProcessStepTextEnum).length)*100))
   }, [location.pathname])

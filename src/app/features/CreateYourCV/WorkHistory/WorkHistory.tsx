@@ -49,6 +49,7 @@ const WorkHistory: React.FC = () => {
   */
   const handleChange = async (_: any, all: any) => {
     /** 更新緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
     const updated = { ...cache };
 
@@ -58,10 +59,10 @@ const WorkHistory: React.FC = () => {
     } else {
       /** 這是編輯模式時 或 在 isCreateNewMode 首次輸入之後 */
       work_history = work_history.map((item: any) =>
-        item.id === selectedId.current ? { id: item.id, ...all } : item
+        item.id === selectedId.current ? { id: item.id, errors: item.errors, ...all } : item
       );
     }
-  
+
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     setTemplate(updated)
@@ -70,12 +71,32 @@ const WorkHistory: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    /** 更新緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 取得最新的 */
+    let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
+    const updated = { ...cache };
+
     try {
       await form.validateFields();
-    } catch (error) {
-      // const { errorFields } = error;
-      console.log('error', error);
+      /** 成功也要刷新 */
+      work_history = work_history.map((item: any) => {
+        if (item.id === selectedId.current) return { ...item, errors: null }
+        return item;
+      })
+    } catch (error: any) {
+      const { errorFields } = error;
+      const errors = errorFields.map((field: any) => (field.name[0]))
+
+      work_history = work_history.map((item: any) => {
+        if (item.id === selectedId.current) return { ...item, errors }
+        return item;
+      })
+      // updated[ProcessStepTextEnum.WorkHistory] = work_history;
+      // storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     }
+    updated[ProcessStepTextEnum.WorkHistory] = work_history;
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     /** 至 Work Summary */
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY);
   };
