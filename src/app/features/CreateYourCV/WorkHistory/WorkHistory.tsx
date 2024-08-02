@@ -35,10 +35,11 @@ const WorkHistory: React.FC = () => {
     const history = cache[ProcessStepTextEnum.WorkHistory] ? state?.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : {};
     /** 待優化：若從 edit 過來，編輯完後 refresh 頁面，緩存成功，但一直用 state.data 顯示編輯前的資料 是否需要用 redux 暫存最新的資料 */
     const updatedHistory = Array.isArray(history) ? state?.isCreateNewMode ? {} : history[0] : history
+    console.log('updatedHistory', updatedHistory);
     const updated = {
       ...updatedHistory,
-      start_date: updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date), 'YYYY-MM'),
-      end_date: updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date), 'YYYY-MM'),
+      start_date: updatedHistory && updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date), 'YYYY-MM'),
+      end_date: updatedHistory && updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date), 'YYYY-MM'),
     }
     /** 設定 form */
     form.setFieldsValue(updated)
@@ -74,6 +75,7 @@ const WorkHistory: React.FC = () => {
     /** 更新緩存 */
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 取得最新的 */
+    /** 這裡出了問題，如果都不輸入任何值時，會是空陣列 */
     let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
     const updated = { ...cache };
 
@@ -87,14 +89,16 @@ const WorkHistory: React.FC = () => {
     } catch (error: any) {
       const { errorFields } = error;
       const errors = errorFields.map((field: any) => (field.name[0]))
+      console.log('errors', errors);
 
       work_history = work_history.map((item: any) => {
+        console.log('item', item);
+        console.log('selectedId', selectedId.current);
         if (item.id === selectedId.current) return { ...item, errors }
         return item;
       })
-      // updated[ProcessStepTextEnum.WorkHistory] = work_history;
-      // storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     }
+    console.log('work_history', work_history);
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     /** 至 Work Summary */
