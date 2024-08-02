@@ -1,8 +1,8 @@
 .text-editer-container {
-  height: 60px;
+  height: 54px;
   .ql-toolbar {
-    border: 2px solid $d-blue;
-    border-radius: 15px 15px 0px 0px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px 8px 0px 0px;
 
     button {
       display: flex;
@@ -14,8 +14,8 @@
   }
 
   .ql-container {
-    border: 2px solid $d-blue;
-    border-radius: 0px 0px 15px 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 0px 0px 8px 8px;
     .ql-editor {
       letter-spacing: 0.1rem;
     }

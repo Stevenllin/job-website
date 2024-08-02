@@ -18,26 +18,77 @@ import CheckItem from '../../../common/components/CheckItem';
 import { CourseworkDefines, Coursework } from '../Education/types';
 import { CourseworkTypeEnum } from "../../../core/enums/coursework";
 import { Skill } from '../Skills/types';
+import { TextEditorHandle } from '../../../common/components/TextEditer/types';
+import { OperationCodeEnum } from '../../../core/enums/operation';
+import commonService from '../../../core/services/commonService';
+import storageService from '../../../core/services/storageService';
+import { StorageKeysEnum } from '../../../core/enums/storage';
+import { ProcessStepTextEnum } from '../types';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const navigate = useNavigate()
   const reduxDispatch = useAppDispatch();
-  const editorRef = useRef<{ getEditorContent: () => string }>(null);
+  const editorRef = useRef<TextEditorHandle>(null);
   /** 呈現更新後的 CourseworkDefines */
   const [updatedCourseworkDefines, setUpdatedCourseworkDefines] = useState<Coursework[]>(CourseworkDefines);
+  /** 取得緩存 */
+  const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  const education = cache[ProcessStepTextEnum.Education];
+  /** 為了更新 Preview Template */
+  const [template, setTemplate] = useState(cache);
+
+  /** 
+   * @description 載入緩存
+  */
+  useEffect(() => {
+    /** 設定 form */
+    form.setFieldsValue(education)
+    /** 將緩存的 options 更新 CheckItem */
+    if (education?.options) setUpdatedCourseworkDefines(education.options);
+  }, [])
+
+  /** 
+   * @description 緩存 CheckItem 的狀態
+   */
+  useEffect(() => {
+    /** 取得緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    const education = cache[ProcessStepTextEnum.Education];
+    /** 更新緩存 */
+    const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...education, options: updatedCourseworkDefines }}
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    
+  }, [updatedCourseworkDefines])
 
   const handleToggle = () => {
     setIsExpand(prev => !prev)
   }
 
   const handleCheck = (item: Skill | Coursework) => {
-    console.log('item', item);
+    /** 斷定 Item 就是 Coursework */
+    const courseworkItem = item as Coursework;
+    /** 1. 更新 CourseworkDefines */
+    const updated = updatedCourseworkDefines.map((skill: Coursework) => {
+      if (skill.id === courseworkItem.id) return { ...skill, checked: !skill.checked }
+      return skill; 
+    })
+    setUpdatedCourseworkDefines(updated)
+
+    if (!editorRef.current?.setEditorContent) return;
+    /** 2. 若點選得是 false */
+    if (!item.checked) {
+      /** 增加 Content */
+      editorRef.current.setEditorContent(courseworkItem.description, OperationCodeEnum.Create)
+    } else {
+      /** 移除 Content */
+      editorRef.current.setEditorContent(courseworkItem.description, OperationCodeEnum.Delete)
+    }
   } 
 
   const handleCreateCollapse = (type: CourseworkTypeEnum) => {
-    const filtered = updatedCourseworkDefines.filter(item => item.type === type);
+    const filtered = updatedCourseworkDefines?.filter(item => item.type === type) ?? [];
     return (
       <>
         {filtered.map(item => (
@@ -48,10 +99,6 @@ const Education: React.FC = () => {
       </>
     )
   }
-
-  useEffect(() => {
-
-  }, [])
 
   const items: CollapseProps['items'] = [
     {
@@ -71,17 +118,76 @@ const Education: React.FC = () => {
     },
   ];
 
-  const handleSubmit = async () => {
-    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS);
-  }
-
+  /**
+   * @description 更新 CheckItem updatedCourseworkDefines
+   * @param innerHTML 目前 Text Editer 的字段
+   */
   const handleSaveSummary = (innerHTML: string) => {
-    console.log('innerHTML', innerHTML);
+    const doc: Document = commonService.convertInnerHTMLToDoc(innerHTML);
+    /** 獲取所有 <li> 元素 */
+    const listItems = doc.querySelectorAll('li');
+    /** description 儲存所有 <li /> 內所有的字 */
+    /** text is string 過濾 string 類型 */
+    const description: string[] = Array.from(listItems)
+      .map(li => li.textContent?.trim())
+      .filter((text): text is string => text !== undefined && text !== '');
+
+    const copied: Coursework[] = CourseworkDefines.map(item => ({
+      ...item,
+      checked: description.includes(item.description)
+    }));
+    /** 更新 CheckItem 狀態 */
+    setUpdatedCourseworkDefines(copied);
+
+    /** 取得緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    const education = cache[ProcessStepTextEnum.Education];
+    /** 更新緩存 */
+    const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...education, coursework: innerHTML }}
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
   }
 
   const handleCheckSampleRef = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
     reduxDispatch(setModalVisibleAction(ModalNameEnum.EducationSampleRef, true))
+  }
+
+  /**
+   * @description
+   * @param val 
+   * @param all 
+   */
+  const handleChange = (_: any, all: any) => {
+    /** 更新緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 取得緩存 (這邊要取得最新的 education) */
+    const education = cache[ProcessStepTextEnum.Education];
+    const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...all, options: education.options, coursework:  education.coursework, errors: education?.errors } }
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
+  }
+
+  const handleSubmit = async () => {
+    /** 更新緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 取得緩存 (這邊要取得最新的 education) */
+    const education = cache[ProcessStepTextEnum.Education];
+    
+    try {
+      await form.validateFields();
+      /** 成功也要更新 */
+      delete education.errors
+      const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...education }}
+      storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    } catch (error: any) {
+      /** 將錯誤 field name 資訊緩存 */
+      const { errorFields } = error;
+      const errors = errorFields.map((field: any) => (field.name[0]))
+      const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...education, errors }}
+      storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    }
+    /** 轉導至 Skills 頁面 */
+    navigate(ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS);
   }
   
   return (
@@ -93,6 +199,7 @@ const Education: React.FC = () => {
       <section>
         <Form
           form={form}
+          onValuesChange={handleChange}
         >
           <div className="d-flex">
             <div className="pa-2 w-100">
@@ -182,19 +289,21 @@ const Education: React.FC = () => {
                 <div className="content">
                   <Row gutter={16}>
                     <Col span="12">
-                      <Collapse
-                        accordion
-                        defaultActiveKey={["1"]}
-                        expandIconPosition="end"
-                        items={items}
-                        expandIcon={({isActive}) => isActive
-                        ? <MdExpandLess style={{ 'fontSize': IconSizeEnum.Small }} />
-                        : <MdExpandMore style={{ 'fontSize': IconSizeEnum.Small }} />}
-                      >
-                      </Collapse>
+                      {updatedCourseworkDefines.length > 0 && (
+                        <Collapse
+                          accordion
+                          defaultActiveKey={["1"]}
+                          expandIconPosition="end"
+                          items={items}
+                          expandIcon={({isActive}) => isActive
+                          ? <MdExpandLess style={{ 'fontSize': IconSizeEnum.Small }} />
+                          : <MdExpandMore style={{ 'fontSize': IconSizeEnum.Small }} />}
+                        >
+                        </Collapse>
+                      )}
                     </Col>
                     <Col span="12">
-                      <TextEditer ref={editorRef} default="" onSave={handleSaveSummary} />
+                      <TextEditer ref={editorRef} default={cache[ProcessStepTextEnum.Education]?.coursework ?? ''} onSave={handleSaveSummary} />
                     </Col>
                   </Row>
                 </div>
@@ -203,7 +312,7 @@ const Education: React.FC = () => {
             </div>
             {/** Preview Template */}
             <div className="pa-2">
-              <PreviewTemplate />
+              <PreviewTemplate template={template} />
             </div>
           </div>
           {/** Submit Button */}
