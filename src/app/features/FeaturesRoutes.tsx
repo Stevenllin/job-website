@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
-import { ROUTES } from '../core/enums/routerPath';
+import { ROUTES } from '../core/enums/router';
 import Home from './Home';
 import CreateYourCV from './CreateYourCV';
 import FindJobs from './FindJobs';

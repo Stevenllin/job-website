@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ROUTES } from '../../enums/routerPath';
+import { ROUTES } from '../../enums/router';
 
 const useCheckHomePage = () => {
   const location = useLocation();

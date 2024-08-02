@@ -1,5 +1,5 @@
 import { EducationSampleRefModalProps } from './types';
-import { ModalNameEnum } from '../../../../core/enums/modalName';
+import { ModalNameEnum } from '../../../../core/enums/modal';
 import Modal from '../Modal';
 
 const EducationSampleRefModal: React.FC<EducationSampleRefModalProps> = (props) => {

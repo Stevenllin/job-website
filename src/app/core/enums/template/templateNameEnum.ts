@@ -1,4 +1,4 @@
-export enum TemplateName {
+export enum TemplateNameEnum {
   Cascade = 'Cascade',
   Cubic = 'Cubic',
 }

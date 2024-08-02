@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import apiServices from '../../../api/services/apiServices';
-import { ROUTES } from '../../../core/enums/routerPath';
+import { ROUTES } from '../../../core/enums/router';
 import { useNavigate } from 'react-router-dom';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { Button, Form, Input, Row, Col, Select } from 'antd';

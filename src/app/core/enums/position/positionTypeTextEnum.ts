@@ -1,7 +1,7 @@
 /**
- * @description 定義 Skills 類型
+ * @description 定義 Position 類型
  */
-export enum SkillsTypeTextEnum {
+export enum PositionTypeTextEnum {
   ALL = 'All',
   SOFTWARE_ENGINEER = 'Software Engineer',
   DESIGNER = 'Designer',

@@ -2,8 +2,7 @@ import React from 'react';
 import { CheckItemProps } from './types';
 import { FaSquarePlus } from "react-icons/fa6";
 import { FaCheckSquare } from "react-icons/fa";
-import { IconSizeEnum } from '../../../core/enums/iconSize';
-
+import { IconSizeEnum } from '../../../core/enums/icon';
 
 const CheckItem: React.FC<CheckItemProps> = (props) => {
   return (
@@ -16,7 +15,7 @@ const CheckItem: React.FC<CheckItemProps> = (props) => {
       }
       <div>
         <p className="fs-2 fw-dark">{props.name}</p>
-        <span className="fs-1">{props.type}</span>
+        <span className="fs-1">{props?.type}</span>
       </div>
     </div>
   )

@@ -43,7 +43,7 @@ const TextEditer = forwardRef<TextEditorHandle, TextEditerProps>((props, ref) =>
   }, [quill])
 
   return (
-    <div style={{ width: '100%', height: '100%' }} className="text-editer-container">
+    <div style={{ width: '100%', height: '95%' }} className="text-editer-container">
       <div ref={quillRef} />
     </div>
   )

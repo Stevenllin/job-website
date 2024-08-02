@@ -20,7 +20,7 @@ import { IoDocument } from "react-icons/io5";
 import { SearchOutlined } from '@ant-design/icons';
 import { RiSearchLine } from "react-icons/ri";
 import { FaUser, FaCity, FaChartSimple } from "react-icons/fa6";
-import { IconSizeEnum } from '../../core/enums/iconSize';
+import { IconSizeEnum } from '../../core/enums/icon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { ArrowRightOutlined } from '@ant-design/icons';

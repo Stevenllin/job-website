@@ -1,4 +1,4 @@
-import { ModalNameEnum } from "../../core/enums/modalName";
+import { ModalNameEnum } from "../../core/enums/modal";
 import { UIActions, UI_MODALS__SET_MODAL_VISIBLE } from "./types";
 
 /** 

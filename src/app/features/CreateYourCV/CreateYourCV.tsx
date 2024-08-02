@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import CreateYourCVRoutes from './CreateYourCVRoutes';
 import ProgressBar from '../../common/components/CompoundComponent/ProgressBar';
 import { ProcessStepTextEnum, ProcessRouteMatchesStep, ProcessStepCodesEnum } from './types';
-import { ROUTES } from '../../core/enums/routerPath';
+import { ROUTES } from '../../core/enums/router';
 
 const CreateYourCV: React.FC = () => {
   const routerLocation = useLocation();

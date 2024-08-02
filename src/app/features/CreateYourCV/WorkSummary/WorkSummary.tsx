@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ROUTES } from '../../../core/enums/routerPath';
+import { ROUTES } from '../../../core/enums/router';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { useNavigate } from 'react-router-dom';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
@@ -11,7 +11,7 @@ import { ProcessStepTextEnum } from '../types';
 import { WorkHistory } from './types';
 import { FaTrash } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
-import { IconSizeEnum } from '../../../core/enums/iconSize'
+import { IconSizeEnum } from '../../../core/enums/icon'
 import commonService from '../../../core/services/commonService';
 
 const WorkSummary: React.FC = () => {

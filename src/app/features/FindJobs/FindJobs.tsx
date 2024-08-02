@@ -2,7 +2,7 @@ import React from 'react'
 import { GoLocation } from "react-icons/go";
 import { RiSearchLine } from "react-icons/ri";
 import { BiSolidCategory } from "react-icons/bi";
-import { IconSizeEnum } from '../../core/enums/iconSize';
+import { IconSizeEnum } from '../../core/enums/icon';
 import { Slider, Col, Row, Select } from 'antd';
 
 const FindJobs: React.FC = () => {

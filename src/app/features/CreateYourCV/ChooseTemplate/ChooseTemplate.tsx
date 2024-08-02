@@ -4,8 +4,8 @@ import Template1 from '../../../../assets/image/template1.png';
 import Template2 from '../../../../assets/image/template2.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation} from 'swiper/modules';
-import { ROUTES } from '../../../core/enums/routerPath';
-import { TemplateName } from '../../../core/enums/templateName';
+import { ROUTES } from '../../../core/enums/router';
+import { TemplateNameEnum } from '../../../core/enums/template';
 import { useNavigate } from 'react-router-dom';
 import storageService from '../../../core/services/storageService';
 import { ProcessStepTextEnum } from '../types';
@@ -18,7 +18,7 @@ const ChooseTemplate: React.FC = () => {
    * 
    * @param template template 名稱
    */
-  const handleChooseTemplate = (template: TemplateName) => {
+  const handleChooseTemplate = (template: TemplateNameEnum) => {
     /** 取得緩存 */
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 更新緩存 */
@@ -45,18 +45,18 @@ const ChooseTemplate: React.FC = () => {
         >
           <SwiperSlide className="p-relative">
             <div className="template-container">
-              <img src={Template1} onClick={() => handleChooseTemplate(TemplateName.Cascade)}></img>
+              <img src={Template1} onClick={() => handleChooseTemplate(TemplateNameEnum.Cascade)}></img>
               <div className="text">
-                <h4 className="fs-4">{TemplateName.Cascade}</h4>
+                <h4 className="fs-4">{TemplateNameEnum.Cascade}</h4>
                 <p className="text-center">Professional CV template. Neatly aligned no matter the word count.</p>
               </div>
             </div>
           </SwiperSlide>
           <SwiperSlide className="p-relative">
             <div className="template-container">
-              <img src={Template2} onClick={() => handleChooseTemplate(TemplateName.Cubic)}></img>
+              <img src={Template2} onClick={() => handleChooseTemplate(TemplateNameEnum.Cubic)}></img>
               <div className="text">
-                <h4 className="fs-4">{TemplateName.Cubic}</h4>
+                <h4 className="fs-4">{TemplateNameEnum.Cubic}</h4>
                 <p className="text-center">Perfect CV template. Ideal readability for the densest of CVs.</p>
               </div>
             </div>

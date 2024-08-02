@@ -1,4 +1,4 @@
-import { ROUTES } from "../../core/enums/routerPath";
+import { ROUTES } from "../../core/enums/router";
 
 /**
  * @description 流程步驟代碼

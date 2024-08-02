@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ROUTES } from '../../core/enums/routerPath';
+import { ROUTES } from '../../core/enums/router';
 import ChooseTemplate from './ChooseTemplate';
 import GeneralInfo from './GeneralInfo';
 import WorkHistory from './WorkHistory';

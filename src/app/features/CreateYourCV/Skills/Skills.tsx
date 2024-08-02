@@ -4,17 +4,15 @@ import { Select, Input, Form, Button, Rate, Row, Col } from 'antd';
 import { PlusOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { SkillsDefines, SkillsTypeDefines, Skill, InputType } from './types';
-import { FaSquarePlus } from "react-icons/fa6";
-import { FaCheckSquare } from "react-icons/fa";
-import { IconSizeEnum } from '../../../core/enums/iconSize';
 import { useNavigate } from 'react-router-dom';
-import { SkillsTypeCodeEnum } from '../../../core/enums/skills';
-import { ROUTES } from '../../../core/enums/routerPath';
+import { PositionTypeCodeEnum } from '../../../core/enums/position';
+import { ROUTES } from '../../../core/enums/router';
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextEnum } from '../types';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 import CheckItem from '../../../common/components/CheckItem';
+import { Coursework } from '../Education/types';
 
 const Skills: React.FC = () => {
   const [form] = Form.useForm();
@@ -28,7 +26,7 @@ const Skills: React.FC = () => {
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
   const skillsCache = cache[ProcessStepTextEnum.Skills] ?? {};
   
-  const handleChangeForm = (val: any, all: any) => {
+  const handleChangeForm = (_: any, all: any) => {
     /** 更新緩存 */
     updateFormCache(all)
   }
@@ -83,7 +81,7 @@ const Skills: React.FC = () => {
    * @param val 選擇得 Skill
    */
   const handleChangeOptions = (val: number) => {
-    if (val === SkillsTypeCodeEnum.ALL) setSkills(updatedSkillsDefines)
+    if (val === PositionTypeCodeEnum.ALL) setSkills(updatedSkillsDefines)
     else {
       const updated = updatedSkillsDefines.filter(item => item.typeCode === val);
       setSkills(updated)
@@ -101,7 +99,7 @@ const Skills: React.FC = () => {
    * @description 提供使用者點選 Skill
    * @param item Skill 物件
    */
-  const handleCheck = (item: Skill) => {
+  const handleCheck = (item: Skill | Coursework) => {
     /** 1. 更新 SkillsDefines */
     const updated = updatedSkillsDefines.map((skill: Skill) => {
       if (skill.id === item.id) return { ...skill, checked: !skill.checked }
@@ -138,7 +136,7 @@ const Skills: React.FC = () => {
     }
   }
 
-  const updateCache = (key: keyof typeof ProcessStepTextEnum, updateCallback: (updated: any) => void) => {
+  const updateCache = (_: keyof typeof ProcessStepTextEnum, updateCallback: (updated: any) => void) => {
     const updated = { ...cache };
     updateCallback(updated);
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));

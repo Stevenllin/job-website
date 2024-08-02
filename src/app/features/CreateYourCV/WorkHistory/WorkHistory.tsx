@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ROUTES } from '../../../core/enums/routerPath';
+import { ROUTES } from '../../../core/enums/router';
 import { useNavigate, useLocation } from 'react-router-dom';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { Button, Form, Input, Row, Col, Checkbox, DatePicker } from 'antd';

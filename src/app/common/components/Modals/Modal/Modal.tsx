@@ -3,7 +3,7 @@ import { setModalVisibleAction } from '../../../../store/ui/actions';
 import { ModalProps } from './types';
 import useAppDispatch from '../../../../core/hooks/useAppDispatch';
 import { IoCloseOutline } from "react-icons/io5";
-import { IconSizeEnum } from '../../../../core/enums/iconSize';
+import { IconSizeEnum } from '../../../../core/enums/icon';
 
 const Modal: React.FC<ModalProps> = (props) => {
   const modalElemRef = useRef<HTMLDivElement>(null);

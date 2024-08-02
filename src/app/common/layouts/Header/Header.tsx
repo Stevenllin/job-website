@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { IoIosCube } from "react-icons/io";
 import { Button, Flex } from 'antd';
 import useCheckHomePage from '../../../core/hooks/useCheckHomePage';
-import { ROUTES } from '../../../core/enums/routerPath';
+import { ROUTES } from '../../../core/enums/router';
 
 const Header: React.FC = () => {
   const isHomePage = useCheckHomePage();

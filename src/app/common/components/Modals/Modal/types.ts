@@ -1,4 +1,4 @@
-import { ModalNameEnum } from "../../../../core/enums/modalName";
+import { ModalNameEnum } from "../../../../core/enums/modal";
 
 export interface ModalProps {
   name: ModalNameEnum;
