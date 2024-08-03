@@ -73,6 +73,7 @@ const GeneralInfo: React.FC = () => {
       const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...info, errors }}
       storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     }
+    console.log('histories', histories);
     /** 無論驗證失敗都會轉導 */
     if (histories && histories.length > 0) {
       /** 至 Work Summary */

@@ -32,8 +32,10 @@
   > .ant-collapse-content-box {
   padding: 0px 8px;
 }
+
 .ant-collapse {
   & > .ant-collapse-item > .ant-collapse-header {
-    padding: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
   }
 }

@@ -39,4 +39,9 @@
 @import "./common/layouts/TemplateBackground/template-background";
 /** 共用 Modal 引用 */
 @import "./common/components/Modal/modal";
+/** 共用 Checklist 引用 */
 @import "./common/components/CheckItem/check-item";
+/** Finalize 引用 */
+@import "./features/CreateYourCV/finalize";
+/** 共用 Edit Template 引用 */
+@import "./common/components/EditTemplate/edit-template";

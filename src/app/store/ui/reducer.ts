@@ -8,7 +8,8 @@ const initialState: UIState = {
   spinners: {},
   modals: {
     previewTemplateVisible: false,
-    educationSampleRefVisible: false
+    educationSampleRefVisible: false,
+    commonVisible: false
   }
 }
 

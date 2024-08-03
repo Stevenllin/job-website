@@ -4,6 +4,7 @@ import { ModalProps } from './types';
 import useAppDispatch from '../../../../core/hooks/useAppDispatch';
 import { IoCloseOutline } from "react-icons/io5";
 import { IconSizeEnum } from '../../../../core/enums/icon';
+import { Button } from 'antd';
 
 const Modal: React.FC<ModalProps> = (props) => {
   const modalElemRef = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const Modal: React.FC<ModalProps> = (props) => {
    * @description 處理確認
    */
   const handleConfirm = () => {
-    if (props.onConfirm) props.onConfirm;
+    if (props.onConfirm) props.onConfirm();
     handleClose();
   }
 
@@ -45,8 +46,6 @@ const Modal: React.FC<ModalProps> = (props) => {
             <div className="modal-header">
               <h4 className="modal-title">{props.title}</h4>
               <IoCloseOutline className="btn-close" style={{ 'fontSize': IconSizeEnum.Large }} onClick={handleClose} />
-
-              {/* <button type="button" className="btn-close" ></button> */}
             </div>
             {/** Modal Body Children */}
             <div className="modal-body">
@@ -55,14 +54,14 @@ const Modal: React.FC<ModalProps> = (props) => {
             {/** Modal Footer */}
             <div className="modal-footer">
               {props.cancelBtnText && (
-                <button className="" onClick={handleClose}>
+                <Button type="primary" className="cancel" onClick={handleClose}>
                   {props.cancelBtnText}
-                </button>
+                </Button>
               )}
               {props.confirmBtnText && (
-                <button className="" onClick={handleConfirm}>
+                <Button type="primary" className="confirm" onClick={handleConfirm}>
                   {props.confirmBtnText}
-                </button>
+                </Button>
               )}
             </div>
           </div>

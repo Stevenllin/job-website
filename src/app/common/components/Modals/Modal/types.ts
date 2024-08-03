@@ -2,7 +2,7 @@ import { ModalNameEnum } from "../../../../core/enums/modal";
 
 export interface ModalProps {
   name: ModalNameEnum;
-  title: string;
+  title: string | any;
   children: any;
   className?: string;
   visible: boolean;

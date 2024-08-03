@@ -21,9 +21,6 @@ const Item: React.FC<ItemProps> = (props) => {
   } else if (data?.errors) {
     errors = true
   }
-  console.log('data', data);
-  console.log('errors', errors);
-
 
   const handleRedirect = () => {
     navigate(props.url)

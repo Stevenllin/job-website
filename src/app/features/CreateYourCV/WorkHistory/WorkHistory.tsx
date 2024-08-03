@@ -35,7 +35,7 @@ const WorkHistory: React.FC = () => {
     const history = cache[ProcessStepTextEnum.WorkHistory] ? state?.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : {};
     /** 待優化：若從 edit 過來，編輯完後 refresh 頁面，緩存成功，但一直用 state.data 顯示編輯前的資料 是否需要用 redux 暫存最新的資料 */
     const updatedHistory = Array.isArray(history) ? state?.isCreateNewMode ? {} : history[0] : history
-    console.log('updatedHistory', updatedHistory);
+
     const updated = {
       ...updatedHistory,
       start_date: updatedHistory && updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date), 'YYYY-MM'),
@@ -76,7 +76,9 @@ const WorkHistory: React.FC = () => {
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 取得最新的 */
     /** 這裡出了問題，如果都不輸入任何值時，會是空陣列 */
-    let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [];
+    let work_history = cache[ProcessStepTextEnum.WorkHistory] ?? [
+      { id: selectedId.current }
+    ];
     const updated = { ...cache };
 
     try {

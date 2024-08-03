@@ -5,5 +5,7 @@ export enum ModalNameEnum {
   /** Preview Template */
   PreviewTemplate = 'previewTemplate',
   /** Education Sample Ref */
-  EducationSampleRef = 'educationSampleRef'
+  EducationSampleRef = 'educationSampleRef',
+  /** Common */
+  Common = 'common'
 }
