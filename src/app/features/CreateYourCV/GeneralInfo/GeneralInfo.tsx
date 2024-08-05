@@ -30,7 +30,11 @@ const GeneralInfo: React.FC = () => {
    */
   useEffect(() => {
     /** 設定 form */
-    form.setFieldsValue(info)
+    form.setFieldsValue(info);
+    /** 若有錯誤，顯示錯誤欄位 */
+    if (info?.errors && info?.errors.length > 0) {
+      form.validateFields();
+    }
   }, [])
   
   /**

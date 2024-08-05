@@ -1,0 +1,30 @@
+/** 
+ * @description ColorPicker 中的顏色
+ */
+export enum ColorPickerEnum {
+  Grey = '#7d7d7d',
+  Navy = '#102a73',
+  Purple = '#7d47b2',
+  Blue = '#2b98de',
+  LightGreen = '#00bca3',
+  Green = '#075700',
+  Red = '#9b3016',
+  Orange = '#f98c79',
+  Yellow = '#facd05',
+  Pink = '#ff69b4',
+  Cyan = '#00ffff',
+  Magenta = '#ff00ff',
+  LightBlue = '#add8e6',
+  DarkGreen = '#006400',
+  LightYellow = '#ffffe0',
+  Brown = '#a52a2a',
+  Maroon = '#800000',
+  Olive = '#808000',
+  Lime = '#00ff00',
+  Teal = '#008080',
+  Indigo = '#4b0082',
+  Violet = '#ee82ee',
+  Gold = '#ffd700',
+  Silver = '#c0c0c0',
+  Beige = '#f5f5dc',
+}

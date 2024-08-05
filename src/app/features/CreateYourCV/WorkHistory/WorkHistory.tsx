@@ -42,7 +42,11 @@ const WorkHistory: React.FC = () => {
       end_date: updatedHistory && updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date), 'YYYY-MM'),
     }
     /** 設定 form */
-    form.setFieldsValue(updated)
+    form.setFieldsValue(updated);
+    /** 若有錯誤，顯示錯誤欄位 */
+    if (updatedHistory?.errors && updatedHistory?.errors.length > 0) {
+      form.validateFields();
+    }
   }, [])
 
   /**
@@ -91,16 +95,12 @@ const WorkHistory: React.FC = () => {
     } catch (error: any) {
       const { errorFields } = error;
       const errors = errorFields.map((field: any) => (field.name[0]))
-      console.log('errors', errors);
 
       work_history = work_history.map((item: any) => {
-        console.log('item', item);
-        console.log('selectedId', selectedId.current);
         if (item.id === selectedId.current) return { ...item, errors }
         return item;
       })
     }
-    console.log('work_history', work_history);
     updated[ProcessStepTextEnum.WorkHistory] = work_history;
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     /** 至 Work Summary */

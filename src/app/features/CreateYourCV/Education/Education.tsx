@@ -47,6 +47,10 @@ const Education: React.FC = () => {
     form.setFieldsValue(education)
     /** 將緩存的 options 更新 CheckItem */
     if (education?.options) setUpdatedCourseworkDefines(education.options);
+    /** 若有錯誤，顯示錯誤欄位 */
+    if (education?.errors && education?.errors.length > 0) {
+      form.validateFields();
+    }
   }, [])
 
   /** 

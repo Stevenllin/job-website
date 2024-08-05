@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/types';
-import { Button, Row, Col } from 'antd';
+import { Row, Col, Slider, Select } from 'antd';
 import Collapse from "antd/lib/collapse";
 import type { CollapseProps } from 'antd';
 import { IconSizeEnum } from '../../../core/enums/icon';
@@ -18,12 +18,90 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextMatchesCodes, ProcessRouteMatchesStep, ProcessStepTextEnum } from '../types';
 import { useNavigate } from 'react-router-dom';
+import ColorPicker from '../../../common/components/Form/ColorPicker';
+import { ColorPickerEnum } from '../../../core/enums/color';
+import { TemplateStyle } from './types';
+import { FaFont } from "react-icons/fa";
+
+const fontOptions = [
+  { value: 'Arial', label: 'Arial' },
+  { value: 'Helvetica', label: 'Helvetica' },
+  { value: 'Times New Roman', label: 'Times New Roman' },
+  { value: 'Courier New', label: 'Courier New' },
+  { value: 'Verdana', label: 'Verdana' },
+  { value: 'Georgia', label: 'Georgia' },
+  { value: 'Palatino', label: 'Palatino' },
+  { value: 'Garamond', label: 'Garamond' },
+  { value: 'Comic Sans MS', label: 'Comic Sans MS' },
+  { value: 'Trebuchet MS', label: 'Trebuchet MS' },
+  { value: 'Arial Black', label: 'Arial Black' },
+  { value: 'Impact', label: 'Impact' },
+  { value: 'Tahoma', label: 'Tahoma' },
+  { value: 'Lucida Sans Unicode', label: 'Lucida Sans Unicode' },
+  { value: 'Times', label: 'Times' },
+  { value: 'Courier', label: 'Courier' },
+  { value: 'Lucida Console', label: 'Lucida Console' },
+  { value: 'Monaco', label: 'Monaco' },
+  { value: 'Brush Script MT', label: 'Brush Script MT' },
+  { value: 'Segoe UI', label: 'Segoe UI' },
+];
 
 const Finalize: React.FC = () => {
   const navigate = useNavigate()
   const reduxDispatch = useAppDispatch();
   /** 取得 Modal 狀態 */
   const modalsState = useSelector((state: RootState) => state.UI.modals);
+  /** Template Style */
+  const [templateStyle, setTemplateStyle] = useState<TemplateStyle>({
+    color: ColorPickerEnum.Beige,
+    fontSize: 'Normal',
+    fontStyle: '',
+    paragraphSpacing: 2,
+    lineSpacing: 2,
+  });
+  
+  /**
+   * 
+   * @param key 目標 Template 樣式
+   * @param value 樣式的 Value
+   */
+  const updateTemplateStyle = (key: keyof TemplateStyle, value: string | number) => {
+    setTemplateStyle(prev => ({ ...prev, [key]: value, }));
+  };
+  
+  const handleDisplayFormatting = () => {
+    return (
+      <div>
+        {/** Font Size */}
+        <div className="d-flex justify-between actions-container">
+          {['Small', 'Normal', 'Large'].map((size: string) => {
+            return (
+              <div key={size} className="actions-container--item" onClick={() => updateTemplateStyle('fontSize', size)}>
+                <FaFont style={{ 'fontSize': IconSizeEnum.Medium }} />
+                <p>{size}</p>
+              </div>
+            )
+          })}
+        </div>
+        {/** Font Style */}
+        <p>Font Style</p>
+        <Select
+          size="large"
+          placeholder="Please Select"
+          options={fontOptions}
+          className="w-100"
+          onChange={(val) => updateTemplateStyle('fontStyle', val)}
+        >
+        </Select>
+        {/** Paragraph Spacing */}
+        <p>Paragraph Spacing</p>
+        <Slider min={2} max={24} onChange={(val) => updateTemplateStyle('paragraphSpacing', val)} />
+        {/** Line Spacing */}
+        <p>Line Spacing</p>
+        <Slider min={2} max={24} onChange={(val) => updateTemplateStyle('lineSpacing', val)} />
+      </div>
+    )
+  }
   
   const items: CollapseProps['items'] = [
     {
@@ -34,12 +112,12 @@ const Finalize: React.FC = () => {
     {
       key: '2',
       label: 'Template & Color',
-      children: <p>1</p>,
+      children: <ColorPicker onChange={(val) => updateTemplateStyle('color', val)} />,
     },
     {
       key: '3',
       label: 'Formatting Tools',
-      children: <p>1</p>,
+      children: handleDisplayFormatting(),
     },
     {
       key: '4',
