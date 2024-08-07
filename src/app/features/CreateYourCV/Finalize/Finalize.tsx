@@ -59,6 +59,22 @@ const Finalize: React.FC = () => {
     paragraphSpacing: 2,
     lineSpacing: 2,
   });
+  /** 取得緩存 */
+  const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+  const finalize = cache[ProcessStepTextEnum.Finalize];
+
+  /** 
+   * @description 載入緩存
+   */
+  useEffect(() => {
+    /** 設定 form */
+    setTemplateStyle(finalize);
+  }, [])
+
+  useEffect(() => {
+    const updated = { ...cache, [ProcessStepTextEnum.Finalize]: templateStyle };
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+  }, [templateStyle])
   
   /**
    * 
@@ -76,7 +92,7 @@ const Finalize: React.FC = () => {
         <div className="d-flex justify-between actions-container">
           {['Small', 'Normal', 'Large'].map((size: string) => {
             return (
-              <div key={size} className="actions-container--item" onClick={() => updateTemplateStyle('fontSize', size)}>
+              <div key={size} className={'actions-container--item' + (templateStyle.fontSize === size ? ' selected' : '')} onClick={() => updateTemplateStyle('fontSize', size)}>
                 <FaFont style={{ 'fontSize': IconSizeEnum.Medium }} />
                 <p>{size}</p>
               </div>
@@ -90,15 +106,16 @@ const Finalize: React.FC = () => {
           placeholder="Please Select"
           options={fontOptions}
           className="w-100"
+          defaultValue={templateStyle.fontStyle}
           onChange={(val) => updateTemplateStyle('fontStyle', val)}
         >
         </Select>
         {/** Paragraph Spacing */}
         <p>Paragraph Spacing</p>
-        <Slider min={2} max={24} onChange={(val) => updateTemplateStyle('paragraphSpacing', val)} />
+        <Slider min={8} max={24} defaultValue={templateStyle.paragraphSpacing} onChange={(val) => updateTemplateStyle('paragraphSpacing', val)} />
         {/** Line Spacing */}
         <p>Line Spacing</p>
-        <Slider min={2} max={24} onChange={(val) => updateTemplateStyle('lineSpacing', val)} />
+        <Slider min={8} max={24} defaultValue={templateStyle.lineSpacing} onChange={(val) => updateTemplateStyle('lineSpacing', val)} />
       </div>
     )
   }
@@ -107,12 +124,12 @@ const Finalize: React.FC = () => {
     {
       key: '1',
       label: 'Spell Check',
-      children: <p>1</p>,
+      children: <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>,
     },
     {
       key: '2',
       label: 'Template & Color',
-      children: <ColorPicker onChange={(val) => updateTemplateStyle('color', val)} />,
+      children: <ColorPicker onChange={(val) => updateTemplateStyle('color', val)} selected={templateStyle.color} />,
     },
     {
       key: '3',

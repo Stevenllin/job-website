@@ -16,7 +16,7 @@ const ColorPicker: React.FC<ColorTemplateProps> = (props) => {
           <label key={index} className="radio">
             <input type="radio" name="color" value={color} onChange={() => handleChange(color)} />
             <span
-              className="checkmark"
+              className={`checkmark${props.selected === color ? ' selected' : ''}`}
               style={{ backgroundColor: color }}
             ></span>
           </label>

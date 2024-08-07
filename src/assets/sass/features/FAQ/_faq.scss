@@ -1,5 +1,6 @@
 #faq {
   background-color: $whitesmoke;
+
   #banner {
     padding: 2.5% 10%;
     background-color: $dark-blue;
@@ -8,11 +9,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     h1 {
       margin-top: 0px;
       margin-bottom: 16px;
       color: #ffffff;
     }
+
     .search-container {
       width: 60%;
       position: relative;
@@ -34,5 +37,9 @@
   }
   #article {
     padding: 2.5% 5%;
+
+    h2 {
+      margin: 0px;
+    }
   }
 }

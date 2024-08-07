@@ -18,7 +18,7 @@ const Faqs: React.FC = () => {
         </div>
       </section>
       <section id="article">
-        <h2>Featured support Articles</h2>
+        <h2 className="ma-0">Featured support Articles</h2>
         {/** Expand? */}
       </section>
     </div>

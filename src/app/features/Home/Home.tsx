@@ -14,6 +14,7 @@ import Background from '../../../assets/image/background1.jpeg';
 import Laptop from '../../../assets/image/laptop.jpeg';
 import Pic from '../../../assets/image/pic.png';
 import Shape from '../../../assets/image/shape.png';
+import Other from '../../../assets/image/other.jpeg';
 import { Button, Col, Row, Input, Select } from 'antd';
 import { MdSupervisorAccount, MdOutlineWork, MdFeedback } from "react-icons/md";
 import { IoDocument } from "react-icons/io5";
@@ -77,9 +78,9 @@ const Home: React.FC = () => {
       </section>
 
       {/** Step 區塊 */}
-      <section id="step">
-        <h2 className="text-center">Easy 3 steps to New Capabilities</h2>
-        <p className="text-center fs-4">Achieve Greater Capabilities with Minimal Effort and Maximum Impact</p>
+      <section id="step" className="text-center">
+        <h2>Easy 3 steps to New Capabilities</h2>
+        <p className="fs-4">Achieve Greater Capabilities with Minimal Effort and Maximum Impact</p>
         <Row gutter={32} className="mt-5">
           <Col span="8">
             <div className="step-container">
@@ -329,9 +330,14 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      <div style={{ height: '20vh', background: 'linear-gradient(to bottom, whitesmoke, #ebf6ff)' }}></div>
       {/** Footer 區塊 */}
-      <section id="footer">
+      
+      <section id="other">
+        <img src={Other} />
       </section>
+      {/* <div style={{ height: '40vh', background: '#012643' }}></div> */}
+
     </div>
   )
 }

@@ -33,6 +33,18 @@
       &:hover {
         border: 2px solid $blue;
       }
+
+      &.selected {
+        border: 2px solid $blue;
+
+        svg {
+          fill: $blue;
+        }
+
+        p {
+          color: $blue;
+        }
+      }
     }
   }
 }

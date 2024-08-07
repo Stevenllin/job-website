@@ -3,6 +3,8 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { PreviewTemplateProps } from './types';
 import previewTemplateService from '../../../core/services/previewTemplateService'; 
+import { ProcessStepTextEnum } from '../../../features/CreateYourCV/types';
+import { TemplateNameEnum } from '../../../core/enums/template';
 
 const PreviewTemplate: React.FC<PreviewTemplateProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -18,8 +20,20 @@ const PreviewTemplate: React.FC<PreviewTemplateProps> = (props) => {
     if (canvas) {
       const context = canvas.getContext('2d');
       if (context) {
-        template ? previewTemplateService.previewTemplate(canvas, context, template)
-          : previewTemplateService.previewTemplate(canvas, context, cache);
+        let target = template ? template : JSON.parse(cache);
+
+        const cvTemplate: TemplateNameEnum = target[ProcessStepTextEnum.ChooseTemplate];
+        const drawCascadeTemplate = previewTemplateService.previewTemplate(canvas, context);
+        switch (cvTemplate) {
+          case TemplateNameEnum.Cascade: {
+            drawCascadeTemplate(() => previewTemplateService.handleCascadeTemplate(context, target), target);
+            break;
+          }
+          case TemplateNameEnum.Cubic: {
+            drawCascadeTemplate(() => previewTemplateService.handleCubicTemplate(context, target), target);
+            break;
+          }
+        }
       }
     }
   }, [cache])

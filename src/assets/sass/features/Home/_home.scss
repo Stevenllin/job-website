@@ -325,8 +325,21 @@
     }
   }
 
-  #footer {
-    height: 30vh;
-    background: linear-gradient(to bottom, $whitesmoke, $light-blue);
+  #other {
+    height: 50vh;
+    background-color: #22435f;
+    overflow: hidden;
+    position: relative; /* 使子元素的绝对定位相对于此容器 */
+
+    & img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 确保图片覆盖容器并保持图片的宽高比 */
+      opacity: 0.1; /* 设置图片的透明度 */
+    }
   }
 }
