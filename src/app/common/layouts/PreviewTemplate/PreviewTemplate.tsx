@@ -23,14 +23,16 @@ const PreviewTemplate: React.FC<PreviewTemplateProps> = (props) => {
         let target = template ? template : JSON.parse(cache);
 
         const cvTemplate: TemplateNameEnum = target[ProcessStepTextEnum.ChooseTemplate];
-        const drawCascadeTemplate = previewTemplateService.previewTemplate(canvas, context);
+        const canvasDistance = previewTemplateService.CanvasDistance.getInstance();
+        const canvasService = previewTemplateService.createCanvasService(canvas, context, target, canvasDistance);
+        const drawCascadeTemplate = canvasService.previewTemplate();
         switch (cvTemplate) {
           case TemplateNameEnum.Cascade: {
-            drawCascadeTemplate(() => previewTemplateService.handleCascadeTemplate(context, target), target);
+            drawCascadeTemplate(() => canvasService.handleCascadeTemplate());
             break;
           }
           case TemplateNameEnum.Cubic: {
-            drawCascadeTemplate(() => previewTemplateService.handleCubicTemplate(context, target), target);
+            drawCascadeTemplate(() => canvasService.handleCubicTemplate());
             break;
           }
         }
