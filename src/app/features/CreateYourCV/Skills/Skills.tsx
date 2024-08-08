@@ -13,6 +13,7 @@ import { ProcessStepTextEnum } from '../types';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 import CheckItem from '../../../common/components/CheckItem';
 import { Coursework } from '../Education/types';
+import commonService from '../../../core/services/commonService';
 
 const Skills: React.FC = () => {
   const [form] = Form.useForm();
@@ -25,6 +26,8 @@ const Skills: React.FC = () => {
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
   const skillsCache = cache[ProcessStepTextEnum.Skills] ?? {};
+  /** 為了更新 Preview Template */
+  const [template, setTemplate] = useState(cache);
   
   const handleChangeForm = (_: any, all: any) => {
     /** 更新緩存 */
@@ -39,21 +42,7 @@ const Skills: React.FC = () => {
       /** 更新 Form 表單 */
       form.setFieldsValue(skillsCache.formValue);
       /** 更新 UI Inputs 畫面 */
-      const result: InputType[] = [];
-      Object.entries(skillsCache.formValue).forEach((item: any) => {
-        const [key, value] = item;
-        /** 取得 id */
-        const [input, id] = key.split('_');
-  
-        let entry = result.find(obj => obj.id === id);
-        if (!entry) {
-          /** 若不存在，則 push 一筆資料 */
-          entry = { id, input: '', rate: 0 };
-          result.push(entry);
-        }
-  
-        entry[input] = value;
-      })
+      const result: InputType[] = commonService.handleAddressSkillsData(skillsCache.formValue);
       setInputs(result)
     }
     if (skillsCache.options) {
@@ -140,6 +129,7 @@ const Skills: React.FC = () => {
     const updated = { ...cache };
     updateCallback(updated);
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
   }
   
   /**
@@ -241,7 +231,7 @@ const Skills: React.FC = () => {
             </div>
             {/** Preview Template */}
             <div className="pa-2">
-              <PreviewTemplate />
+              <PreviewTemplate template={template} />
             </div>
           </div>
           {/** Submit Button */}

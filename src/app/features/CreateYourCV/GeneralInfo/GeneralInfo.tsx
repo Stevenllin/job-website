@@ -53,7 +53,7 @@ const GeneralInfo: React.FC = () => {
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
     /** 取得緩存 (這邊要取得最新的 info) */
     const info = cache[ProcessStepTextEnum.GeneralInfo];
-    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...all, errors: info?.errors } }    
+    const updated = { ...cache, [ProcessStepTextEnum.GeneralInfo]: { ...all, errors: info?.errors } }
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
     setTemplate(updated)
   };
