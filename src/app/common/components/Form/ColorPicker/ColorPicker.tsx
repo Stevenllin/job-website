@@ -13,13 +13,13 @@ const ColorPicker: React.FC<ColorTemplateProps> = (props) => {
       {/** 優化 UI */}
       {ColorPickerDefines.map((color, index) => {
         return (
-          <label key={index} className="radio">
-            <input type="radio" name="color" value={color} onChange={() => handleChange(color)} />
-            <span
-              className={`checkmark${props.selected === color ? ' selected' : ''}`}
-              style={{ backgroundColor: color }}
-            ></span>
-          </label>
+            <label key={index} className="radio">
+              <input type="radio" name="color" value={color} onChange={() => handleChange(color)} />
+              <span
+                className={`checkmark${props.selected === color ? ' selected' : ''}`}
+                style={{ backgroundColor: color }}
+              ></span>
+            </label>
         )
       })}
     </div>

@@ -1,6 +1,7 @@
 import { Rule, RuleObject } from 'antd/lib/form';
 import { StoreValue } from 'antd/lib/form/interface';
 import { FormInstance } from 'antd/lib/form/Form';
+import dayjs from 'dayjs';
 
 /** 策略模式 */
 

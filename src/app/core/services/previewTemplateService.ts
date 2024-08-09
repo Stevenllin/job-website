@@ -90,7 +90,6 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    */
   const previewTemplate = () => {
     return (handleTemplate: () => void) => {
-
       canvasDistance.resetDistances();
       /** 清除畫布 */
       context.clearRect(0, 0, 450, 550);
@@ -154,11 +153,9 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     }
 
     /** Right Side: Experience */
-    // drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
-    /** 設定右側的高度 */
-    // canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + style?.paragraphSpacing);
-    // drawText('Education', TemplateSideEnum.Right, 435);
-    // drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
+    drawTitle('Experience', 2, TemplateSideEnum.Right)
+    /** Right Side: Education */
+    drawTitle('Education', 2, TemplateSideEnum.Right)
   }
 
   function drawPersonalInfo(title: string, str: string, side: TemplateSideEnum) {
@@ -260,6 +257,14 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
         drawText(str, side, 130);
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
+        break;
+      }
+      case 2: {
+        drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
+        /** 設定右側的高度 注意這邊要乘以 2 */
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 2 * style?.lineSpacing);
+        drawText(str, TemplateSideEnum.Right, 435);
+        drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
         break;
       }
     }

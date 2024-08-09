@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
-import { Form, Select, Input, Button, Row, Col } from 'antd';
+import { Form, Select, Input, Button, Row, Col, DatePicker } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { IconSizeEnum } from '../../../core/enums/icon';
@@ -12,7 +12,7 @@ import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 import useAppDispatch from '../../../core/hooks/useAppDispatch';
 import { setModalVisibleAction } from '../../../store/ui/actions';
 import { ModalNameEnum } from '../../../core/enums/modal';
-import { getRequiredRule } from '../../../core/services/validationService';
+import { getRequiredRule, getStartDateRule, getEndDateRule } from '../../../core/services/validationService';
 import TextEditer from '../../../common/components/TextEditer';
 import CheckItem from '../../../common/components/CheckItem';
 import { CourseworkDefines, Coursework } from '../Education/types';
@@ -24,6 +24,7 @@ import commonService from '../../../core/services/commonService';
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextEnum } from '../types';
+import dayjs from 'dayjs';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
@@ -44,7 +45,13 @@ const Education: React.FC = () => {
   */
   useEffect(() => {
     /** 設定 form */
-    form.setFieldsValue(education)
+    const updated = {
+      ...education,
+      start_date: education && education.start_date && dayjs(commonService.convertDateFormat(education.start_date), 'YYYY-MM'),
+      end_date: education && education.end_date && dayjs(commonService.convertDateFormat(education.end_date), 'YYYY-MM')
+    }
+    console.log('education', education);
+    form.setFieldsValue(updated)
     /** 將緩存的 options 更新 CheckItem */
     if (education?.options) setUpdatedCourseworkDefines(education.options);
     /** 若有錯誤，顯示錯誤欄位 */
@@ -270,6 +277,28 @@ const Education: React.FC = () => {
                       className="custom-input"
                       style={{ letterSpacing: '0.1rem' }}
                     />
+                  </Form.Item>
+                </Col>
+                {/** Start Date */}
+                <Col span="12">
+                  <Form.Item
+                    name="start_date"
+                    label="Start Date"
+                    layout="vertical"
+                    rules={getStartDateRule(true, form)}
+                  >
+                    <DatePicker format="YYYY/MM" picker="month"></DatePicker>
+                  </Form.Item>
+                </Col>
+                {/** End Date */}
+                <Col span="12">
+                  <Form.Item
+                    name="end_date"
+                    label="End Date"
+                    layout="vertical"
+                    rules={getEndDateRule(true, form)}
+                  >
+                    <DatePicker format="YYYY/MM" picker="month"></DatePicker>
                   </Form.Item>
                 </Col>
               </Row>
