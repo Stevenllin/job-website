@@ -3,9 +3,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Row, Col } from 'antd';
 import { TbTargetArrow } from "react-icons/tb";
 import { IconSizeEnum } from '../../core/enums/icon';
-import Faq1 from '../../../assets/image/faq1.jpeg';
-import Faq2 from '../../../assets/image/faq2.jpeg';
-import Faq3 from '../../../assets/image/faq3.jpeg';
 
 const Faqs: React.FC = () => {
   return (

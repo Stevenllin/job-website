@@ -1,4 +1,4 @@
-import Background from '../../../../assets/image/background.png';
+import { Background } from '../../../../assets/image/images';
 import { TemplateBackgroundProps } from './types';
 
 const TemplateBackground: React.FC<TemplateBackgroundProps> = ({ title, subtitle }) => {

@@ -1,26 +1,26 @@
 import React from 'react'
-import Banner from '../../../assets/image/Rectangle 2.png';
-import Business from '../../../assets/image/business1.jpeg';
-import Holder1 from '../../../assets/image/holder1.jpeg';
-import Holder2 from '../../../assets/image/holder2.jpeg';
-import Holder3 from '../../../assets/image/holder3.jpeg';
-import Holder4 from '../../../assets/image/holder4.png';
-import Holder5 from '../../../assets/image/holder5.jpeg';
-import Value1 from '../../../assets/image/value1.jpeg';
-import Value2 from '../../../assets/image/value2.jpeg';
-import Value3 from '../../../assets/image/value3.jpeg';
-import Value4 from '../../../assets/image/value4.jpeg';
-import Background from '../../../assets/image/background1.jpeg';
-import Laptop from '../../../assets/image/laptop.jpeg';
-import Pic from '../../../assets/image/pic.png';
-import Shape from '../../../assets/image/shape.png';
-import Other from '../../../assets/image/other.jpeg';
+import {
+  Rectangle2,
+  Business1,
+  Holder1,
+  Holder2,
+  Holder3,
+  Holder4,
+  Holder5,
+  Value1,
+  Value2,
+  Value3,
+  Laptop,
+  Pic,
+  Shape1,
+  Other,
+} from '../../../assets/image/images';
 import { Button, Col, Row, Input, Select } from 'antd';
 import { MdSupervisorAccount, MdOutlineWork, MdFeedback } from "react-icons/md";
 import { IoDocument } from "react-icons/io5";
 import { SearchOutlined } from '@ant-design/icons';
 import { RiSearchLine } from "react-icons/ri";
-import { FaUser, FaCity, FaChartSimple } from "react-icons/fa6";
+import { FaUser, FaCity } from "react-icons/fa6";
 import { IconSizeEnum } from '../../core/enums/icon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
@@ -69,12 +69,12 @@ const Home: React.FC = () => {
               </div>
               <div className="banner-image-container--2">
               </div>
-              <div className="banner-image-container--1" style={{ backgroundImage: `url(${Business})` }}>
+              <div className="banner-image-container--1" style={{ backgroundImage: `url(${Business1})` }}>
               </div>
             </Col>
           </Row>
         </div>
-        <img src={Banner}></img>
+        <img src={Rectangle2}></img>
       </section>
 
       {/** Step 區塊 */}
@@ -205,7 +205,7 @@ const Home: React.FC = () => {
             </Row>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Shape} width={350} style={{ top: '250px' }}></img>
+            <img src={Shape1} width={350} style={{ top: '250px' }}></img>
             <img src={Pic} width={350}></img>
 
           </SwiperSlide>
