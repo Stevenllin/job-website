@@ -1,6 +1,4 @@
 #faq {
-  background-color: $whitesmoke;
-
   #banner {
     padding: 2.5% 10%;
     background-color: $dark-blue;
@@ -36,10 +34,23 @@
     }
   }
   #article {
+    background-color: $whitesmoke;
+
     padding: 2.5% 5%;
 
     h2 {
       margin: 0px;
+    }
+  }
+
+  .faq-container {
+    padding: 0% 5% 5% 5%;
+    background: linear-gradient(to bottom, whitesmoke, #ebf6ff);
+
+    .text {
+      margin: 0 24px;
+      padding: 0 2rem;
+      border-left: 2px solid $blue;
     }
   }
 }
