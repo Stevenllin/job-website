@@ -29,7 +29,7 @@ const FindJobs: React.FC = () => {
             </Select>
           </Col>
           {/** Vertical Line */}
-          <Col span="1" className="d-flex justify-center">
+          <Col span="1" className="d-flex align-center justify-center">
             <div className="vl"></div>
           </Col>
           {/** Location */}
@@ -50,7 +50,7 @@ const FindJobs: React.FC = () => {
             </Select>
           </Col>
           {/** Vertical Line */}
-          <Col span="1" className="d-flex justify-center">
+          <Col span="1" className="d-flex align-center justify-center">
             <div className="vl"></div>
           </Col>
           {/** Category */}
@@ -71,7 +71,7 @@ const FindJobs: React.FC = () => {
             </Select>
           </Col>
           {/** Vertical Line */}
-          <Col span="1" className="d-flex justify-center">
+          <Col span="1" className="d-flex align-center justify-center">
             <div className="vl"></div>
           </Col>
           {/** Salary Range */}

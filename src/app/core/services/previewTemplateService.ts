@@ -90,6 +90,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    */
   const previewTemplate = () => {
     return (handleTemplate: () => void) => {
+
       canvasDistance.resetDistances();
       /** 清除畫布 */
       context.clearRect(0, 0, 450, 550);
@@ -127,7 +128,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       if (profession) drawText(profession, TemplateSideEnum.Left, 130);
       
       /** Personal Info */
-      drawTitle('Personal Info', 1);
+      drawTitle('Personal Info', 1, TemplateSideEnum.Left);
       if (email) drawPersonalInfo('Email', email, TemplateSideEnum.Left)
       if (phone) drawPersonalInfo('Phone', phone, TemplateSideEnum.Left)
       if (country || city) drawPersonalInfo('Location', `${city} ${country}`, TemplateSideEnum.Left)
@@ -136,20 +137,28 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     /** Skills */
     const Skills = template[ProcessStepTextEnum.Skills];
     if (Skills.formValue) {
-      drawTitle('Skills', 1);
+      drawTitle('Skills', 1, TemplateSideEnum.Left);
       const inputs: InputType[] = commonService.handleAddressSkillsData(Skills.formValue);
-      inputs.forEach(input => drawSkills(input))
+      inputs.forEach(input => drawSkills(input, TemplateSideEnum.Left))
     }
 
+    context.fillStyle = 'black'; 
+
     /** Right Side: Summary */
-    // console.log('template', template)
+    const Summary = template[ProcessStepTextEnum.Summary];
+    if (Summary) {
+      const doc: Document = commonService.convertInnerHTMLToDoc(Summary);
+      const content = doc.getElementsByTagName('body')[0];
+      /** 根據 HTML 繪圖 */
+      content.childNodes.forEach((item: ChildNode) => drawHTMLFormat(item, TemplateSideEnum.Right))
+    }
 
     /** Right Side: Experience */
-    drawLine('black', 0.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
+    // drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
     /** 設定右側的高度 */
-    canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + style?.paragraphSpacing);
-    drawText('Education', TemplateSideEnum.Right, 435);
-    drawLine('black', 0.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
+    // canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + style?.paragraphSpacing);
+    // drawText('Education', TemplateSideEnum.Right, 435);
+    // drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
   }
 
   function drawPersonalInfo(title: string, str: string, side: TemplateSideEnum) {
@@ -241,7 +250,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    * @param str 目標文字
    * @param type UI 類型
    */
-  function drawTitle(str: string, type: number) {
+  function drawTitle(str: string, type: number, side: TemplateSideEnum) {
     context.font = `12px ${style?.fontStyle}`;
     switch (type) {
       case 1: {
@@ -249,7 +258,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
         /** 繪製背影顏色，設置 Title */
         drawLine('black', 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
-        drawText(str, TemplateSideEnum.Left, 130);
+        drawText(str, side, 130);
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
         break;
       }
@@ -260,11 +269,67 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    * @description 目的是 SKills 上不同樣式的呈現
    * @param skills Skill 資料
    */
-  function drawSkills(skills: InputType) {
-    drawText(skills.input, TemplateSideEnum.Left, 130);
+  function drawSkills(skills: InputType, side: TemplateSideEnum) {
+    drawText(skills.input, side, 130);
     drawLine('black', 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
     drawLine('white', 5, { x: 6, y: canvasDistance.leftY }, { x: 124 * (skills.rate/5), y: canvasDistance.leftY })
     canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
+  }
+
+  function drawHTMLFormat(node: ChildNode, side: TemplateSideEnum) {
+    const element = node as HTMLElement;
+    switch (node.nodeName) {
+      case ('P'): {
+        /** 组合最终的 font 樣式 */
+        context.font = handleAddressFontStyle(element)
+        if (element.textContent?.trim()) drawText(element.textContent?.trim(), side, 438);
+        break;
+      }
+      case ('OL'): {
+        const listItems = element.querySelectorAll('li');
+        Array.from(listItems).forEach(li => {
+          /** 组合最终的 font 樣式 */
+          context.font = handleAddressFontStyle(li);
+          /** 劃圓 */
+          drawCircle(TemplateSideEnum.Right)
+
+          /** 增加 X 軸的距離 */
+          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 12, canvasDistance.leftY, canvasDistance.rightY);
+          if (li.textContent?.trim()) drawText(li.textContent?.trim(), side, 438)
+          /** 重置 X 軸的距離以及增加 Line Spacing */
+          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX - 12, canvasDistance.leftY, canvasDistance.rightY + style.lineSpacing);
+        })
+        break;
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param element 目標 Element
+   * @returns 
+   */
+  function handleAddressFontStyle(element: HTMLElement) {
+    const isStrong = element.querySelector('strong') !== null;
+    const isItalic = element.querySelector('em') !== null;
+    const fontWeight = isStrong ? 'bold' : 'normal';
+    const fontStyle = isItalic ? 'italic' : 'normal';
+
+    return `${fontStyle} ${fontWeight} 12px ${style.fontStyle}`;
+  }
+
+  /**
+   * @description 繪製圓點
+   */
+  function drawCircle(side: TemplateSideEnum) {
+    context.beginPath();
+    if (side === TemplateSideEnum.Left) {
+      context.arc(canvasDistance.leftX, canvasDistance.leftY - 5, 2, 0, 2 * Math.PI);
+    } else {
+      context.arc(canvasDistance.rightX, canvasDistance.rightY - 5, 2, 0, 2 * Math.PI);
+    }
+    context.fill();
+    context.closePath();
   }
 
   /** 
