@@ -50,7 +50,7 @@ const Education: React.FC = () => {
       start_date: education && education.start_date && dayjs(commonService.convertDateFormat(education.start_date), 'YYYY-MM'),
       end_date: education && education.end_date && dayjs(commonService.convertDateFormat(education.end_date), 'YYYY-MM')
     }
-    console.log('education', education);
+
     form.setFieldsValue(updated)
     /** 將緩存的 options 更新 CheckItem */
     if (education?.options) setUpdatedCourseworkDefines(education.options);
@@ -256,9 +256,9 @@ const Education: React.FC = () => {
                     <Select
                       placeholder="e.g. Select"
                       options={[
-                        { label: 'Bachelor', value: '1'},
-                        { label: 'Master', value: '2'},
-                        { label: 'PhD', value: '3'},
+                        { label: 'Bachelor', value: 'Bachelor'},
+                        { label: 'Master', value: 'Master'},
+                        { label: 'PhD', value: 'PhD'},
                       ]}
                     >
                     </Select>

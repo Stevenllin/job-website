@@ -30,8 +30,8 @@ const defaultStyle = {
   color: '#383d47',
   fontSize: 'Normal',
   fontStyle: 'Arial',
-  lineSpacing: 2,
-  paragraphSpacing: 2,
+  lineSpacing: 8,
+  paragraphSpacing: 8,
 }
 
 /** 
@@ -83,7 +83,13 @@ const CanvasDistance = (() => {
 
 const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, template: any, canvasDistance: CanvasDistance) => {
   /** 若沒有設置 Finalize 的 Style 則用默認 */
-  let style: Style = template ? template[ProcessStepTextEnum.Finalize] : defaultStyle;
+  const style: Style = {
+    color: template[ProcessStepTextEnum.Finalize]?.color || defaultStyle.color,
+    fontSize: template[ProcessStepTextEnum.Finalize]?.fontSize || defaultStyle.fontSize,
+    fontStyle: template[ProcessStepTextEnum.Finalize]?.fontStyle || defaultStyle.fontStyle,
+    lineSpacing: template[ProcessStepTextEnum.Finalize]?.lineSpacing || defaultStyle.lineSpacing,
+    paragraphSpacing: template[ProcessStepTextEnum.Finalize]?.paragraphSpacing || defaultStyle.paragraphSpacing,
+  };
 
   /**
    * @description 建立畫布長寬
@@ -106,12 +112,12 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    */
   function handleCascadeTemplate () {
     /** 左側背景顏色 */
-    context.fillStyle = style?.color ?? 'black';
+    context.fillStyle = style.color;
     context.fillRect(0, 0, 130, 565);
 
     /** 繪製名字 */
     context.fillStyle = 'white' ?? 'white';
-    context.font = `bold 18px ${style?.fontStyle}`;
+    context.font = `bold 18px ${style.fontStyle}`;
 
     /** Left Side: Heading */
     const Heading = template[ProcessStepTextEnum.GeneralInfo];
@@ -120,7 +126,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       /** First Name / LastName */
       const name = first_name || last_name ? `${first_name || ''} ${last_name || ''}`.trim() : '';
       drawText(name, TemplateSideEnum.Left, 130);
-      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
       
       /** Profession */
       context.font = `12px ${style.fontStyle}`;
@@ -153,9 +159,37 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     }
 
     /** Right Side: Experience */
-    drawTitle('Experience', 2, TemplateSideEnum.Right)
+    const WorkHistory = template[ProcessStepTextEnum.WorkHistory];
+    if (WorkHistory) {
+      drawTitle('Experience', 2, TemplateSideEnum.Right)
+      console.log();
+    }
+    
     /** Right Side: Education */
-    drawTitle('Education', 2, TemplateSideEnum.Right)
+    const Education = template[ProcessStepTextEnum.Education];
+    if (Education) {
+      drawTitle('Education', 2, TemplateSideEnum.Right);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 2 * style.lineSpacing);
+      const { degree, field, school_name, school_location, start_date, end_date, coursework } = Education;
+      const title = `${degree} in ${field}`
+      
+      context.font = `9px ${style.fontStyle}`;
+      drawText(`${commonService.convertDateFormat(start_date)} -`, TemplateSideEnum.Right, 280);
+      drawText(`${commonService.convertDateFormat(end_date)}`, TemplateSideEnum.Right, 280);
+      /** 因 drawText 移動四格 Line Spacing */
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);
+      context.font = `italic 9px ${style.fontStyle}`;
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 48, canvasDistance.leftY, canvasDistance.rightY);
+      drawText(title, TemplateSideEnum.Right, 438);
+      drawText(`${school_name}, ${school_location}`, TemplateSideEnum.Right, 438);
+
+      if (coursework) {
+        const doc: Document = commonService.convertInnerHTMLToDoc(coursework);
+        const content = doc.getElementsByTagName('body')[0];
+        /** 根據 HTML 繪圖 */
+        content.childNodes.forEach((item: ChildNode) => drawHTMLFormat(item, TemplateSideEnum.Right))
+      }      
+    }
   }
 
   function drawPersonalInfo(title: string, str: string, side: TemplateSideEnum) {
@@ -166,9 +200,9 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
 
     /** 增加 Paragraph Spacing */
     if (side === TemplateSideEnum.Left) {
-      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
     } else {
-      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + style?.paragraphSpacing);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + style.paragraphSpacing);
     }
   }
 
@@ -196,11 +230,11 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     let lastSubStrIndex = 0;
     
     function updateLeftDistances() {
-      canvasDistance.setDistances(leftX, rightX, leftY += style?.lineSpacing, rightY);
+      canvasDistance.setDistances(leftX, rightX, leftY += 2 * style.lineSpacing, rightY);
     }
     
     function updateRightDistances() {
-      canvasDistance.setDistances(leftX, rightX, leftY, rightY += style?.lineSpacing);
+      canvasDistance.setDistances(leftX, rightX, leftY, rightY += 2 * style.lineSpacing);
     }
   
     for (let i = 0; i < str.length; i++) {
@@ -248,22 +282,22 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    * @param type UI 類型
    */
   function drawTitle(str: string, type: number, side: TemplateSideEnum) {
-    context.font = `12px ${style?.fontStyle}`;
+    context.font = `12px ${style.fontStyle}`;
     switch (type) {
       case 1: {
-        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
         /** 繪製背影顏色，設置 Title */
         drawLine('black', 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
         drawText(str, side, 130);
-        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style?.paragraphSpacing, canvasDistance.rightY);
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
         break;
       }
       case 2: {
         drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
-        /** 設定右側的高度 注意這邊要乘以 2 */
-        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 2 * style?.lineSpacing);
-        drawText(str, TemplateSideEnum.Right, 435);
+        /** 設定右側的高度 注意這邊要乘以 3 */
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 3 * style.lineSpacing);
+        drawText(str, side, 435);
         drawLine('black', 1.5, { x: canvasDistance.rightX, y: canvasDistance.rightY }, { x: 390, y: canvasDistance.rightY })
         break;
       }
