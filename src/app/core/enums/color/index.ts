@@ -1,1 +1,2 @@
-export * from './colorPickerEnum';
+export * from './colorNameEnum';
+export * from './colorTypeNameEnum';

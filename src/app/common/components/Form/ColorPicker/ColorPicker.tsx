@@ -1,23 +1,23 @@
 import React from 'react'
-import { ColorPickerDefines } from '../../../../core/models/color'
+import { ColorPickers } from '../../../../core/models/color'
 import { ColorTemplateProps } from './types';
-import { ColorPickerEnum } from '../../../../core/enums/color';
+import { ColorNameEnum } from '../../../../core/enums/color';
 
 const ColorPicker: React.FC<ColorTemplateProps> = (props) => {
-  const handleChange = (color: ColorPickerEnum) => {
+  const handleChange = (color: ColorNameEnum) => {
     props.onChange(color);
   }
 
   return (
     <div id="color-picker">
       {/** 優化 UI */}
-      {ColorPickerDefines.map((color, index) => {
+      {ColorPickers.map((color, index) => {
         return (
             <label key={index} className="radio">
-              <input type="radio" name="color" value={color} onChange={() => handleChange(color)} />
+              <input type="radio" name="color" value={color.value} onChange={() => handleChange(color.text)} />
               <span
-                className={`checkmark${props.selected === color ? ' selected' : ''}`}
-                style={{ backgroundColor: color }}
+                className={`checkmark${props.selected === color.text ? ' selected' : ''}`}
+                style={{ backgroundColor: color.value }}
               ></span>
             </label>
         )

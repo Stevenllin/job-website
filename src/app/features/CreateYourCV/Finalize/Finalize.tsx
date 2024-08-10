@@ -19,7 +19,7 @@ import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextMatchesCodes, ProcessRouteMatchesStep, ProcessStepTextEnum } from '../types';
 import { useNavigate } from 'react-router-dom';
 import ColorPicker from '../../../common/components/Form/ColorPicker';
-import { ColorPickerEnum } from '../../../core/enums/color';
+import { ColorNameEnum } from '../../../core/enums/color';
 import { TemplateStyle } from './types';
 import { FaFont } from "react-icons/fa";
 import { FontSizeEnum } from '../../../core/enums/font';
@@ -55,7 +55,7 @@ const Finalize: React.FC = () => {
   const modalsState = useSelector((state: RootState) => state.UI.modals);
   /** Template Style */
   const [templateStyle, setTemplateStyle] = useState<TemplateStyle>({
-    color: ColorPickerEnum.Beige,
+    color: ColorNameEnum.Gray,
     fontSize: FontSizeEnum.Medium,
     fontStyle: '',
     paragraphSpacing: 2,

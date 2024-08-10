@@ -1,6 +1,6 @@
-import { ColorPickerEnum } from '../../../../core/enums/color';
+import { ColorNameEnum } from '../../../../core/enums/color';
 
 export interface ColorTemplateProps {
-  onChange: (color: ColorPickerEnum) => void;
+  onChange: (color: ColorNameEnum) => void;
   selected: string;
 }

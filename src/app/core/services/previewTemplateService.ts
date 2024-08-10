@@ -2,6 +2,8 @@ import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
 import { TemplateNameEnum, TemplateSideEnum } from '../enums/template';
 import { FontSizeEnum, FontSizeTypeEnum } from '../enums/font';
 import { FontMappingDefines } from '../models/font';
+import { ColorNameEnum } from '../enums/color';
+import { ColorMappingDefines } from '../models/color';
 import { InputType } from '../../features/CreateYourCV/Skills/types';
 import commonService from './commonService';
 
@@ -85,8 +87,9 @@ const CanvasDistance = (() => {
 
 const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, template: any, canvasDistance: CanvasDistance) => {
   /** 若沒有設置 Finalize 的 Style 則用默認 */
+  const colorEnum = template[ProcessStepTextEnum.Finalize].color as ColorNameEnum
   const style: Style = {
-    color: template[ProcessStepTextEnum.Finalize]?.color || defaultStyle.color,
+    color: ColorMappingDefines[colorEnum].Primary || defaultStyle.color,
     fontSize: template[ProcessStepTextEnum.Finalize]?.fontSize || defaultStyle.fontSize,
     fontStyle: template[ProcessStepTextEnum.Finalize]?.fontStyle || defaultStyle.fontStyle,
     lineSpacing: template[ProcessStepTextEnum.Finalize]?.lineSpacing || defaultStyle.lineSpacing,
@@ -146,7 +149,6 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     if (Skills.formValue) {
       drawTitle('Skills', 1, TemplateSideEnum.Left);
       const inputs: InputType[] = commonService.handleAddressSkillsData(Skills.formValue).filter(input => input.rate !== 0);
-      console.log('inputs', inputs);
       inputs.forEach(input => drawSkills(input, TemplateSideEnum.Left))
     }
 
@@ -165,7 +167,6 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     const WorkHistory = template[ProcessStepTextEnum.WorkHistory];
     if (WorkHistory) {
       drawTitle('Experience', 2, TemplateSideEnum.Right)
-      console.log();
     }
     
     /** Right Side: Education */
@@ -290,7 +291,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       case 1: {
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
         /** 繪製背影顏色，設置 Title */
-        drawLine('black', 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
+        drawLine(ColorMappingDefines[colorEnum].Secondary, 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
         drawText(str, side, 130);
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
@@ -313,7 +314,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    */
   function drawSkills(skills: InputType, side: TemplateSideEnum) {
     drawText(skills.input, side, 130);
-    drawLine('black', 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
+    drawLine(ColorMappingDefines[colorEnum].Secondary, 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
     drawLine('white', 5, { x: 6, y: canvasDistance.leftY }, { x: 124 * (skills.rate/5), y: canvasDistance.leftY })
     canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 2 * style.paragraphSpacing, canvasDistance.rightY);
   }
