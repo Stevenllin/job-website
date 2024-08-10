@@ -1,11 +1,13 @@
 import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
 import { TemplateNameEnum, TemplateSideEnum } from '../enums/template';
+import { FontSizeEnum, FontSizeTypeEnum } from '../enums/font';
+import { FontMappingDefines } from '../models/font';
 import { InputType } from '../../features/CreateYourCV/Skills/types';
 import commonService from './commonService';
 
 interface Style {
   color: string;
-  fontSize: string;
+  fontSize: FontSizeEnum;
   fontStyle: string;
   lineSpacing: number;
   paragraphSpacing: number;
@@ -28,7 +30,7 @@ interface Point {
 /** 預設 Style */
 const defaultStyle = {
   color: '#383d47',
-  fontSize: 'Normal',
+  fontSize: FontSizeEnum.Medium,
   fontStyle: 'Arial',
   lineSpacing: 8,
   paragraphSpacing: 8,
@@ -116,8 +118,8 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     context.fillRect(0, 0, 130, 565);
 
     /** 繪製名字 */
-    context.fillStyle = 'white' ?? 'white';
-    context.font = `bold 18px ${style.fontStyle}`;
+    context.fillStyle = 'white';
+    context.font = `bold ${FontMappingDefines[FontSizeTypeEnum.Name][style.fontSize]} ${style.fontStyle}`;
 
     /** Left Side: Heading */
     const Heading = template[ProcessStepTextEnum.GeneralInfo];
@@ -129,7 +131,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
       
       /** Profession */
-      context.font = `12px ${style.fontStyle}`;
+      context.font = `${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]} ${style.fontStyle}`;
       if (profession) drawText(profession, TemplateSideEnum.Left, 130);
       
       /** Personal Info */
@@ -143,7 +145,8 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     const Skills = template[ProcessStepTextEnum.Skills];
     if (Skills.formValue) {
       drawTitle('Skills', 1, TemplateSideEnum.Left);
-      const inputs: InputType[] = commonService.handleAddressSkillsData(Skills.formValue);
+      const inputs: InputType[] = commonService.handleAddressSkillsData(Skills.formValue).filter(input => input.rate !== 0);
+      console.log('inputs', inputs);
       inputs.forEach(input => drawSkills(input, TemplateSideEnum.Left))
     }
 
@@ -173,12 +176,12 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       const { degree, field, school_name, school_location, start_date, end_date, coursework } = Education;
       const title = `${degree} in ${field}`
       
-      context.font = `9px ${style.fontStyle}`;
+      context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
       drawText(`${commonService.convertDateFormat(start_date)} -`, TemplateSideEnum.Right, 280);
       drawText(`${commonService.convertDateFormat(end_date)}`, TemplateSideEnum.Right, 280);
       /** 因 drawText 移動四格 Line Spacing */
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);
-      context.font = `italic 9px ${style.fontStyle}`;
+      context.font = `italic ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 48, canvasDistance.leftY, canvasDistance.rightY);
       drawText(title, TemplateSideEnum.Right, 438);
       drawText(`${school_name}, ${school_location}`, TemplateSideEnum.Right, 438);
@@ -193,9 +196,9 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
   }
 
   function drawPersonalInfo(title: string, str: string, side: TemplateSideEnum) {
-    context.font = `bold 12px ${style.fontStyle}`;
+    context.font = `bold ${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]} ${style.fontStyle}`;
     drawText(title, TemplateSideEnum.Left, 130);
-    context.font = `10px ${style.fontStyle}`;
+    context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
     drawText(str, TemplateSideEnum.Left, 130);
 
     /** 增加 Paragraph Spacing */
@@ -282,7 +285,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    * @param type UI 類型
    */
   function drawTitle(str: string, type: number, side: TemplateSideEnum) {
-    context.font = `12px ${style.fontStyle}`;
+    context.font = `${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]} ${style.fontStyle}`;
     switch (type) {
       case 1: {
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
@@ -312,7 +315,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     drawText(skills.input, side, 130);
     drawLine('black', 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
     drawLine('white', 5, { x: 6, y: canvasDistance.leftY }, { x: 124 * (skills.rate/5), y: canvasDistance.leftY })
-    canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
+    canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 2 * style.paragraphSpacing, canvasDistance.rightY);
   }
 
   function drawHTMLFormat(node: ChildNode, side: TemplateSideEnum) {
@@ -354,7 +357,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     const fontWeight = isStrong ? 'bold' : 'normal';
     const fontStyle = isItalic ? 'italic' : 'normal';
 
-    return `${fontStyle} ${fontWeight} 12px ${style.fontStyle}`;
+    return `${fontStyle} ${fontWeight} ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
   }
 
   /**

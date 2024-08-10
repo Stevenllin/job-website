@@ -22,6 +22,7 @@ import ColorPicker from '../../../common/components/Form/ColorPicker';
 import { ColorPickerEnum } from '../../../core/enums/color';
 import { TemplateStyle } from './types';
 import { FaFont } from "react-icons/fa";
+import { FontSizeEnum } from '../../../core/enums/font';
 
 const fontOptions = [
   { value: 'PingFang TC', label: 'PingFang TC' },
@@ -55,7 +56,7 @@ const Finalize: React.FC = () => {
   /** Template Style */
   const [templateStyle, setTemplateStyle] = useState<TemplateStyle>({
     color: ColorPickerEnum.Beige,
-    fontSize: 'Normal',
+    fontSize: FontSizeEnum.Medium,
     fontStyle: '',
     paragraphSpacing: 2,
     lineSpacing: 2,
@@ -91,7 +92,7 @@ const Finalize: React.FC = () => {
       <div>
         {/** Font Size */}
         <div className="d-flex justify-between actions-container">
-          {['Small', 'Normal', 'Large'].map((size: string) => {
+          {[FontSizeEnum.Small, FontSizeEnum.Medium, FontSizeEnum.Large].map((size: FontSizeEnum) => {
             return (
               <div key={size} className={'actions-container--item' + (templateStyle?.fontSize === size ? ' selected' : '')} onClick={() => updateTemplateStyle('fontSize', size)}>
                 <FaFont style={{ 'fontSize': IconSizeEnum.Medium }} />
