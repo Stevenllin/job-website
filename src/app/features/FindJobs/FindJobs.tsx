@@ -1,11 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoLocation } from "react-icons/go";
 import { RiSearchLine } from "react-icons/ri";
 import { BiSolidCategory } from "react-icons/bi";
 import { IconSizeEnum } from '../../core/enums/icon';
-import { Slider, Col, Row, Select } from 'antd';
+import { Slider, Col, Row, Select, Button } from 'antd';
+import db from '../../core/services/firebaseService';
+import { collection, onSnapshot,  query, where, getDocs, addDoc } from 'firebase/firestore';
+import { Jobs } from './types';
 
 const FindJobs: React.FC = () => {
+  const [jobs, setJobs] = useState<Jobs[]>([]);
+
+  useEffect(() => {
+    /** onSnapshot 是當資料庫資料有異動時會再觸發 */
+    onSnapshot(collection(db, 'jobs'), (snapshot) => {
+      const results = snapshot.docs.map((doc) => doc.data() as Jobs);
+      setJobs(results);
+      console.log('results', results)
+    });
+  }, [])
+
+  const handleCreateNew = async () => {
+    const jobData = {
+      has_remote: false,
+      location: "Netherlands", // 更新后的国家/地区
+      published: "2024-08-18T10:00:00Z", // 更新后的发布时间
+      salary_max: 170000,
+      salary_min: 130000,
+      title: "Data Scientist - Machine Learning Specialist",
+      job_type: "Data Scientist",
+      types: "Full Time",
+      company: {
+        linkedin_url: "https://www.linkedin.com/company/philips",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Philips_logo.svg/368px-Philips_logo.svg.png",
+        name: "Philips",
+        website_url: "https://www.philips.com"
+      }
+    };
+    
+    // 获取 'jobs' 集合的引用
+    const jobsCollectionRef = collection(db, 'jobs');
+    
+    // 新增一笔数据到 'jobs' 集合
+    const docRef = await addDoc(jobsCollectionRef, jobData);
+  }
+
   return (
     <div id="find-jobs">
       {/** Filter Header */}
@@ -84,7 +123,6 @@ const FindJobs: React.FC = () => {
       </section>
       <Row style={{ minHeight: 'calc(100vh - 205px)' }}>
         {/** Filter Sidebar */}
-        {/** style={{ borderRight: '0.5px solid rgba(128, 128, 128, 0.4509803922)' }} */}
         <Col span="5" className="pa-4">
           <h3>Filters</h3>
           <p>Working Schedule</p>
@@ -93,6 +131,16 @@ const FindJobs: React.FC = () => {
         {/** Search Section */}
         <Col span="19" className="pa-4">
           <h3>Recommended Jobs</h3>
+          <div className="job-lists">
+            <Row gutter={32}>
+              {jobs.map((job, index) => (
+                <Col key={`${job}_${index}`} span="8">
+                  {job.title}
+                </Col>
+              ))}
+            </Row>
+          </div>
+          {/* <Button onClick={handleCreateNew}>Create New</Button> */}
         </Col>
       </Row>
     </div>
