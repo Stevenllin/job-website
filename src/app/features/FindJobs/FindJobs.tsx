@@ -7,6 +7,11 @@ import { Slider, Col, Row, Select, Button } from 'antd';
 import db from '../../core/services/firebaseService';
 import { collection, onSnapshot,  query, where, getDocs, addDoc } from 'firebase/firestore';
 import { Jobs } from './types';
+import VirtualizedList from '../../common/layouts/VirtualizedList';
+import commonService from '../../core/services/commonService';
+import { FaRegBookmark } from "react-icons/fa6";
+import { ColorPositionDefines } from '../../core/models/color';
+// import { PositionNewTypeTextEnum } from '../../core/enums/position'
 
 const FindJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Jobs[]>([]);
@@ -130,15 +135,39 @@ const FindJobs: React.FC = () => {
         </Col>
         {/** Search Section */}
         <Col span="19" className="pa-4">
-          <h3>Recommended Jobs</h3>
+          <h3 className="ms-1">Recommended Jobs</h3>
           <div className="job-lists">
-            <Row gutter={32}>
-              {jobs.map((job, index) => (
-                <Col key={`${job}_${index}`} span="8">
-                  {job.title}
-                </Col>
-              ))}
-            </Row>
+            {/** VirtualizedList */}
+            <VirtualizedList
+              itemCount={jobs.length}
+              itemHeight={400}
+              listHeight={800}
+              itemsPerRow={3}
+              renderComponent={(index: number, style: React.CSSProperties) => (
+                <div key={index} style={{ height: 380, ...style }} className="virtualizedList__item">
+                  <div className="job-card">
+                    <div className="card-background" style={{ background: ColorPositionDefines[jobs[index].job_type] }}>
+                      {/* <img src={jobs[index].company.logo} /> */}
+                      <div className="d-flex justify-between">
+                        <span className="fs-2 mb-2">{jobs[index].company.name}</span>
+                        <FaRegBookmark style={{ fontSize: IconSizeEnum.Small, cursor: 'pointer' }} />
+                      </div>
+                      <div className="fs-4 fw-dark mb-2">{jobs[index].title}</div>
+                      <div>{commonService.convertDateFormat(jobs[index].published)}</div>
+                      <div>{jobs[index].job_type}</div>
+                      <div>{jobs[index].types}</div>
+                      <div>{jobs[index].has_remote}</div>
+                    </div>
+                    <div className="card-footer d-flex justify-between align-center">
+                      {/** Salary */}
+                      <span className="fs-2">${jobs[index].salary_min} - ${jobs[index].salary_max}</span>
+                      {/** Action Button */}
+                      <Button type="primary" style={{ height: '48px' }}>Apply Now</Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            />
           </div>
           {/* <Button onClick={handleCreateNew}>Create New</Button> */}
         </Col>

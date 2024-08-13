@@ -72,9 +72,26 @@ const handleAddressSkillsData = (skills: any) => {
   return result;
 }
 
+/**
+ * @description
+ */
+function throttle<T extends (...args: any[]) => void>(fn: T, delay = 300) {
+  let timer: NodeJS.Timeout | null = null;
+
+  return (...args: Parameters<T>): void => {
+    if (timer) return;
+
+    timer = setTimeout(() => {
+      fn(...args);
+      timer = null;
+    }, delay);
+  };
+}
+
 export default {
   convertDateFormat,
   convertInnerHTMLToDoc,
   handleCheckTemplatePage,
-  handleAddressSkillsData
+  handleAddressSkillsData,
+  throttle
 }
