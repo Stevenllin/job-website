@@ -78,6 +78,13 @@
         padding: 16px;
         margin-bottom: 16px;
         border-radius: 16px;
+
+        .chips {
+          color: white;
+          background-color: $dark-blue;
+          padding: 4px 16px;
+          border-radius: 16px;
+        }
       }
     }
 

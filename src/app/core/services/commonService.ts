@@ -88,10 +88,19 @@ function throttle<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   };
 }
 
+const formatCurrency = (amount: number) => {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+  });
+}
+
 export default {
   convertDateFormat,
   convertInnerHTMLToDoc,
   handleCheckTemplatePage,
   handleAddressSkillsData,
-  throttle
+  throttle,
+  formatCurrency
 }

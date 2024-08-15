@@ -15,6 +15,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
 import { PositionTypeDefines } from '../../core/models/position';
 import { PositionNewTypeTextEnum } from '../../core/enums/position';
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { HiLocationMarker } from "react-icons/hi";
+import { IoBagSharp } from "react-icons/io5";
 
 const defaultFilters = {
   title: '',
@@ -162,7 +165,7 @@ const FindJobs: React.FC = () => {
             </Col>
             {/** Category */}
             <Col span="5" className="d-flex align-center">
-              <BiSolidCategory className="header-icon" style={{ 'fontSize': IconSizeEnum.Small }} />
+              <IoBagSharp className="header-icon" style={{ 'fontSize': IconSizeEnum.Small }} />
               {/** Select */}
               <Form.Item
                 name="job_type"
@@ -187,7 +190,7 @@ const FindJobs: React.FC = () => {
                 {!filters.salary || filters.salary?.length === 0 ? (
                   <span>-</span>
                 ) : (
-                  <span>${filters.salary[0]} - ${filters.salary[1]}</span>
+                  <span>{commonService.formatCurrency(filters.salary[0])} - {commonService.formatCurrency(filters.salary[1])}</span>
                 )}
               </div>
               <Form.Item
@@ -215,7 +218,7 @@ const FindJobs: React.FC = () => {
               </Col>
             </Row>
           </Checkbox.Group>
-          <p className="fs-2">Employment Type</p>
+          <p className="fs-2 ">Employment Type</p>
           <Checkbox.Group onChange={(val) => handleChangeCheckbox('employment_type', val)}>
             <Row>
               <Col span="24" className="mb-2">
@@ -266,14 +269,16 @@ const FindJobs: React.FC = () => {
                         <FaRegBookmark style={{ fontSize: IconSizeEnum.Small, cursor: 'pointer' }} />
                       </div>
                       <div className="fs-4 fw-dark mb-2">{jobs[index].title}</div>
-                      <div>{commonService.convertDateFormat(jobs[index].published)}</div>
-                      <div>{jobs[index].job_type}</div>
-                      <div>{jobs[index].types}</div>
-                      <div>{jobs[index].location}</div>
-                      <div>{jobs[index].has_remote ? 'Remote' : 'On-site'}</div>
+                      <div className="mb-1 d-flex align-center"><FaRegCalendarAlt className="me-2"/> {commonService.convertDateFormat(jobs[index].published)}</div>
+                      <div className="mb-1 d-flex align-center"><HiLocationMarker className="me-2"/>{jobs[index].location}</div>
+                      <div className="mb-2 d-flex align-center"><IoBagSharp className="me-2" /> {jobs[index].job_type}</div>
+                      <div className="d-flex" style={{ flexWrap: 'wrap' }}>
+                        <span className="me-1 chips">{jobs[index].types}</span>
+                        <span className="me-1 chips">{jobs[index].has_remote ? 'Remote' : 'On-site'}</span>
+                      </div>
                     </div>
                     <div className="card-footer d-flex justify-between align-center">
-                      <span className="fs-2">${jobs[index].salary_min} - ${jobs[index].salary_max}</span>
+                      <span className="fs-2">{commonService.formatCurrency(jobs[index].salary_min)} - {commonService.formatCurrency(jobs[index].salary_max)}</span>
                       <Button type="primary" style={{ height: '48px' }}>Apply Now</Button>
                     </div>
                   </div>
