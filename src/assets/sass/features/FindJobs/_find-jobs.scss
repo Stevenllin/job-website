@@ -44,6 +44,10 @@
       font-weight: $fw-light;
       letter-spacing: 0.1rem;
     }
+    .ant-input::placeholder {
+      color: $grey;
+      font-weight: $fw-light;
+    }
     .ant-select-selection-placeholder {
       color: $grey;
       font-weight: $fw-light;
@@ -74,6 +78,53 @@
         padding: 16px;
         margin-bottom: 16px;
         border-radius: 16px;
+      }
+    }
+
+    .card-skeleton {
+      background-color: #f0f0f0;
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+      background-color: #efefef;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+      margin: 8px;
+      height: 100%;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .skeleton-footer,
+    .skeleton-body {
+      background: linear-gradient(90deg, #e3e3e3 25%, #efefef 50%, #e3e3e3 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s infinite;
+    }
+
+    .skeleton-footer {
+      box-sizing: border-box;
+      height: 15%;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+    }
+
+    .skeleton-body {
+      box-sizing: border-box;
+      height: 80%;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      height: 80%;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
       }
     }
   }

@@ -87,9 +87,9 @@ const CanvasDistance = (() => {
 
 const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, template: any, canvasDistance: CanvasDistance) => {
   /** 若沒有設置 Finalize 的 Style 則用默認 */
-  const colorEnum = template[ProcessStepTextEnum.Finalize].color as ColorNameEnum
+  const colorEnum = template[ProcessStepTextEnum.Finalize]?.color as ColorNameEnum
   const style: Style = {
-    color: ColorMappingDefines[colorEnum].Primary || defaultStyle.color,
+    color: ColorMappingDefines[colorEnum]?.Primary || defaultStyle.color,
     fontSize: template[ProcessStepTextEnum.Finalize]?.fontSize || defaultStyle.fontSize,
     fontStyle: template[ProcessStepTextEnum.Finalize]?.fontStyle || defaultStyle.fontStyle,
     lineSpacing: template[ProcessStepTextEnum.Finalize]?.lineSpacing || defaultStyle.lineSpacing,

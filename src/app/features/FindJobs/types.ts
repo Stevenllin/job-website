@@ -16,3 +16,13 @@ export interface Company {
   linkedin_url: string;
   website_url: string;
 }
+
+
+export interface Filters {
+  title: string;
+  location: string;
+  job_type: string;
+  salary: number[]
+  work_mode: string[],
+  employment_type: string[]
+}
