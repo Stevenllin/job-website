@@ -13,6 +13,7 @@ import { FaTrash } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { IconSizeEnum } from '../../../core/enums/icon'
 import commonService from '../../../core/services/commonService';
+import { DateFormatEnum } from '../../../core/enums/date';
 
 const WorkSummary: React.FC = () => {
   const [histories, setHistories] = useState<WorkHistory[]>([]);
@@ -57,7 +58,7 @@ const WorkSummary: React.FC = () => {
                     {/** Job title and Employer */}
                     <span className="fs-3 fw-dark">{history.job_title}, {history.employer}</span>
                     <br></br>
-                    <span>{history.location} | {commonService.convertDateFormat(history.start_date)} - {commonService.convertDateFormat(history.end_date)}</span>
+                    <span>{history.location} | {commonService.convertDateFormat(history.start_date, DateFormatEnum.YYYYMM)} - {commonService.convertDateFormat(history.end_date, DateFormatEnum.YYYYMM)}</span>
                     <span></span>
                     <div className="icon-container">
                       <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />

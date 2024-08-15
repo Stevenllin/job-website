@@ -1,18 +1,20 @@
 import { InputType } from '../../features/CreateYourCV/Skills/types';
-
+import { DateFormatEnum } from '../enums/date';
 /**
  * 
  * @param date 日期
  * @returns 轉換日期 YYYY-MM-DD
  */
-const convertDateFormat = (date: string) => {
+const convertDateFormat = (date: string, format: DateFormatEnum) => {
   let d = new Date(date),
+    day = '' + d.getDate(),
     month = '' + (d.getMonth() + 1),
     year = d.getFullYear();
 
   if (month.length < 2) month = '0' + month;
 
-  return [year, month].join('-');
+  if (format === DateFormatEnum.YYYYMM) return [year, month].join('-');
+  return [year, month, day].join('-'); 
 }
 
 /**
@@ -96,11 +98,26 @@ const formatCurrency = (amount: number) => {
   });
 }
 
+const groupData = (array: any[], elem: any) => {
+  const groupedJobs = array.reduce((acc, job) => {
+    const jobType = job[elem];
+  
+    if (!acc[jobType]) acc[jobType] = [];
+  
+    acc[jobType].push(job);
+  
+    return acc;
+  }, {});
+
+  return groupedJobs
+}
+
 export default {
   convertDateFormat,
   convertInnerHTMLToDoc,
   handleCheckTemplatePage,
   handleAddressSkillsData,
   throttle,
-  formatCurrency
+  formatCurrency,
+  groupData
 }

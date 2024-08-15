@@ -12,6 +12,7 @@ import commonService from '../../../core/services/commonService';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import { getRequiredRule, getStartDateRule, getEndDateRule } from '../../../core/services/validationService';
+import { DateFormatEnum } from '../../../core/enums/date';
 
 const WorkHistory: React.FC = () => {
   const [form] = Form.useForm();
@@ -38,8 +39,8 @@ const WorkHistory: React.FC = () => {
 
     const updated = {
       ...updatedHistory,
-      start_date: updatedHistory && updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date), 'YYYY-MM'),
-      end_date: updatedHistory && updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date), 'YYYY-MM'),
+      start_date: updatedHistory && updatedHistory.start_date && dayjs(commonService.convertDateFormat(updatedHistory.start_date, DateFormatEnum.YYYYMM), 'YYYY-MM'),
+      end_date: updatedHistory && updatedHistory.end_date && dayjs(commonService.convertDateFormat(updatedHistory.end_date, DateFormatEnum.YYYYMM), 'YYYY-MM'),
     }
     /** 設定 form */
     form.setFieldsValue(updated);

@@ -25,6 +25,7 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { ProcessStepTextEnum } from '../types';
 import dayjs from 'dayjs';
+import { DateFormatEnum } from '../../../core/enums/date';
 
 const Education: React.FC = () => {
   const [form] = Form.useForm();
@@ -47,8 +48,8 @@ const Education: React.FC = () => {
     /** 設定 form */
     const updated = {
       ...education,
-      start_date: education && education.start_date && dayjs(commonService.convertDateFormat(education.start_date), 'YYYY-MM'),
-      end_date: education && education.end_date && dayjs(commonService.convertDateFormat(education.end_date), 'YYYY-MM')
+      start_date: education && education.start_date && dayjs(commonService.convertDateFormat(education.start_date, DateFormatEnum.YYYYMM), 'YYYY-MM'),
+      end_date: education && education.end_date && dayjs(commonService.convertDateFormat(education.end_date, DateFormatEnum.YYYYMM), 'YYYY-MM')
     }
 
     form.setFieldsValue(updated)

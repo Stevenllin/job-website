@@ -1,11 +1,12 @@
 import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
-import { TemplateNameEnum, TemplateSideEnum } from '../enums/template';
+import { TemplateSideEnum } from '../enums/template';
 import { FontSizeEnum, FontSizeTypeEnum } from '../enums/font';
 import { FontMappingDefines } from '../models/font';
 import { ColorNameEnum } from '../enums/color';
 import { ColorMappingDefines } from '../models/color';
 import { InputType } from '../../features/CreateYourCV/Skills/types';
 import commonService from './commonService';
+import { DateFormatEnum } from '../enums/date';
 
 interface Style {
   color: string;
@@ -178,8 +179,8 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       const title = `${degree} in ${field}`
       
       context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
-      drawText(`${commonService.convertDateFormat(start_date)} -`, TemplateSideEnum.Right, 280);
-      drawText(`${commonService.convertDateFormat(end_date)}`, TemplateSideEnum.Right, 280);
+      drawText(`${commonService.convertDateFormat(start_date, DateFormatEnum.YYYYMM)} -`, TemplateSideEnum.Right, 280);
+      drawText(`${commonService.convertDateFormat(end_date, DateFormatEnum.YYYYMM)}`, TemplateSideEnum.Right, 280);
       /** 因 drawText 移動四格 Line Spacing */
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);
       context.font = `italic ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;

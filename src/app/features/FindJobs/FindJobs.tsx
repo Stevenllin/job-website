@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoLocation } from "react-icons/go";
 import { RiSearchLine } from "react-icons/ri";
-import { BiSolidCategory } from "react-icons/bi";
 import { IconSizeEnum } from '../../core/enums/icon';
 import { Form, Slider, Col, Row, Select, Button, Input, Checkbox } from 'antd';
 import db from '../../core/services/firebaseService';
-import { collection, onSnapshot,  query, where, getDocs, addDoc } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { Jobs, Filters } from './types';
 import VirtualizedList from '../../common/layouts/VirtualizedList';
 import commonService from '../../core/services/commonService';
@@ -18,6 +17,7 @@ import { PositionNewTypeTextEnum } from '../../core/enums/position';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoBagSharp } from "react-icons/io5";
+import useGetJobs from '../../core/hooks/useGetJobs';
 
 const defaultFilters = {
   title: '',
@@ -33,20 +33,13 @@ const FindJobs: React.FC = () => {
   /** 紀錄 filters */
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   /** Job 列表 */
-  const [jobs, setJobs] = useState<Jobs[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const country = useSelector((state: RootState) => state.common.country_flag);
-  const original = useRef<Jobs[]>([])
+  const { original, loading } = useGetJobs();
+  const [jobs, setJobs] = useState<Jobs[]>([]);
 
   useEffect(() => {
-    /** onSnapshot 是當資料庫資料有異動時會再觸發 */
-    onSnapshot(collection(db, 'jobs'), (snapshot) => {
-      const results = snapshot.docs.map((doc) => doc.data() as Jobs);
-      original.current = results;
-      setJobs(results);
-      setLoading(true);
-    });
-  }, [])
+    setJobs(original.current)
+  }, [original.current])
 
   const handleCreateNew = async () => {
     const jobData = {
@@ -269,7 +262,7 @@ const FindJobs: React.FC = () => {
                         <FaRegBookmark style={{ fontSize: IconSizeEnum.Small, cursor: 'pointer' }} />
                       </div>
                       <div className="fs-4 fw-dark mb-2">{jobs[index].title}</div>
-                      <div className="mb-1 d-flex align-center"><FaRegCalendarAlt className="me-2"/> {commonService.convertDateFormat(jobs[index].published)}</div>
+                      <div className="mb-1 d-flex align-center"><FaRegCalendarAlt className="me-2"/> {jobs[index].published}</div>
                       <div className="mb-1 d-flex align-center"><HiLocationMarker className="me-2"/>{jobs[index].location}</div>
                       <div className="mb-2 d-flex align-center"><IoBagSharp className="me-2" /> {jobs[index].job_type}</div>
                       <div className="d-flex" style={{ flexWrap: 'wrap' }}>

@@ -12,6 +12,7 @@
   "dependencies": {
     "antd": "^5.19.3",
     "axios": "^1.7.2",
+    "chart.js": "^4.4.3",
     "dayjs": "^1.11.12",
     "firebase": "^10.12.5",
     "quill": "^2.0.2",
