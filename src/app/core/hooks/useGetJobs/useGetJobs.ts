@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef, useMemo } from "react";
 import { Jobs } from '../../../features/FindJobs/types';
 import { collection, onSnapshot } from 'firebase/firestore';
 import db from '../../../core/services/firebaseService';
@@ -18,23 +18,25 @@ const useGetJobs = () => {
         }
       });
       original.current = results;
-
-      /** 將資料進行整合整理 */
-      const group_job_type = commonService.groupData(results, 'job_type')
-      const group_location = commonService.groupData(results, 'location')
-      const group_published = commonService.groupData(results, 'published')
-
-      console.log('results', results);
-      console.log('group_job_type', group_job_type);
-      console.log('group_location', group_location);
-      console.log('group_published', group_published);
       setLoading(true);
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
+  const group_job_type = useMemo(() => {
+    return commonService.groupData(original.current, 'job_type');
+  }, [original.current]);
+  
+  const group_location = useMemo(() => {
+    return commonService.groupData(original.current, 'location');
+  }, [original.current]);
+  
+  const group_published = useMemo(() => {
+    return commonService.groupData(original.current, 'published');
+  }, [original.current]);
 
-  return { original, loading }
+  return { original, loading, group_job_type, group_location, group_published };
 }
 
 export default useGetJobs;

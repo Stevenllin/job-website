@@ -112,6 +112,21 @@ const groupData = (array: any[], elem: any) => {
   return groupedJobs
 }
 
+/**
+ * 將字符串轉換为缩寫
+ * @param {string} str - 需要轉換的字符串
+ * @returns {string} - 转换后的缩写
+ */
+const toAbbreviation = (str: string) => {
+  // 将字符串按空格拆分成单词数组
+  const words = str.split(' ');
+
+  // 提取每个单词的首字母并转换为大写
+  const abbreviation = words.map(word => word.charAt(0).toUpperCase()).join('');
+
+  return abbreviation;
+}
+
 export default {
   convertDateFormat,
   convertInnerHTMLToDoc,
@@ -119,5 +134,6 @@ export default {
   handleAddressSkillsData,
   throttle,
   formatCurrency,
-  groupData
+  groupData,
+  toAbbreviation
 }
