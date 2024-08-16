@@ -8,32 +8,31 @@ import commonService from '../../core/services/commonService';
 import DoughnutChart from '../../common/components/Chart/DoughnutChart';
 import BarChart from '../../common/components/Chart/BarChart';
 import { Jobs } from '../../features/FindJobs/types';
+import { BarChartState } from '../../common/components/Chart/BarChart/types';
 
 ChartJS.register(ArcElement, Legend, ChartDataLabels);
 
-interface BarChart {
-  labels: string[],
-  values: number[],
-  color: string;
-}
-
 const SalaryInfomation: React.FC = () => {
   const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
-  const [barChart, setBarChart] = useState<BarChart>({
+  const color: string[] = Object.values(ColorPositionDefines);
+  const [barChart, setBarChart] = useState<BarChartState>({
+    title: '',
     labels: [],
-    values: [],
+    data: [],
     color: '',
   });
 
   const array_job_type = Object.entries(group_job_type);
+  
 
   /** Job Type 的 Doughnut 圖 */
   const doughnutLabels: string[] = array_job_type.map(item => item[0]);
   const doughnutValues: number[] = array_job_type.map((item: any[]) => item[1].length);
-  const doughnutColor = Object.values(ColorPositionDefines);
+  const [doughnutColor, setDoughnutColor] = useState<string[]>(color);
+  // const doughnutColor = Object.values(ColorPositionDefines);
 
-  const handleSelectPosition = (label: string, value: number, index: number) => {
-    const selected = array_job_type.find(item => item[0] === label);
+  const handleSelectPosition = (value: number, index: number) => {
+    const selected = array_job_type.find(item => item[0] === doughnutLabels[index]);
     /** 整理 Bar Chart */
     if (selected) {
       /** 該職缺的 Job List */
@@ -47,7 +46,7 @@ const SalaryInfomation: React.FC = () => {
       let j = 0;
       for (let i = 100000; i <= 200000; i += 5000) {
         /** Bar Labels */
-        barLabels.push(i.toString());
+        barLabels.push(commonService.formatCurrency(i));
         /** 計算 Bar 的 Value */
         const salary = array_salary_distribution[j] ? parseInt(array_salary_distribution[j][0]) : null;
         if (i === salary) {
@@ -58,35 +57,45 @@ const SalaryInfomation: React.FC = () => {
         }
         barValues.push(0);
       }
+      /** 設置 Doughnut 的顏色 */
+      setDoughnutColor(color.map((item, i) => {
+        if (i === index) return item
+        return 'rgb(244 244 244)'
+      }))
+      console.log('doughnutColor', doughnutColor);
+      /** 設置 Bar Chart 圖形 */
       setBarChart({
+        title: doughnutLabels[index],
         labels: barLabels,
-        values: barValues,
-        color: doughnutColor[index]
+        data: barValues,
+        color: color[index]
       })
     }
   }
-
-  /** 各職業的 百分比（甜甜圈圖 點選後顯示該職業的柱狀圖）*/
-  /** 各職業的 薪水分佈（柱狀圖）*/
 
   /** 各國家的 薪水分佈（地圖＋列表）*/
   /** 各日期的 薪水分佈（折線圖）*/
   return (
     <div id="salary-information">
-      <Row gutter={16}>
-        <Col span="8">
+      <Row gutter={48}>
+        <Col span="6">
           <div className="salary-card">
-            <DoughnutChart
-              doughnutLabels={doughnutLabels}
-              doughnutValues={doughnutValues}
-              doughnutColor={doughnutColor}
-              onClick={handleSelectPosition}
-            />
+            <div className="d-flex justify-center" style={{ height: '350px' }}>
+              <DoughnutChart
+                color={color}
+                doughnutLabels={doughnutLabels}
+                doughnutValues={doughnutValues}
+                doughnutColor={doughnutColor}
+                onClick={handleSelectPosition}
+              />
+            </div>
           </div>
         </Col>
-        <Col span="16">
+        <Col span="18">
           <div className="salary-card">
-            <BarChart data={barChart.values} labels={barChart.labels} color={barChart.color} />
+            <div>
+              <BarChart barChart={barChart} />
+            </div>
           </div>
         </Col>
       </Row>

@@ -1,6 +1,7 @@
 export interface DoughnutProps {
+  color: string[];
   doughnutLabels: string[];
   doughnutValues: number[];
   doughnutColor: string[];
-  onClick: (value: string, label: number, index: number) => void;
+  onClick: (value: number, index: number) => void;
 }

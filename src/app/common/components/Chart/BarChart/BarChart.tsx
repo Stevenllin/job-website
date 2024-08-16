@@ -18,15 +18,13 @@ ChartJS.register(
   Legend
 );
 
-
-const BarChart: React.FC<BarChartProps> = (props) => {
+const BarChart: React.FC<BarChartProps> = ({ barChart }) => {
   const data = {
-    labels: props.labels,
+    labels: barChart.labels,
     datasets: [
       {
-        label: 'Sales',
-        data: props.data,
-        backgroundColor: props.color,
+        data: barChart.data,
+        backgroundColor: barChart.color,
         borderWidth: 1,
       },
     ],
@@ -40,7 +38,7 @@ const BarChart: React.FC<BarChartProps> = (props) => {
       },
       title: {
         display: true,
-        text: 'Monthly Sales Data',
+        text: `Overview of ${barChart.title}`,
       },
     },
   };
