@@ -39,6 +39,13 @@ const BarChart: React.FC<BarChartProps> = ({ barChart }) => {
       title: {
         display: true,
         text: `Overview of ${barChart.title}`,
+        font: {
+          size: 24
+        },
+        padding: {
+          top: 10,
+          bottom: 20,
+        },
       },
     },
   };
