@@ -1,20 +1,32 @@
 #salary-information {
   padding: 2.5% 2.5%;
-  height: 100vh;
+  // height: 100vh;
   background-color: $whitesmoke;
 
   .salary-card {
+    box-sizing: border-box;
     height: 100%;
     padding: 16px;
     background-color: #ffffff;
     border-radius: 16px;
 
+    .vl {
+      height: 60px;
+      width: 5px;
+      background-color: $blue;
+      border-radius: 16px;
+    }
+
     .title {
       padding-left: 20px;
-      border-left: 5px solid $blue;
+      // border-left: 5px solid $blue;
 
       h4 {
         color: #656665;
+      }
+
+      p {
+        margin: 8px 0px;
       }
     }
   }
