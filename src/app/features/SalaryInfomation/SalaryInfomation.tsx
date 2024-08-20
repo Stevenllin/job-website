@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import useGetJobs from '../../core/hooks/useGetJobs';
-import { Chart as ChartJS, ArcElement, Legend, ChartOptions } from "chart.js";
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Col, Row } from 'antd';
 import { ColorPositionDefines } from '../../core/models/color';
 import commonService from '../../core/services/commonService';
@@ -15,8 +13,7 @@ import MapChart from '../../common/components/Chart/MapChart';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
 import { GetCountriesResp } from '../../api/models/get/getCountries';
-
-ChartJS.register(ArcElement, Legend, ChartDataLabels);
+import LineChart from '../../common/components/Chart/LineChart';
 
 const SalaryInfomation: React.FC = () => {
   const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
@@ -187,7 +184,8 @@ const SalaryInfomation: React.FC = () => {
         <Col span="18">
           <div className="salary-card">
             <div>
-              <BarChart barChart={barChart} />
+              <LineChart lineChart={barChart} />
+              {/* <BarChart barChart={barChart} /> */}
             </div>
           </div>
         </Col>
