@@ -1,3 +1,4 @@
 export interface MapChartProps {
-  mapData: any
+  mapData: any;
+  onSelectCountry: (name: string) => void;
 }

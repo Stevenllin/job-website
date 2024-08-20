@@ -21,9 +21,9 @@ ChartJS.register(ArcElement, Legend, ChartDataLabels);
 const SalaryInfomation: React.FC = () => {
   const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
   const country = useSelector((state: RootState) => state.common.country_flag);
+
   /** 選擇的 Country */
   const [selectedCountry, setSelectedCountry] = useState<GetCountriesResp|null>(null)
-  const [data, setData] = useState(null);
   /** 選擇的 Country 職缺列表 */
   const [selectedCountryData, setSelectedCountryData] = useState<Jobs[]>()
   /** 各職缺所代表的顏色 */
@@ -57,6 +57,7 @@ const SalaryInfomation: React.FC = () => {
   useEffect(() => {
     const target = Object.entries(group_location).find(item => item[0] === selectedCountry?.name);
     if (target) {
+      console.log('target', target[1]);
       setSelectedCountryData(target[1] as Jobs[])
     }
   }, [selectedCountry])
@@ -105,6 +106,11 @@ const SalaryInfomation: React.FC = () => {
         color: color[index]
       })
     }
+  }
+
+  const handleSelectCountry = (countryName: string) => {
+    const target: GetCountriesResp | null = country.find(item => item.name === countryName) ?? null;
+    if (target) setSelectedCountry(target)
   }
 
   /** 各日期的 薪水分佈（折線圖）*/
@@ -191,7 +197,7 @@ const SalaryInfomation: React.FC = () => {
         <Col span="18">
           <div className="salary-card">
             {/** 有資料時再渲染畫面 */}
-            {mapData.length > 0 && <MapChart mapData={mapData} />}
+            {mapData.length > 0 && <MapChart mapData={mapData} onSelectCountry={handleSelectCountry} />}
           </div>
         </Col>
         <Col span="6">
@@ -199,7 +205,7 @@ const SalaryInfomation: React.FC = () => {
             <div style={{ width: '100%', backgroundSize: 'cover', overflow: 'hidden' }}>
               <img src={selectedCountry?.flag} style={{ width: '100%' }} />
             </div>
-            <h4 className="text-center mt-0">
+            <h4 className="text-center mt-1">
               {selectedCountry?.name}
             </h4>
             Total Jobs: {selectedCountryData?.length}

@@ -12,20 +12,20 @@ const MapChart: React.FC<MapChartProps> = (props) => {
     const map = new jsVectorMap({
       selector: mapRef.current,
       map: 'world',
-      zoomOnScroll: false, // 禁用滑鼠滾輪縮放
       markers: props.mapData,
       labels: {
         markers: {
-          // Starting from jsvectormap v1.2 the render function receives
-          // the marker object as a first parameter and index as the second.
           render(marker: { name?: string; labelName?: string }, index: number) {
-            return marker.name || marker.labelName || 'Not available'
+            return marker.name
           }
         }
       },
-      onMarkerClick: (event: React.MouseEvent, markerIndex: number) => {
+      onMarkerClick: (_: React.MouseEvent, markerIndex: number) => {
+        const marker = props.mapData[markerIndex];
+        props.onSelectCountry(marker.name)
       }
     });
+    
 
     // 清理 map instance
     return () => {
