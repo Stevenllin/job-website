@@ -6,6 +6,7 @@ import { LineChartProps } from './types';
 ChartJS.register(LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
 
 const LineChart: React.FC<LineChartProps> = (props) => {
+  console.log('props', props);
   const data = {
     labels: props.lineChart.labels,
     datasets: [
@@ -20,7 +21,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
           gradient.addColorStop(1, '#FFFFFF');
           return gradient;
         },
-        fill: "start",
+        fill: 'start',
         tension: 0.3, // 曲线的弯曲度，0 表示直线
         pointHoverRadius: 0
       },

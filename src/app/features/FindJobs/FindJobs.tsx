@@ -45,14 +45,14 @@ const FindJobs: React.FC = () => {
   const handleCreateNew = async () => {
     const jobData = {
       has_remote: true,
-      location: "Germany",
-      published: "2024-07-20T14:00:00Z",
-      salary_max: 150000,
-      salary_min: 120000,
-      title: "Software Engineer - User Research Expert",
+      location: "Switzerland",
+      published: "2024-06-25T14:00:00Z",
+      salary_max: 105000,
+      salary_min: 100000,
+      title: "Software Engineer - Research Expert",
       job_type: "Software Engineer",
-      coords: [60.1282, 18.6435],
-      types: "Part Time",
+      coords: [46.8182, 8.2275],
+      types: "Full Time",
       company: {
         linkedin_url: "https://www.linkedin.com/company/ericsson",
         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ericsson_logo.svg/368px-Ericsson-logo.svg.png",
@@ -170,7 +170,8 @@ const FindJobs: React.FC = () => {
                   size="large"
                   placeholder="Job Type"
                   variant="borderless"
-                  options={PositionTypeDefines}            >
+                  options={PositionTypeDefines}
+                >
                 </Select>
               </Form.Item>
             </Col>

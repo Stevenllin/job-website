@@ -97,8 +97,9 @@ const SalaryInfomation: React.FC = () => {
           const target = array_salary_distribution[j][1] as Jobs[];
           values.push(target.length);
           j++
+        } else {
+          values.push(0);
         }
-        values.push(0);
       }
       /** 設置 Doughnut 的顏色 */
       setDoughnutColor(color.map((item, i) => {
