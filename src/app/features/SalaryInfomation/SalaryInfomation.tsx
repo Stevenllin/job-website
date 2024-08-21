@@ -61,7 +61,7 @@ const SalaryInfomation: React.FC = () => {
         labels.push(item[0]);
         const jobs = item[1] as Jobs[];
         const average_salary = jobs.reduce((acc, curr) => acc + curr.salary_max, 0) / jobs.length
-        console.log('average_salary', average_salary);
+
         data.push(average_salary);
       })
       setBarChart({ labels, data })
@@ -102,8 +102,8 @@ const SalaryInfomation: React.FC = () => {
       }
       /** 設置 Doughnut 的顏色 */
       setDoughnutColor(color.map((item, i) => {
-        if (i === index) return item
-        return 'rgb(244 244 244)'
+        if (i === index) return '#0766bc'
+        return '#dee2e8'
       }))
       /** 設置 Bar Chart 圖形 */
       setLineChart({
@@ -165,7 +165,7 @@ const SalaryInfomation: React.FC = () => {
             <div className="d-flex align-center">
               <div className="vl"></div>
               <div className="title">
-                <h4 className="ma-0 fs-2">Most Popular Country</h4>
+                <h4 className="ma-0 fs-2">Past three months</h4>
                 <p className="fs-4">{ original.current.length }</p>
               </div>
             </div>
@@ -206,7 +206,7 @@ const SalaryInfomation: React.FC = () => {
         <Col span="7">
           <div className="salary-card">
             <div style={{ width: '100%', backgroundSize: 'cover', overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
-              <img src={selectedCountry?.flag} style={{ width: '100%', borderRadius: '16px', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px' }} />
+              <img src={selectedCountry?.flag} style={{ width: '100%', borderRadius: '16px' }} />
             </div>
             <h4 className="text-center mt-2 fs-4">
               {selectedCountry?.name}

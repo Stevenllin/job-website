@@ -11,12 +11,12 @@ const LineChart: React.FC<LineChartProps> = (props) => {
     datasets: [
       {
         data: props.lineChart.data,
-        borderColor: props.lineChart.color,
+        borderColor: '#0766bc',
         backgroundColor: (context: ScriptableContext<"line">) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 600);
 
-          gradient.addColorStop(0, props.lineChart.color ? props.lineChart.color : "rgba(250,174,50,1)");
+          gradient.addColorStop(0, props.lineChart.color ? '#0766bc' : "rgba(250,174,50,1)");
           gradient.addColorStop(1, '#FFFFFF');
           return gradient;
         },

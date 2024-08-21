@@ -25,7 +25,7 @@ const DoughnutChart: React.FC<DoughnutProps> = (props) => {
 
   const options: ChartOptions<'doughnut'> = {
     responsive: true,
-    cutout: 135,
+    cutout: 145,
     plugins: {
       tooltip: {
         enabled: false,
@@ -59,7 +59,7 @@ const DoughnutChart: React.FC<DoughnutProps> = (props) => {
       /** 繪畫圓形 */
       ctx.beginPath();
       ctx.arc(width / 2, height / 2, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = selectedLabel.current ? selectedColor.current : 'white';
+      ctx.fillStyle = selectedLabel.current ? '#0766bc' : 'white';
       ctx.fill();
     
       // Set the text properties

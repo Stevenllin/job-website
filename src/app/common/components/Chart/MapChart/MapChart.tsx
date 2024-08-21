@@ -2,17 +2,35 @@
 import { useEffect, useRef } from "react";
 import jsVectorMap from "jsvectormap";
 import "jsvectormap/dist/maps/world.js";
-import { MapChartProps } from "./types";
+import { MapChartProps, JobValueMap, MapData } from "./types";
 
 const MapChart: React.FC<MapChartProps> = (props) => {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mapRef.current) return;
+    const values: JobValueMap = props.mapData.reduce((acc: JobValueMap, job: MapData, index: number) => {
+      acc[index] = job.number > 2 ? 'More than 2' : 'Less than 2';
+      return acc;
+    }, {});
+
     const map = new jsVectorMap({
       selector: mapRef.current,
       map: 'world',
       markers: props.mapData,
+      series: {
+        markers: [{
+          attribute: "fill",
+          legend: {
+            title: "Number of Jobs",
+          },
+          scale: {
+            "More than 2": "#0766bc",
+            "Less than 2": "#ebf6ff",
+          },
+          values: values
+        }]
+      },
       labels: {
         markers: {
           render(marker: { name?: string; labelName?: string }, index: number) {
