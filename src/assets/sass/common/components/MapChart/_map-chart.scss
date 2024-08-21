@@ -1,10 +1,3 @@
-.jsvmap-legend {
-  position: absolute; /* 将图例定位为绝对位置 */
-  top: 20px; /* 距离顶部的距离 */
-  right: 20px; /* 距离右侧的距离 */
-  z-index: 1000; /* 确保图例在最上层 */
-  background-color: white; /* 设置图例的背景色 */
-  padding: 10px; /* 添加内边距 */
-  border: 1px solid #ddd; /* 添加边框 */
-  border-radius: 5px; /* 圆角效果 */
+.jvm-series-container {
+  left: 0;
 }

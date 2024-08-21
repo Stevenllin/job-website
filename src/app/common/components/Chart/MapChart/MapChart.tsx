@@ -23,12 +23,13 @@ const MapChart: React.FC<MapChartProps> = (props) => {
           attribute: "fill",
           legend: {
             title: "Number of Jobs",
+            position: 'bottom-left'
           },
           scale: {
             "More than 2": "#0766bc",
             "Less than 2": "#ebf6ff",
           },
-          values: values
+          values: values,
         }]
       },
       labels: {
@@ -41,7 +42,8 @@ const MapChart: React.FC<MapChartProps> = (props) => {
       onMarkerClick: (_: React.MouseEvent, markerIndex: number) => {
         const marker = props.mapData[markerIndex];
         props.onSelectCountry(marker.name)
-      }
+      },
+      zoomButtons: false
     });
     
 

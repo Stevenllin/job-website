@@ -15,6 +15,12 @@ import { RootState } from '../../store/types';
 import { GetCountriesResp } from '../../api/models/get/getCountries';
 import LineChart from '../../common/components/Chart/LineChart';
 import BarChart from '../../common/components/Chart/BarChart';
+import moment from 'moment';
+import { TfiClipboard } from "react-icons/tfi";
+
+export interface JobMap {
+  [string: string]: Jobs[];
+}
 
 const SalaryInfomation: React.FC = () => {
   const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
@@ -22,12 +28,11 @@ const SalaryInfomation: React.FC = () => {
 
   /** 選擇的 Country */
   const [selectedCountry, setSelectedCountry] = useState<GetCountriesResp|null>(null)
-  /** 選擇的 Country 職缺列表 */
-  // const [selectedCountryData, setSelectedCountryData] = useState<Jobs[]>()
   /** 各職缺所代表的顏色 */
   const color: string[] = Object.values(ColorPositionDefines);
   const [lineChart, setLineChart] = useState<LineChartState>({ title: '', labels: [], data: [], color: '', });
   const [barChart, setBarChart] = useState<BarChartState>({ labels: [], data: [] })
+  const [selectedJobType, setSelectedJobType] = useState<JobMap>();
 
   const countryList = useMemo(() => {
     return Object.keys(group_location)
@@ -113,6 +118,10 @@ const SalaryInfomation: React.FC = () => {
         data: values,
         color: color[index]
       })
+
+      /** 取得 selected 的 Position Type */
+      const groupType = commonService.groupData(jobs, 'types');
+      setSelectedJobType(groupType)
     }
   }
 
@@ -126,51 +135,74 @@ const SalaryInfomation: React.FC = () => {
       <Row gutter={32} style={{ marginBottom: '32px', justifyContent: 'space-between' }}>
         <Col span="6">
           <div className="salary-card">
-            <div className="d-flex align-center">
+            <div className="d-flex align-center mb-3">
               <div className="vl"></div>
               <div className="title">
                 <h4 className="ma-0 fs-2">Total Jobs</h4>
-                <p className="fs-4">{ original.current.length }</p>
+                <p className="fs-4 fw-dark">{ original.current.length }</p>
+              </div>
+              <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
+                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
-            <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
+            <div className="d-flex align-center" style={{ color: '#fd3131' }}>
+              <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
+              <span className="fw-dark">6.5%</span>
+            </div>
           </div>
         </Col>
         <Col span="6">
           <div className="salary-card">
-            <div className="d-flex align-center">
+            <div className="d-flex align-center mb-3">
               <div className="vl"></div>
               <div className="title">
                 <h4 className="ma-0 fs-2">Average Salary</h4>
-                <p className="fs-4">{ commonService.formatCurrency(Math.floor((original.current.reduce((acc, job) => acc + job.salary_max, 0))/original.current.length)) }</p>
+                <p className="fs-4 fw-dark">{ commonService.formatCurrency(Math.floor((original.current.reduce((acc, job) => acc + job.salary_max, 0))/original.current.length)) }</p>
+              </div>
+              <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
+                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
-            <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
+            <div className="d-flex align-center" style={{ color: '#74c674' }}>
+              <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
+              <span className="fw-dark">5.9%</span>
+            </div>
           </div>
         </Col>
         <Col span="6">
           <div className="salary-card">
-            <div className="d-flex align-center">
+            <div className="d-flex align-center mb-3">
               <div className="vl"></div>
               <div className="title">
                 <h4 className="ma-0 fs-2">Remark Work</h4>
-                <p className="fs-4">{ original.current.filter(item => item.has_remote).length }</p>
+                <p className="fs-4 fw-dark">{ original.current.filter(item => item.has_remote).length }</p>
+              </div>
+              <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
+                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
-            <p>Previous Month:</p>
+            <div className="d-flex align-center" style={{ color: '#74c674' }}>
+              <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
+              <span className="fw-dark">6.6%</span>
+            </div>
           </div>
         </Col>
-        {/** 近三個月的 */}
         <Col span="6">
           <div className="salary-card">
-            <div className="d-flex align-center">
+            <div className="d-flex align-center mb-3">
               <div className="vl"></div>
               <div className="title">
-                <h4 className="ma-0 fs-2">Past three months</h4>
-                <p className="fs-4">{ original.current.length }</p>
+                <h4 className="ma-0 fs-2">Past Three months</h4>
+                <p className="fs-4 fw-dark">{ original.current.filter(item => moment(item.published).isAfter(moment().subtract(3, 'month'))).length }</p>
+              </div>
+              <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
+                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
-            <p>Previous Month:</p>
+            <div className="d-flex align-center" style={{ color: '#74c674' }}>
+              <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
+              <span className="fw-dark">4.8%</span>
+            </div>
           </div>
         </Col>
       </Row>
@@ -187,6 +219,16 @@ const SalaryInfomation: React.FC = () => {
                 onClick={handleSelectPosition}
               />
             </div>
+            <Row className="mt-3" justify="center">
+              {selectedJobType && Object.entries(selectedJobType).map(item => {
+                return (
+                  <Col span="7" key={item[0]} className="text-center type-container ma-1">
+                    <p className="fs-2">{item[0]}</p>
+                    <p className="fw-dark fs-4">{item[1].length}</p>
+                  </Col>
+                )
+              })}
+            </Row>
           </div>
         </Col>
         {/** Bar Chart */}

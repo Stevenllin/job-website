@@ -10,6 +10,7 @@ ChartJS.register(ArcElement, Legend, ChartDataLabels);
 const DoughnutChart: React.FC<DoughnutProps> = (props) => {
   const selectedLabel = useRef<string>();
   const selectedColor = useRef<string>();
+  const valRef = useRef<number>();
 
   const data = {
     labels: props.doughnutLabels.map(item => commonService.toAbbreviation(item)),
@@ -69,10 +70,13 @@ const DoughnutChart: React.FC<DoughnutProps> = (props) => {
       /** 設置 水平 中央 */
       ctx.textAlign = 'center';
       ctx.fillStyle = 'white';
-      
+
       /** 畫出字 */
-      ctx.fillText(text, textX, textY);
-    
+      ctx.fillText(text, textX, textY-16);
+      /** 寫出數值 */
+      ctx.font = `bold 1.2rem sans-serif`;
+      ctx.fillText(valRef.current, textX, textY+16);
+
       ctx.restore();
     }
   }];
@@ -93,6 +97,7 @@ const DoughnutChart: React.FC<DoughnutProps> = (props) => {
       selectedLabel.current = props.doughnutLabels[index]
       selectedColor.current = props.color[index]
 
+      valRef.current = value;
       // 在這裡添加自定義邏輯
       props.onClick(value, index);
     }
