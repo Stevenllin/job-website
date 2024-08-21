@@ -27,6 +27,9 @@ const DoughnutChart: React.FC<DoughnutProps> = (props) => {
     responsive: true,
     cutout: 135,
     plugins: {
+      tooltip: {
+        enabled: false,
+      },
       datalabels: {
         color: 'white',
         anchor: 'center',

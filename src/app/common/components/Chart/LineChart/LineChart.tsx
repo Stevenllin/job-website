@@ -14,14 +14,14 @@ const LineChart: React.FC<LineChartProps> = (props) => {
         borderColor: props.lineChart.color,
         backgroundColor: (context: ScriptableContext<"line">) => {
           const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 500);
+          const gradient = ctx.createLinearGradient(0, 0, 0, 600);
 
           gradient.addColorStop(0, props.lineChart.color ? props.lineChart.color : "rgba(250,174,50,1)");
           gradient.addColorStop(1, '#FFFFFF');
           return gradient;
         },
         fill: "start",
-        tension: 0.4, // 曲线的弯曲度，0 表示直线
+        tension: 0.3, // 曲线的弯曲度，0 表示直线
         pointHoverRadius: 0
       },
     ],
@@ -46,6 +46,9 @@ const LineChart: React.FC<LineChartProps> = (props) => {
       },
       tooltip: {
         enabled: false, // 禁用工具提示
+      },
+      datalabels: {
+        display: false, // 移除 Line Chart 上的值
       },
     },
     scales: {

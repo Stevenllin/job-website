@@ -4,8 +4,8 @@ import { Col, Row } from 'antd';
 import { ColorPositionDefines } from '../../core/models/color';
 import commonService from '../../core/services/commonService';
 import DoughnutChart from '../../common/components/Chart/DoughnutChart';
-import BarChart from '../../common/components/Chart/BarChart';
 import { Jobs } from '../../features/FindJobs/types';
+import { LineChartState } from '../../common/components/Chart/LineChart/types';
 import { BarChartState } from '../../common/components/Chart/BarChart/types';
 import { IoMdArrowDropup, IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { IconSizeEnum } from '../../core/enums/icon';
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/types';
 import { GetCountriesResp } from '../../api/models/get/getCountries';
 import LineChart from '../../common/components/Chart/LineChart';
+import BarChart from '../../common/components/Chart/BarChart';
 
 const SalaryInfomation: React.FC = () => {
   const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
@@ -22,15 +23,11 @@ const SalaryInfomation: React.FC = () => {
   /** 選擇的 Country */
   const [selectedCountry, setSelectedCountry] = useState<GetCountriesResp|null>(null)
   /** 選擇的 Country 職缺列表 */
-  const [selectedCountryData, setSelectedCountryData] = useState<Jobs[]>()
+  // const [selectedCountryData, setSelectedCountryData] = useState<Jobs[]>()
   /** 各職缺所代表的顏色 */
   const color: string[] = Object.values(ColorPositionDefines);
-  const [barChart, setBarChart] = useState<BarChartState>({
-    title: '',
-    labels: [],
-    data: [],
-    color: '',
-  });
+  const [lineChart, setLineChart] = useState<LineChartState>({ title: '', labels: [], data: [], color: '', });
+  const [barChart, setBarChart] = useState<BarChartState>({ labels: [], data: [] })
 
   const countryList = useMemo(() => {
     return Object.keys(group_location)
@@ -54,8 +51,21 @@ const SalaryInfomation: React.FC = () => {
   useEffect(() => {
     const target = Object.entries(group_location).find(item => item[0] === selectedCountry?.name);
     if (target) {
-      console.log('target', target[1]);
-      setSelectedCountryData(target[1] as Jobs[])
+      /** 整理 BarChart 的資料 */
+      const jobLists = target[1] as Jobs[];
+      const grouped = commonService.groupData(jobLists, 'job_type');
+
+      const labels: string[] = [];
+      const data: number[] = [];
+      Object.entries(grouped).forEach(item => {
+        labels.push(item[0]);
+        const jobs = item[1] as Jobs[];
+        const average_salary = jobs.reduce((acc, curr) => acc + curr.salary_max, 0) / jobs.length
+        console.log('average_salary', average_salary);
+        data.push(average_salary);
+      })
+      setBarChart({ labels, data })
+      // setSelectedCountryData(jobLists)
     }
   }, [selectedCountry])
 
@@ -73,22 +83,22 @@ const SalaryInfomation: React.FC = () => {
       const groupedJobs = commonService.groupData(jobs, 'salary_max');
 
       const array_salary_distribution = Object.entries(groupedJobs);
-      const barLabels: string[] = [];
-      const barValues: number[] = [];
+      const labels: string[] = [];
+      const values: number[] = [];
 
       let j = 0;
       for (let i = 100000; i <= 200000; i += 5000) {
         /** Bar Labels */
-        barLabels.push(commonService.formatCurrency(i));
+        labels.push(commonService.formatCurrency(i));
         /** 計算 Bar 的 Value */
         const salary = array_salary_distribution[j] ? parseInt(array_salary_distribution[j][0]) : null;
         if (i === salary) {
           /** 整理薪資分佈的 Job List */
           const target = array_salary_distribution[j][1] as Jobs[];
-          barValues.push(target.length);
+          values.push(target.length);
           j++
         }
-        barValues.push(0);
+        values.push(0);
       }
       /** 設置 Doughnut 的顏色 */
       setDoughnutColor(color.map((item, i) => {
@@ -96,10 +106,10 @@ const SalaryInfomation: React.FC = () => {
         return 'rgb(244 244 244)'
       }))
       /** 設置 Bar Chart 圖形 */
-      setBarChart({
+      setLineChart({
         title: doughnutLabels[index],
-        labels: barLabels,
-        data: barValues,
+        labels: labels,
+        data: values,
         color: color[index]
       })
     }
@@ -110,8 +120,6 @@ const SalaryInfomation: React.FC = () => {
     if (target) setSelectedCountry(target)
   }
 
-  /** 各日期的 薪水分佈（折線圖）*/
-  /** 國家根據職業排行薪水 */
   return (
     <div id="salary-information">
       <Row gutter={32} style={{ marginBottom: '32px', justifyContent: 'space-between' }}>
@@ -183,31 +191,28 @@ const SalaryInfomation: React.FC = () => {
         {/** Bar Chart */}
         <Col span="18">
           <div className="salary-card">
-            <div>
-              <LineChart lineChart={barChart} />
-              {/* <BarChart barChart={barChart} /> */}
-            </div>
+            <LineChart lineChart={lineChart} />
           </div>
         </Col>
       </Row>
       <Row style={{ marginTop: '32px' }} gutter={32}>
         {/** MapChart */}
-        <Col span="18">
+        <Col span="17">
           <div className="salary-card">
             {/** 有資料時再渲染畫面 */}
             {mapData.length > 0 && <MapChart mapData={mapData} onSelectCountry={handleSelectCountry} />}
           </div>
         </Col>
-        <Col span="6">
+        <Col span="7">
           <div className="salary-card">
-            <div style={{ width: '100%', backgroundSize: 'cover', overflow: 'hidden' }}>
-              <img src={selectedCountry?.flag} style={{ width: '100%' }} />
+            <div style={{ width: '100%', backgroundSize: 'cover', overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
+              <img src={selectedCountry?.flag} style={{ width: '100%', borderRadius: '16px', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px' }} />
             </div>
-            <h4 className="text-center mt-1">
+            <h4 className="text-center mt-2 fs-4">
               {selectedCountry?.name}
             </h4>
-            Total Jobs: {selectedCountryData?.length}
-
+            {/* Total Jobs: {selectedCountryData?.length} */}
+            <BarChart barChart={barChart} />
           </div>
         </Col>
       </Row>

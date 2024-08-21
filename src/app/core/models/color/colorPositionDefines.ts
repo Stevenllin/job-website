@@ -3,7 +3,7 @@ import { PositionNewTypeTextEnum } from "../../enums/position";
 export const ColorPositionDefines: Record<string, string> = {
   [PositionNewTypeTextEnum.DATA_SCIENTIST]: 'rgb(236 70 101)',
   [PositionNewTypeTextEnum.DEVOPS_ENGINEER]: 'rgb(218 121 139)',
-  [PositionNewTypeTextEnum.SOFTWARE_ENGINEER]: 'rgb(255 223 223)',
+  [PositionNewTypeTextEnum.SOFTWARE_ENGINEER]: 'rgb(248 200 200)',
   [PositionNewTypeTextEnum.CLOUD_ENGINEER]: 'rgb(240 207 127)',
   [PositionNewTypeTextEnum.UX_DESIGNER]: 'rgb(241 237 183)',
   [PositionNewTypeTextEnum.FRONTEND_ENGINEER]: 'rgb(227 238 150)',

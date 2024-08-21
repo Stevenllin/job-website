@@ -38,24 +38,26 @@ const FindJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Jobs[]>([]);
 
   useEffect(() => {
+    console.log('original', original.current);
     setJobs(original.current)
   }, [original.current])
 
   const handleCreateNew = async () => {
     const jobData = {
-      has_remote: false,
-      location: "Netherlands", // 更新后的国家/地区
-      published: "2024-08-18T10:00:00Z", // 更新后的发布时间
-      salary_max: 170000,
-      salary_min: 130000,
-      title: "Data Scientist - Machine Learning Specialist",
-      job_type: "Data Scientist",
-      types: "Full Time",
+      has_remote: true,
+      location: "Germany",
+      published: "2024-07-20T14:00:00Z",
+      salary_max: 150000,
+      salary_min: 120000,
+      title: "Software Engineer - User Research Expert",
+      job_type: "Software Engineer",
+      coords: [60.1282, 18.6435],
+      types: "Part Time",
       company: {
-        linkedin_url: "https://www.linkedin.com/company/philips",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Philips_logo.svg/368px-Philips_logo.svg.png",
-        name: "Philips",
-        website_url: "https://www.philips.com"
+        linkedin_url: "https://www.linkedin.com/company/ericsson",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ericsson_logo.svg/368px-Ericsson-logo.svg.png",
+        name: "Ericsson",
+        website_url: "https://www.ericsson.com"
       }
     };
     
@@ -196,6 +198,8 @@ const FindJobs: React.FC = () => {
           </Row>
         </Form>
       </section>
+      <Button onClick={handleCreateNew}>Create New</Button>
+
       <Row style={{ minHeight: 'calc(100vh - 205px)' }}>
         {/** Filter Sidebar */}
         <Col span="5" className="pa-4">
@@ -279,7 +283,6 @@ const FindJobs: React.FC = () => {
               )}
             />
           </div>
-          {/* <Button onClick={handleCreateNew}>Create New</Button> */}
         </Col>
       </Row>
     </div>
