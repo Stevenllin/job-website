@@ -142,12 +142,13 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       drawTitle('Personal Info', 1, TemplateSideEnum.Left);
       if (email) drawPersonalInfo('Email', email, TemplateSideEnum.Left)
       if (phone) drawPersonalInfo('Phone', phone, TemplateSideEnum.Left)
-      if (country || city) drawPersonalInfo('Location', `${city} ${country}`, TemplateSideEnum.Left)
+      if (country || city) drawPersonalInfo('Location', `${city ? city : ''} ${country}`, TemplateSideEnum.Left)
     }
 
     /** Skills */
     const Skills = template[ProcessStepTextEnum.Skills];
-    if (Skills.formValue) {
+
+    if (Skills?.formValue) {
       drawTitle('Skills', 1, TemplateSideEnum.Left);
       const inputs: InputType[] = commonService.handleAddressSkillsData(Skills.formValue).filter(input => input.rate !== 0);
       inputs.forEach(input => drawSkills(input, TemplateSideEnum.Left))
@@ -241,7 +242,6 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     function updateRightDistances() {
       canvasDistance.setDistances(leftX, rightX, leftY, rightY += 2 * style.lineSpacing);
     }
-  
     for (let i = 0; i < str.length; i++) {
       lineWidth += context.measureText(str[i]).width;
   
@@ -292,7 +292,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       case 1: {
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
         /** 繪製背影顏色，設置 Title */
-        drawLine(ColorMappingDefines[colorEnum].Secondary, 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
+        drawLine(ColorMappingDefines[colorEnum]?.Secondary ?? 'black', 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
         drawText(str, side, 130);
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
@@ -314,10 +314,12 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
    * @param skills Skill 資料
    */
   function drawSkills(skills: InputType, side: TemplateSideEnum) {
-    drawText(skills.input, side, 130);
-    drawLine(ColorMappingDefines[colorEnum].Secondary, 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
-    drawLine('white', 5, { x: 6, y: canvasDistance.leftY }, { x: 124 * (skills.rate/5), y: canvasDistance.leftY })
-    canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 2 * style.paragraphSpacing, canvasDistance.rightY);
+    if (skills.input) {
+      drawText(skills.input, side, 130);
+      drawLine(ColorMappingDefines[colorEnum]?.Secondary ?? 'black', 5, { x: 6, y: canvasDistance.leftY }, { x: 124, y: canvasDistance.leftY })
+      drawLine('white', 5, { x: 6, y: canvasDistance.leftY }, { x: 124 * (skills.rate/5), y: canvasDistance.leftY })
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 2 * style.paragraphSpacing, canvasDistance.rightY);
+    }
   }
 
   function drawHTMLFormat(node: ChildNode, side: TemplateSideEnum) {

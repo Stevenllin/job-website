@@ -38,6 +38,10 @@ const Skills: React.FC = () => {
    * @description 載入緩存並設置 Form 表單
    */
   useEffect(() => {
+    /** 若沒有選擇 Template 跳轉畫面 */
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
+
     if (skillsCache.formValue) {
       /** 更新 Form 表單 */
       form.setFieldsValue(skillsCache.formValue);

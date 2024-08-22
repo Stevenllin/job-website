@@ -25,6 +25,9 @@ const WorkSummary: React.FC = () => {
    useEffect(() => {
     /** 取得緩存 */
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    /** 若沒有選擇 Template 跳轉畫面 */
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
     const history = cache[ProcessStepTextEnum.WorkHistory] ? cache[ProcessStepTextEnum.WorkHistory] : [];
     setHistories(history);
   }, [])

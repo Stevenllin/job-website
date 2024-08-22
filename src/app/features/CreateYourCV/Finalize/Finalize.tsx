@@ -23,6 +23,7 @@ import { ColorNameEnum } from '../../../core/enums/color';
 import { TemplateStyle } from './types';
 import { FaFont } from "react-icons/fa";
 import { FontSizeEnum } from '../../../core/enums/font';
+import { ROUTES } from '../../../core/enums/router';
 
 const fontOptions = [
   { value: 'PingFang TC', label: 'PingFang TC' },
@@ -69,6 +70,8 @@ const Finalize: React.FC = () => {
    * @description 載入緩存
    */
   useEffect(() => {
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
     /** 設定 form */
     setTemplateStyle(finalize);
   }, [])

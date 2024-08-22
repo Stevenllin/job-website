@@ -45,6 +45,10 @@ const Education: React.FC = () => {
    * @description 載入緩存
   */
   useEffect(() => {
+    /** 若沒有選擇 Template 跳轉畫面 */
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
+    
     /** 設定 form */
     const updated = {
       ...education,
@@ -67,6 +71,7 @@ const Education: React.FC = () => {
   useEffect(() => {
     /** 取得緩存 */
     const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+
     const education = cache[ProcessStepTextEnum.Education];
     /** 更新緩存 */
     const updated = { ...cache, [ProcessStepTextEnum.Education]: { ...education, options: updatedCourseworkDefines }}

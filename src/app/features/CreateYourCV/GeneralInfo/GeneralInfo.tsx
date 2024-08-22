@@ -29,6 +29,8 @@ const GeneralInfo: React.FC = () => {
    * @description 載入緩存
    */
   useEffect(() => {
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
     /** 設定 form */
     form.setFieldsValue(info);
     /** 若有錯誤，顯示錯誤欄位 */

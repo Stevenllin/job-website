@@ -33,6 +33,9 @@ const WorkHistory: React.FC = () => {
    * @description 載入緩存並設置 Form 表單
    */
   useEffect(() => {
+    const template = cache[ProcessStepTextEnum.ChooseTemplate];
+    if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
+    
     const history = cache[ProcessStepTextEnum.WorkHistory] ? state?.isEditMode ? state.data : cache[ProcessStepTextEnum.WorkHistory] : {};
     /** 待優化：若從 edit 過來，編輯完後 refresh 頁面，緩存成功，但一直用 state.data 顯示編輯前的資料 是否需要用 redux 暫存最新的資料 */
     const updatedHistory = Array.isArray(history) ? state?.isCreateNewMode ? {} : history[0] : history
