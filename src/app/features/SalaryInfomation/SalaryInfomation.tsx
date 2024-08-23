@@ -174,7 +174,7 @@ const SalaryInfomation: React.FC = () => {
             <div className="d-flex align-center mb-3">
               <div className="vl"></div>
               <div className="title">
-                <h4 className="ma-0 fs-2">Remark Work</h4>
+                <h4 className="ma-0 fs-2">Remote Work</h4>
                 <p className="fs-4 fw-dark">{ original.current.filter(item => item.has_remote).length }</p>
               </div>
               <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>

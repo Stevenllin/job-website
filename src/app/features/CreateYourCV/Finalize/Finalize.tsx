@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/types';
@@ -24,6 +24,7 @@ import { TemplateStyle } from './types';
 import { FaFont } from "react-icons/fa";
 import { FontSizeEnum } from '../../../core/enums/font';
 import { ROUTES } from '../../../core/enums/router';
+import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 
 const fontOptions = [
   { value: 'PingFang TC', label: 'PingFang TC' },
@@ -50,6 +51,7 @@ const fontOptions = [
 ];
 
 const Finalize: React.FC = () => {
+  const previewTemplateRef = useRef<{ exportToPDF: () => void }>(null);
   const navigate = useNavigate()
   const reduxDispatch = useAppDispatch();
   /** 取得 Modal 狀態 */
@@ -65,7 +67,8 @@ const Finalize: React.FC = () => {
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
   const finalize = cache[ProcessStepTextEnum.Finalize];
-
+  /** 為了更新 Preview Template */
+  const [template, setTemplate] = useState(cache);
   /** 
    * @description 載入緩存
    */
@@ -79,6 +82,7 @@ const Finalize: React.FC = () => {
   useEffect(() => {
     const updated = { ...cache, [ProcessStepTextEnum.Finalize]: templateStyle };
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
   }, [templateStyle])
   
   /**
@@ -152,7 +156,8 @@ const Finalize: React.FC = () => {
    * @description 執行 Actions
    */
   const handleExecuteActions = () => {
-    reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true))
+    reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true));
+    previewTemplateRef.current?.exportToPDF();
   }
 
   const handleConfirmWarning = () => {
@@ -189,7 +194,8 @@ const Finalize: React.FC = () => {
         <Row gutter={32} className="h-100">
           {/** Resume */}
           <Col span="16">
-            <EditTemplate />
+            <PreviewTemplate ref={previewTemplateRef} template={template} />
+            {/* <EditTemplate /> */}
           </Col>
           {/** Actions & Changes */}
           <Col span="8">

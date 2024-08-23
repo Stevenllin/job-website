@@ -38,6 +38,7 @@ const Summary: React.FC = () => {
   const handleSaveSummary = (innerHTML: string) => {
     /** 更新緩存 */
     const updated = { ...cache, [ProcessStepTextEnum.Summary]: innerHTML }
+    setTemplate(updated);
     storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated))
   }
 
