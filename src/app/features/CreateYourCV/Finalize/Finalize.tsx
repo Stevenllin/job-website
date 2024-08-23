@@ -25,6 +25,7 @@ import { FaFont } from "react-icons/fa";
 import { FontSizeEnum } from '../../../core/enums/font';
 import { ROUTES } from '../../../core/enums/router';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
+import { TemplateActionEnum } from '../../../core/enums/template';
 
 const fontOptions = [
   { value: 'PingFang TC', label: 'PingFang TC' },
@@ -155,9 +156,17 @@ const Finalize: React.FC = () => {
   /**
    * @description 執行 Actions
    */
-  const handleExecuteActions = () => {
+  const handleExecuteActions = (action: TemplateActionEnum) => {
     reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true));
-    previewTemplateRef.current?.exportToPDF();
+    switch (action) {
+      case TemplateActionEnum.Download: {
+        previewTemplateRef.current?.exportToPDF();
+        break;
+      }
+      case TemplateActionEnum.Print: {
+        break;
+      }
+    }
   }
 
   const handleConfirmWarning = () => {
@@ -200,15 +209,15 @@ const Finalize: React.FC = () => {
           {/** Actions & Changes */}
           <Col span="8">
             <div className="d-flex justify-between actions-container">
-              <div className="actions-container--item" onClick={handleExecuteActions}>
+              <div className="actions-container--item" onClick={() => handleExecuteActions(TemplateActionEnum.Download)}>
                 <MdDownload style={{ 'fontSize': IconSizeEnum.Large }} />
                 <p>Download</p>
               </div>
-              <div className="actions-container--item" onClick={handleExecuteActions}>
+              <div className="actions-container--item" onClick={() => handleExecuteActions(TemplateActionEnum.Print)}>
                 <MdPrint style={{ 'fontSize': IconSizeEnum.Large }} />
                 <p>Print</p>
               </div>
-              <div className="actions-container--item" onClick={handleExecuteActions}>
+              <div className="actions-container--item" onClick={() => handleExecuteActions(TemplateActionEnum.Email)}>
                 <MdEmail style={{ 'fontSize': IconSizeEnum.Large }} />
                 <p>Email</p>
               </div>

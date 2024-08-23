@@ -10,7 +10,7 @@ const CommonModal: React.FC<CommonModalProps> = (props) => {
   return (
     <Modal
       name={ModalNameEnum.Common}
-      title={<RiErrorWarningFill style={{ fontSize: IconSizeEnum.Large }} />}
+      title={<RiErrorWarningFill style={{ fontSize: IconSizeEnum.Largest }} />}
       visible={props.visible}
       confirmBtnText="Confirm"
       cancelBtnText="Cancel"
