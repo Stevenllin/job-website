@@ -104,10 +104,17 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     return (handleTemplate: () => void) => {
       canvasDistance.resetDistances();
       /** 清除畫布 */
-      context.clearRect(0, 0, 450, 550);
-      /** 設定畫布的寬度和高度 */
-      canvas.width = 400;
-      canvas.height = 565;
+      context.clearRect(0, 0, 400, 566);
+      /** 設定畫布的寬度和高度並提高解析度 */
+      canvas.style.width = `400px`
+      canvas.style.height = `566px`
+      /** 像素比率 */
+      const dpr = 4
+      /** 設置 Canvas 的實際寬度，考慮像素比ㄋ */
+      canvas.width = 400 * dpr;
+      canvas.height = 566 * dpr;
+      /** 縮放，以適應設備像素比 */
+      context.scale(dpr, dpr)
       /** 根據 Cascade 或 Cubic Template */
       handleTemplate();
     }
@@ -119,7 +126,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
   function handleCascadeTemplate () {
     /** 左側背景顏色 */
     context.fillStyle = style.color;
-    context.fillRect(0, 0, 130, 565);
+    context.fillRect(0, 0, 130, 566);
 
     /** 繪製名字 */
     context.fillStyle = 'white';

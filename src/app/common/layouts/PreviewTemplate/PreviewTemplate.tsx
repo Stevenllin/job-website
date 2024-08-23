@@ -18,8 +18,10 @@ const PreviewTemplate = forwardRef((props: PreviewTemplateProps, ref) => {
       if (canvasRef.current) {
         const canvas = canvasRef.current;
         const imgData = canvas.toDataURL('image/png');
+        /** 縱向 毫米 A4 */
         const pdf = new jsPDF('p', 'mm', 'a4');
-        pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+        /** 起始位置 圖像寬度 圖像高度 設置為 0 代表原始寬高計算 */
+        pdf.addImage(imgData, 'PNG', 0, 0, 210, 0);
         pdf.save('download.pdf');
       }
     }
