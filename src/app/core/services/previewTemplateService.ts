@@ -165,18 +165,11 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
 
     /** Right Side: Summary */
     const Summary = template[ProcessStepTextEnum.Summary];
-    if (Summary) {
-      const doc: Document = commonService.convertInnerHTMLToDoc(Summary);
-      const content = doc.getElementsByTagName('body')[0];
-      /** 根據 HTML 繪圖 */
-      content.childNodes.forEach((item: ChildNode) => drawHTMLFormat(item, TemplateSideEnum.Right))
-    }
+    if (Summary) commonService.handleFilterText(Summary, (item) => drawHTMLFormat(item, TemplateSideEnum.Right))
 
     /** Right Side: Experience */
     const WorkHistory = template[ProcessStepTextEnum.WorkHistory];
-    if (WorkHistory) {
-      drawTitle('Experience', 2, TemplateSideEnum.Right)
-    }
+    if (WorkHistory) drawTitle('Experience', 2, TemplateSideEnum.Right)
     
     /** Right Side: Education */
     const Education = template[ProcessStepTextEnum.Education];
@@ -196,12 +189,9 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       drawText(title, TemplateSideEnum.Right, 438);
       drawText(`${school_name}, ${school_location}`, TemplateSideEnum.Right, 438);
 
-      if (coursework) {
-        const doc: Document = commonService.convertInnerHTMLToDoc(coursework);
-        const content = doc.getElementsByTagName('body')[0];
-        /** 根據 HTML 繪圖 */
-        content.childNodes.forEach((item: ChildNode) => drawHTMLFormat(item, TemplateSideEnum.Right))
-      }      
+      /** 根據 HTML 繪圖 */
+      /** Item 是由 Foreach 中傳入 */
+      if (coursework) commonService.handleFilterText(coursework, (item) => drawHTMLFormat(item, TemplateSideEnum.Right))
     }
   }
 

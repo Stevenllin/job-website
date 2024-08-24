@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/types';
-import { Row, Col, Slider, Select } from 'antd';
+import { Row, Col, Slider, Select, Button } from 'antd';
 import Collapse from "antd/lib/collapse";
 import type { CollapseProps } from 'antd';
 import { IconSizeEnum } from '../../../core/enums/icon';
@@ -94,7 +94,7 @@ const Finalize: React.FC = () => {
   const updateTemplateStyle = (key: keyof TemplateStyle, value: string | number) => {
     setTemplateStyle(prev => ({ ...prev, [key]: value, }));
   };
-  
+
   const handleDisplayFormatting = () => {
     return (
       <div>
@@ -129,12 +129,52 @@ const Finalize: React.FC = () => {
       </div>
     )
   }
+
+  const handleCheckSpelling = () => {
+    const Summary = template[ProcessStepTextEnum.Summary];
+    const Education = template[ProcessStepTextEnum.Education];
+
+    if (Summary) commonService.handleFilterText(Summary, getText)
+    if (Education.coursework) commonService.handleFilterText(Education.coursework, getText)
+
+    async function getText(node: ChildNode) {
+      const element = node as HTMLElement;
+      switch (node.nodeName) {
+        case ('P'): {
+          if (element.textContent?.trim()) {
+            const stringArray =  element.textContent?.trim().split(' ');
+            const spellResult = await commonService.checkSpelling(stringArray)
+            console.log('spellResult', spellResult)
+          }
+          break;
+        }
+        case ('OL'): {
+          const listItems = element.querySelectorAll('li');
+          Array.from(listItems).forEach(li => {
+            if (li.textContent?.trim()) {
+              const stringArray = li.textContent?.trim().split(' ')
+              // console.log('stringArray', stringArray)
+            }
+          })
+          break;
+        }
+      }
+    }
+  }
   
   const items: CollapseProps['items'] = [
     {
       key: '1',
       label: 'Spell Check',
-      children: <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>,
+      children: (
+        <div>
+          <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>
+          <Button
+            type="primary"
+            onClick={handleCheckSpelling}
+          >Check your spelling</Button>
+        </div>
+      ),
     },
     {
       key: '2',

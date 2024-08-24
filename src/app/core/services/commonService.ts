@@ -1,5 +1,8 @@
 import { InputType } from '../../features/CreateYourCV/Skills/types';
 import { DateFormatEnum } from '../enums/date';
+import Typo from 'typo-js';
+import { TemplateSideEnum } from '../enums/template';
+
 /**
  * 
  * @param date 日期
@@ -90,6 +93,11 @@ function throttle<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   };
 }
 
+/**
+ * 
+ * @param amount 目標數字
+ * @returns 回傳金額格式
+ */
 const formatCurrency = (amount: number) => {
   return amount.toLocaleString('en-US', {
     style: 'currency',
@@ -98,6 +106,12 @@ const formatCurrency = (amount: number) => {
   });
 }
 
+/**
+ * 
+ * @param array 目標陣列
+ * @param elem 目標整合的參數
+ * @returns 
+ */
 const groupData = (array: any[], elem: any) => {
   const groupedJobs = array.reduce((acc, job) => {
     const jobType = job[elem];
@@ -120,11 +134,50 @@ const groupData = (array: any[], elem: any) => {
 const toAbbreviation = (str: string) => {
   // 将字符串按空格拆分成单词数组
   const words = str.split(' ');
-
   // 提取每个单词的首字母并转换为大写
   const abbreviation = words.map(word => word.charAt(0).toUpperCase()).join('');
 
   return abbreviation;
+}
+
+/**
+ * @description 根據 HTML 取得內容純文字
+ * @param process 是目標步驟的內容
+ * @param fn 目標欲執行函數
+ */
+const handleFilterText = (process: any, fn: (item: ChildNode, side?: TemplateSideEnum) => void) => {
+  const doc: Document = convertInnerHTMLToDoc(process);
+  const content = doc.getElementsByTagName('body')[0];
+  content.childNodes.forEach(item => fn(item))
+}
+
+interface SpellingResult {
+  string: string;
+  check: boolean;
+  suggestion: string[];
+}
+
+/**
+ * @description 檢核文字的 Spelling
+ * 
+ */
+const checkSpelling = async (target: string[]) => {
+  const fetchText = async (dictionaries: string) => {
+    const response = await fetch(dictionaries);
+    return await response.text();
+  };
+
+  const [aff, dic] = await Promise.all([fetchText("/dictionaries/fr_FR/fr_FR.aff"), fetchText("/dictionaries/fr_FR/fr_FR.dic")]);
+  const typo = new Typo("fr_FR", aff, dic);
+  
+  const result: SpellingResult[] = target.map(string => {
+    return {
+      string,
+      check: typo.check(string),
+      suggestion: typo.suggest(string)
+    }
+  })
+  return result;
 }
 
 export default {
@@ -135,5 +188,7 @@ export default {
   throttle,
   formatCurrency,
   groupData,
-  toAbbreviation
+  toAbbreviation,
+  checkSpelling,
+  handleFilterText
 }

@@ -38,7 +38,6 @@ const FindJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Jobs[]>([]);
 
   useEffect(() => {
-    console.log('original', original.current);
     setJobs(original.current)
   }, [original.current])
 
