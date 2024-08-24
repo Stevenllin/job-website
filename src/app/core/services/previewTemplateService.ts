@@ -7,14 +7,8 @@ import { ColorMappingDefines } from '../models/color';
 import { InputType } from '../../features/CreateYourCV/Skills/types';
 import commonService from './commonService';
 import { DateFormatEnum } from '../enums/date';
-
-interface Style {
-  color: string;
-  fontSize: FontSizeEnum;
-  fontStyle: string;
-  lineSpacing: number;
-  paragraphSpacing: number;
-} 
+import { Style } from '../models/style';
+import { ROUTES } from "../../core/enums/router";
 
 interface CanvasDistance {
   leftX: number;
@@ -28,15 +22,6 @@ interface CanvasDistance {
 interface Point {
   x: number;
   y: number;
-}
-
-/** 預設 Style */
-const defaultStyle = {
-  color: '#383d47',
-  fontSize: FontSizeEnum.Medium,
-  fontStyle: 'Arial',
-  lineSpacing: 8,
-  paragraphSpacing: 8,
 }
 
 /** 
@@ -87,15 +72,12 @@ const CanvasDistance = (() => {
 })()
 
 const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, template: any, canvasDistance: CanvasDistance) => {
-  /** 若沒有設置 Finalize 的 Style 則用默認 */
   const colorEnum = template[ProcessStepTextEnum.Finalize]?.color as ColorNameEnum
-  const style: Style = {
-    color: ColorMappingDefines[colorEnum]?.Primary || defaultStyle.color,
-    fontSize: template[ProcessStepTextEnum.Finalize]?.fontSize || defaultStyle.fontSize,
-    fontStyle: template[ProcessStepTextEnum.Finalize]?.fontStyle || defaultStyle.fontStyle,
-    lineSpacing: template[ProcessStepTextEnum.Finalize]?.lineSpacing || defaultStyle.lineSpacing,
-    paragraphSpacing: template[ProcessStepTextEnum.Finalize]?.paragraphSpacing || defaultStyle.paragraphSpacing,
-  };
+  const style: Style = commonService.handleAddressTemplateStyle(template)
+  const isFinalize = window.location.pathname === ROUTES.FEATURES__CREATE_YOUR_CV__FINALIZE;
+  const previewElement = document.getElementById('preview');
+  const width = isFinalize ? previewElement?.getBoundingClientRect().width : 400;
+  const height = isFinalize && width ? width * Math.sqrt(2) : 566;
 
   /**
    * @description 建立畫布長寬
@@ -104,13 +86,13 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     return (handleTemplate: () => void) => {
       canvasDistance.resetDistances();
       /** 清除畫布 */
-      context.clearRect(0, 0, 400, 566);
+      context.clearRect(0, 0, width || 400, height);
       /** 設定畫布的寬度和高度並提高解析度 */
-      canvas.style.width = `400px`
-      canvas.style.height = `566px`
+      canvas.style.width = isFinalize ? `${width}px` : `400px`
+      canvas.style.height = isFinalize ? `${height}px` : `566px`
       /** 像素比率 */
       const dpr = 4
-      /** 設置 Canvas 的實際寬度，考慮像素比ㄋ */
+      /** 設置 Canvas 的實際寬度，考慮像素比 */
       canvas.width = 400 * dpr;
       canvas.height = 566 * dpr;
       /** 縮放，以適應設備像素比 */
@@ -126,7 +108,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
   function handleCascadeTemplate () {
     /** 左側背景顏色 */
     context.fillStyle = style.color;
-    context.fillRect(0, 0, 130, 566);
+    context.fillRect(0, 0, 130, height);
 
     /** 繪製名字 */
     context.fillStyle = 'white';
@@ -180,7 +162,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       const title = `${degree} in ${field}`
       
       context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
-      drawText(`${commonService.convertDateFormat(start_date, DateFormatEnum.YYYYMM)} -`, TemplateSideEnum.Right, 280);
+      drawText(`${commonService.convertDateFormat(start_date, DateFormatEnum.YYYYMM)} `, TemplateSideEnum.Right, 280);
       drawText(`${commonService.convertDateFormat(end_date, DateFormatEnum.YYYYMM)}`, TemplateSideEnum.Right, 280);
       /** 因 drawText 移動四格 Line Spacing */
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);

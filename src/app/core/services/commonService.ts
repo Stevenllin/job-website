@@ -2,6 +2,11 @@ import { InputType } from '../../features/CreateYourCV/Skills/types';
 import { DateFormatEnum } from '../enums/date';
 import Typo from 'typo-js';
 import { TemplateSideEnum } from '../enums/template';
+import { Style } from '../models/style';
+import { ColorNameEnum } from '../enums/color';
+import { ColorMappingDefines } from '../models/color';
+import { FontSizeEnum } from '../enums/font';
+import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
 
 /**
  * 
@@ -166,7 +171,6 @@ const checkSpelling = async (target: string[]) => {
     const response = await fetch(dictionaries);
     return await response.text();
   };
-
   const [aff, dic] = await Promise.all([fetchText("/dictionaries/fr_FR/fr_FR.aff"), fetchText("/dictionaries/fr_FR/fr_FR.dic")]);
   const typo = new Typo("fr_FR", aff, dic);
   
@@ -180,6 +184,28 @@ const checkSpelling = async (target: string[]) => {
   return result;
 }
 
+const handleAddressTemplateStyle = (template: any) => {
+  /** 預設 Style */
+  const defaultStyle = {
+    color: ColorNameEnum.Gray,
+    fontSize: FontSizeEnum.Medium,
+    fontStyle: 'Arial',
+    lineSpacing: 8,
+    paragraphSpacing: 8,
+  }
+
+  const colorEnum = template[ProcessStepTextEnum.Finalize]?.color as ColorNameEnum
+  const style: Style = {
+    color: ColorMappingDefines[colorEnum]?.Primary || defaultStyle.color,
+    fontSize: template[ProcessStepTextEnum.Finalize]?.fontSize || defaultStyle.fontSize,
+    fontStyle: template[ProcessStepTextEnum.Finalize]?.fontStyle || defaultStyle.fontStyle,
+    lineSpacing: template[ProcessStepTextEnum.Finalize]?.lineSpacing || defaultStyle.lineSpacing,
+    paragraphSpacing: template[ProcessStepTextEnum.Finalize]?.paragraphSpacing || defaultStyle.paragraphSpacing,
+  };
+
+  return style;
+}
+
 export default {
   convertDateFormat,
   convertInnerHTMLToDoc,
@@ -190,5 +216,6 @@ export default {
   groupData,
   toAbbreviation,
   checkSpelling,
-  handleFilterText
+  handleFilterText,
+  handleAddressTemplateStyle
 }

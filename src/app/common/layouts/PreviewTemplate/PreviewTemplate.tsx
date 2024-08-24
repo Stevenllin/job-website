@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useEffect, useImperativeHandle } from 'react'
+import { forwardRef, useRef, useEffect, useImperativeHandle } from 'react'
 import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { PreviewTemplateProps } from './types';

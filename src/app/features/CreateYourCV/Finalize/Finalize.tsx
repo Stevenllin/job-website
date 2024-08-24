@@ -7,7 +7,6 @@ import Collapse from "antd/lib/collapse";
 import type { CollapseProps } from 'antd';
 import { IconSizeEnum } from '../../../core/enums/icon';
 import { MdExpandMore, MdExpandLess, MdDownload, MdPrint, MdEmail } from "react-icons/md";
-import EditTemplate from '../../../common/components/EditTemplate';
 import CommonModal from '../../../common/components/Modals/CommonModal';
 import { CommonTypeEnum } from '../../../core/enums/modal/';
 import useAppDispatch from '../../../core/hooks/useAppDispatch';
@@ -61,9 +60,9 @@ const Finalize: React.FC = () => {
   const [templateStyle, setTemplateStyle] = useState<TemplateStyle>({
     color: ColorNameEnum.Gray,
     fontSize: FontSizeEnum.Medium,
-    fontStyle: '',
-    paragraphSpacing: 2,
-    lineSpacing: 2,
+    fontStyle: 'Arial',
+    paragraphSpacing: 8,
+    lineSpacing: 8,
   });
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
@@ -242,9 +241,8 @@ const Finalize: React.FC = () => {
       <section>
         <Row gutter={32} className="h-100">
           {/** Resume */}
-          <Col span="16">
+          <Col span="16" style={{ height: 'calc(100vh - 307px)', overflow: 'scroll' }}>
             <PreviewTemplate ref={previewTemplateRef} template={template} />
-            {/* <EditTemplate /> */}
           </Col>
           {/** Actions & Changes */}
           <Col span="8">
