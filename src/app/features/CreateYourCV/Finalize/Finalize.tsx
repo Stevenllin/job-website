@@ -10,7 +10,7 @@ import { MdExpandMore, MdExpandLess, MdDownload, MdPrint, MdEmail } from "react-
 import CommonModal from '../../../common/components/Modals/CommonModal';
 import { CommonTypeEnum } from '../../../core/enums/modal/';
 import useAppDispatch from '../../../core/hooks/useAppDispatch';
-import { setModalVisibleAction } from '../../../store/ui/actions';
+import { setModalVisibleAction, setSpinnerVisibleAction } from '../../../store/ui/actions';
 import { ModalNameEnum } from '../../../core/enums/modal';
 import commonService from '../../../core/services/commonService';
 import storageService from '../../../core/services/storageService';
@@ -129,37 +129,74 @@ const Finalize: React.FC = () => {
     )
   }
 
-  const handleCheckSpelling = () => {
+  const handleCheckSpelling = async () => {
     const Summary = template[ProcessStepTextEnum.Summary];
     const Education = template[ProcessStepTextEnum.Education];
+  
+    reduxDispatch(setSpinnerVisibleAction(true));
+  
+    try {
+      // 創建 Promise 陣列来存儲異步操作
+      const promises = [];
+      // 如果 Summary 存在，添加對應的 Promise
+      if (Summary) promises.push(createCheckSpellingPromise(Summary));
+      // 如果 Education.coursework 存在，添加對應的 Promise
+      if (Education.coursework) promises.push(createCheckSpellingPromise(Education.coursework));
+  
+      await Promise.all(promises);
+    } catch (error) {
+      console.error('error', error);
+    } finally {
+      reduxDispatch(setSpinnerVisibleAction(false));
+    }
 
-    if (Summary) commonService.handleFilterText(Summary, getText)
-    if (Education.coursework) commonService.handleFilterText(Education.coursework, getText)
+    /**
+     * 
+     * @param textContent 目標 Section 的
+     * @returns 回傳一個 Promise
+     */
+    function createCheckSpellingPromise (textContent: any): Promise<void> {
+      return new Promise<void>((resolve) => {
+        commonService.handleFilterText(textContent, async (node) => {
+          await getText(node);
+          resolve();
+        });
+      });
+    };
 
+    /**
+     * @description 目的是取出 HTML 內純文字
+     * @param node 目標的 HTML 的元素
+     */
     async function getText(node: ChildNode) {
       const element = node as HTMLElement;
       switch (node.nodeName) {
-        case ('P'): {
+        case 'P': {
           if (element.textContent?.trim()) {
-            const stringArray =  element.textContent?.trim().split(' ');
-            const spellResult = await commonService.checkSpelling(stringArray)
-            console.log('spellResult', spellResult)
+            const stringArray = element.textContent.trim().split(' ');
+            try {
+              const spellResult = await commonService.checkSpelling(stringArray);
+              console.log('spellResult', spellResult);
+            } catch (error) {
+              console.error('Error checking spelling for paragraph:', error);
+            }
           }
           break;
         }
-        case ('OL'): {
+        case 'OL': {
           const listItems = element.querySelectorAll('li');
-          Array.from(listItems).forEach(li => {
+          for (const li of listItems) {
             if (li.textContent?.trim()) {
-              const stringArray = li.textContent?.trim().split(' ')
-              // console.log('stringArray', stringArray)
+              const stringArray = li.textContent.trim().split(' ');
+              // You can add your logic here to handle list item text
             }
-          })
+          }
           break;
         }
       }
     }
-  }
+  };
+  
   
   const items: CollapseProps['items'] = [
     {

@@ -4,6 +4,7 @@ import { initFetchCommonDataAction } from '../../../store/common/actions';
 import { MainLayoutProps } from './types';
 import useAppDispatch from '../../../core/hooks/useAppDispatch';
 import ModalCollection from '../../components/Modals/ModalCollection';
+import CircularSpinner from '../../components/Spinners/CircularSpinner';
 
 /**
  * 
@@ -27,6 +28,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props) => {
         {props.children}
       </main>
       <ModalCollection />
+      <CircularSpinner />
     </>
   )
 }
