@@ -19,12 +19,13 @@ import { ProcessStepTextMatchesCodes, ProcessRouteMatchesStep, ProcessStepTextEn
 import { useNavigate } from 'react-router-dom';
 import ColorPicker from '../../../common/components/Form/ColorPicker';
 import { ColorNameEnum } from '../../../core/enums/color';
-import { TemplateStyle } from './types';
+import { TemplateStyle, SpellingResult } from './types';
 import { FaFont } from "react-icons/fa";
 import { FontSizeEnum } from '../../../core/enums/font';
 import { ROUTES } from '../../../core/enums/router';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 import { TemplateActionEnum } from '../../../core/enums/template';
+import { v4 as uuidv4 } from 'uuid';
 
 const fontOptions = [
   { value: 'PingFang TC', label: 'PingFang TC' },
@@ -63,6 +64,7 @@ const Finalize: React.FC = () => {
     fontStyle: 'Arial',
     paragraphSpacing: 8,
     lineSpacing: 8,
+    typo: []
   });
   /** 取得緩存 */
   const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
@@ -130,6 +132,7 @@ const Finalize: React.FC = () => {
   }
 
   const handleCheckSpelling = async () => {
+    let spellingResult: SpellingResult[] = [];
     const Summary = template[ProcessStepTextEnum.Summary];
     const Education = template[ProcessStepTextEnum.Education];
   
@@ -142,8 +145,9 @@ const Finalize: React.FC = () => {
       if (Summary) promises.push(createCheckSpellingPromise(Summary));
       // 如果 Education.coursework 存在，添加對應的 Promise
       if (Education.coursework) promises.push(createCheckSpellingPromise(Education.coursework));
-  
+      console.log('spellingResult', spellingResult)
       await Promise.all(promises);
+      setTemplateStyle({ ...finalize, typo: spellingResult });
     } catch (error) {
       console.error('error', error);
     } finally {
@@ -152,51 +156,89 @@ const Finalize: React.FC = () => {
 
     /**
      * 
-     * @param textContent 目標 Section 的
+     * @param textContent 目標 Section 的 HTML 文字
      * @returns 回傳一個 Promise
      */
-    function createCheckSpellingPromise (textContent: any): Promise<void> {
+    function createCheckSpellingPromise (textContent: string): Promise<void> {
       return new Promise<void>((resolve) => {
         commonService.handleFilterText(textContent, async (node) => {
-          await getText(node);
+          const result: SpellingResult[] = (await getText(node)).filter(item => item.check === false);
+          spellingResult = [...spellingResult, ...result]
           resolve();
         });
-      });
+      })
     };
-
-    /**
-     * @description 目的是取出 HTML 內純文字
-     * @param node 目標的 HTML 的元素
-     */
-    async function getText(node: ChildNode) {
-      const element = node as HTMLElement;
-      switch (node.nodeName) {
-        case 'P': {
-          if (element.textContent?.trim()) {
-            const stringArray = element.textContent.trim().split(' ');
+  };
+  /**
+   * @description 目的是取出 HTML 內純文字
+   * @param node 目標的 HTML 的元素
+   */
+  async function getText(node: ChildNode) {
+    const element = node as HTMLElement;
+    switch (node.nodeName) {
+      case 'P': {
+        if (element.textContent?.trim()) {
+          const stringArray = element.textContent.trim().split(' ').filter(word => !/\d/.test(word));
+          if (stringArray.length === 0) return []
+          try {
+            const spellResult = await commonService.checkSpelling(stringArray);
+            return spellResult;
+          } catch (error) {
+            console.error('Error checking spelling for paragraph:', error);
+          }
+          return []
+        }
+        break;
+      }
+      case 'OL': {
+        const listItems = element.querySelectorAll('li');
+        for (const li of listItems) {
+          if (li.textContent?.trim()) {
+            const stringArray = li.textContent.trim().split(' ').filter(word => !/\d/.test(word));
+            if (stringArray.length === 0) return []
             try {
               const spellResult = await commonService.checkSpelling(stringArray);
-              console.log('spellResult', spellResult);
+              return spellResult;
             } catch (error) {
               console.error('Error checking spelling for paragraph:', error);
             }
+            return []
           }
-          break;
         }
-        case 'OL': {
-          const listItems = element.querySelectorAll('li');
-          for (const li of listItems) {
-            if (li.textContent?.trim()) {
-              const stringArray = li.textContent.trim().split(' ');
-              // You can add your logic here to handle list item text
-            }
-          }
-          break;
-        }
+        break;
       }
+      default:
+        return []
     }
-  };
+    return []
+  }
   
+  /**
+   * @description 將目標文字取代原文字
+   * 
+   * @param origin 原文字
+   * @param target 目標文字
+   */
+  const handleUseSuggestion = (origin: string, target: string) => {
+    let summary_text = ''
+    let education_text = ''
+    const Summary = template[ProcessStepTextEnum.Summary];
+    const Education = template[ProcessStepTextEnum.Education];
+
+    if (Summary) summary_text = Summary.replaceAll(origin, target);
+    if (Education.coursework) education_text = Education.coursework.replaceAll(origin, target);
+
+    /** 更新緩存 */
+    const updated = { ...cache,
+      [ProcessStepTextEnum.Summary]: summary_text,
+      [ProcessStepTextEnum.Education]: {
+        ...cache[ProcessStepTextEnum.Education],
+        coursework: education_text
+      }
+    };
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setTemplate(updated)
+  }
   
   const items: CollapseProps['items'] = [
     {
@@ -204,11 +246,41 @@ const Finalize: React.FC = () => {
       label: 'Spell Check',
       children: (
         <div>
-          <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>
-          <Button
-            type="primary"
-            onClick={handleCheckSpelling}
-          >Check your spelling</Button>
+          {templateStyle.typo.length === 0 ? (
+            <>
+              <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>
+              <Button
+                type="primary"
+                onClick={handleCheckSpelling}
+              >Check your spelling</Button>
+            </>
+          ) : (
+            <>
+              <div className="d-flex justify-center">
+                <Button
+                  type="primary"
+                  onClick={handleCheckSpelling}
+                >Check again?</Button>
+              </div>
+              <div className="suggestion-container">
+                {templateStyle.typo.map((origin, index) => (
+                  <div key={uuidv4()}>
+                    <p>{index+1} {origin.string}</p>
+                    <div className="d-flex" style={{ flexWrap: 'wrap' }}>
+                      <span className="me-2">Suggestion:</span>
+                      {origin.suggestion.map(text => (
+                        <span
+                          key={uuidv4()}
+                          className="me-2 suggestion-text"
+                          onClick={() => handleUseSuggestion(origin.string, text)}
+                        >{text}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       ),
     },
@@ -221,12 +293,7 @@ const Finalize: React.FC = () => {
       key: '3',
       label: 'Formatting Tools',
       children: handleDisplayFormatting(),
-    },
-    {
-      key: '4',
-      label: 'Add sections',
-      children: <p>1</p>,
-    },
+    }
   ]
 
   /**

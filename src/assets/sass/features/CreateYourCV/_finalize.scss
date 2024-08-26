@@ -47,4 +47,19 @@
       }
     }
   }
+  .suggestion {
+    &-container {
+      height: 240px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+    &-text {
+      font-style: italic;
+      cursor: pointer;
+
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
 }

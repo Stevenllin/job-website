@@ -7,6 +7,7 @@ import { ColorNameEnum } from '../enums/color';
 import { ColorMappingDefines } from '../models/color';
 import { FontSizeEnum } from '../enums/font';
 import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
+import { SpellingResult } from '../../features/CreateYourCV/Finalize/types';
 
 /**
  * 
@@ -147,19 +148,13 @@ const toAbbreviation = (str: string) => {
 
 /**
  * @description 根據 HTML 取得內容純文字
- * @param process 是目標步驟的內容
+ * @param textContent 是目標步驟的內容
  * @param fn 目標欲執行函數
  */
-const handleFilterText = (process: any, fn: (item: ChildNode, side?: TemplateSideEnum) => void) => {
-  const doc: Document = convertInnerHTMLToDoc(process);
+const handleFilterText = (textContent: string, fn: (item: ChildNode, side?: TemplateSideEnum) => void) => {
+  const doc: Document = convertInnerHTMLToDoc(textContent);
   const content = doc.getElementsByTagName('body')[0];
   content.childNodes.forEach(item => fn(item))
-}
-
-interface SpellingResult {
-  string: string;
-  check: boolean;
-  suggestion: string[];
 }
 
 /**

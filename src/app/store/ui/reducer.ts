@@ -23,7 +23,6 @@ const UIReducer: Reducer<UIState, UIActions> = (state = initialState, action) =>
     }
     /** [Spinners] 設置 Async Spinner 能見度 (Action) */
     case UI_SPINNERS__SET_SPINNER_VISIBLE: {
-      console.log('action', action)
       return { ...state, spinners: { visible: action.payload.visible  }}
     }
     default:
