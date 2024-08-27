@@ -145,7 +145,7 @@ const Finalize: React.FC = () => {
       if (Summary) promises.push(createCheckSpellingPromise(Summary));
       // 如果 Education.coursework 存在，添加對應的 Promise
       if (Education.coursework) promises.push(createCheckSpellingPromise(Education.coursework));
-      console.log('spellingResult', spellingResult)
+
       await Promise.all(promises);
       setTemplateStyle({ ...finalize, typo: spellingResult });
     } catch (error) {
@@ -246,7 +246,7 @@ const Finalize: React.FC = () => {
       label: 'Spell Check',
       children: (
         <div>
-          {templateStyle.typo.length === 0 ? (
+          {templateStyle?.typo.length === 0 ? (
             <>
               <p>Spelling errors have been hightlighted in your resume. Click on each word to edit the text. </p>
               <Button
@@ -263,7 +263,7 @@ const Finalize: React.FC = () => {
                 >Check again?</Button>
               </div>
               <div className="suggestion-container">
-                {templateStyle.typo.map((origin, index) => (
+                {templateStyle?.typo.map((origin, index) => (
                   <div key={uuidv4()}>
                     <p>{index+1} {origin.string}</p>
                     <div className="d-flex" style={{ flexWrap: 'wrap' }}>

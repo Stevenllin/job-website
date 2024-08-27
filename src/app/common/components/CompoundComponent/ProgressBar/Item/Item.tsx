@@ -4,8 +4,13 @@ import ProgressBarContext from '../ProgressBarContext';
 import { useNavigate } from 'react-router-dom';
 import storageService from '../../../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../../../core/enums/storage';
+import { ProcessStepTextEnum } from '../../../../../features/CreateYourCV/types';
+import { useLocation } from 'react-router-dom';
+import { BiSolidError } from "react-icons/bi";
+import { IconSizeEnum } from '../../../../../core/enums/icon';
 
 const Item: React.FC<ItemProps> = (props) => {
+  const location = useLocation();
   const progressBarContext = useContext(ProgressBarContext);
   const isActive = progressBarContext.currentStep === props.value;
   const navigate = useNavigate()
@@ -17,7 +22,6 @@ const Item: React.FC<ItemProps> = (props) => {
   /** 如果為陣列（Work History） */
   if (Array.isArray(data)) {
     errors = data.some(item => item.errors && item.errors.length > 0);
-
   } else if (data?.errors) {
     errors = true
   }
@@ -38,8 +42,9 @@ const Item: React.FC<ItemProps> = (props) => {
       </div>
       {
         errors && (
-          <div className="mb-2 fs-1 text-center" style={{ color: 'red' }}>
-            Add missing information
+          <div className="mb-2 fs-1 text-center d-flex align-center" style={{ color: 'red', fontWeight: 'bold' }}>
+            <BiSolidError style={{ fontSize: IconSizeEnum.Medium }} />
+            <span className="ms-2">Missing information</span>
           </div>
         )
       }
