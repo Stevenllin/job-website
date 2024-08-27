@@ -8,4 +8,11 @@
       "path": "./tsconfig.node.json"
     }
   ],
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    /** 可以適當的解決 CommonJS 和 ES 模組之間兼容問題 */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+  }
 }

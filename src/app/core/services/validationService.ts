@@ -1,7 +1,6 @@
 import { Rule, RuleObject } from 'antd/lib/form';
 import { StoreValue } from 'antd/lib/form/interface';
 import { FormInstance } from 'antd/lib/form/Form';
-import dayjs from 'dayjs';
 
 /** 策略模式 */
 
@@ -62,7 +61,7 @@ export const validateEndDate = (form: FormInstance) => ({
 })
 
 /**
- * @description 驗證 End Date
+ * @description 驗證 Start Date
  * 
  * @param isRequired 是否必填
  * @param form 表單實例

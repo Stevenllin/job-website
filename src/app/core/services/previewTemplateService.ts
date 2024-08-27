@@ -1,6 +1,6 @@
 import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
 import { TemplateSideEnum } from '../enums/template';
-import { FontSizeEnum, FontSizeTypeEnum } from '../enums/font';
+import { FontSizeTypeEnum } from '../enums/font';
 import { FontMappingDefines } from '../models/font';
 import { ColorNameEnum } from '../enums/color';
 import { ColorMappingDefines } from '../models/color';
