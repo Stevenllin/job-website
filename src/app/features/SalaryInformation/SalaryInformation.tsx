@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import { ColorPositionDefines } from '../../core/models/color';
 import commonService from '../../core/services/commonService';
 import DoughnutChart from '../../common/components/Chart/DoughnutChart';
-import { Jobs } from '../../features/FindJobs/types';
+import { Jobs } from '../FindJobs/types';
 import { LineChartState } from '../../common/components/Chart/LineChart/types';
 import { BarChartState } from '../../common/components/Chart/BarChart/types';
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
@@ -22,7 +22,7 @@ export interface JobMap {
   [string: string]: Jobs[];
 }
 
-const SalaryInfomation: React.FC = () => {
+const SalaryInformation: React.FC = () => {
   const { original, group_job_type, group_location } = useGetJobs();
   const country = useSelector((state: RootState) => state.common.country_flag);
 
@@ -263,4 +263,4 @@ const SalaryInfomation: React.FC = () => {
   )
 }
 
-export default SalaryInfomation
+export default SalaryInformation
