@@ -15,10 +15,9 @@ const Faqs: React.FC = () => {
           <Button type="primary" shape="circle" size="large" icon={<SearchOutlined />}></Button>
         </div>
       </section>
-      <section id="article">
+      <div id="article">
         <h2 className="ma-0">Featured support Articles</h2>
-        {/** Expand? */}
-      </section>
+      </div>
       <div className="faq-container">
         <Row gutter={128}>
           <Col span="12">

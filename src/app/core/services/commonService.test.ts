@@ -5,19 +5,6 @@ import { ColorNameEnum } from '../enums/color';
 import { FontSizeEnum } from '../enums/font';
 import { ProcessStepTextEnum } from '../../features/CreateYourCV/types';
 
-beforeAll(() => {
-  /** 因 DOMParser 是一個瀏覽器的 API，模拟 DOMParser */
-  global.DOMParser = class {
-    parseFromString(str: string, type: string) {
-      // 使用 jsdom 创建一个虚拟的 DOM 进行测试
-      const jsdom = require('jsdom');
-      const { JSDOM } = jsdom;
-      const dom = new JSDOM(str, { contentType: type });
-      return dom.window.document;
-    }
-  };
-});
-
 describe('convertDateFormat', () => {
   /** 測試當格式為 DateFormatEnum.YYYYMM 時，日期應返回 YYYY-MM 格式 */
   it('should return date in YYYY-MM format when format is DateFormatEnum.YYYYMM', () => {

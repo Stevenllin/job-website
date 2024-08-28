@@ -9,6 +9,7 @@
     }
   ],
   "compilerOptions": {
+    "jsx": "react-jsx",
     "target": "es6",
     "module": "commonjs",
     /** 可以適當的解決 CommonJS 和 ES 模組之間兼容問題 */

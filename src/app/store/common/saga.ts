@@ -16,7 +16,7 @@ export interface ResponseGenerator{
 /**
  * @description 初始取得系統共用選項資料
  */
-function * initFetchCommonData () {
+export function * initFetchCommonData () {
   const countries: GetCountriesResp[] = yield call(apiServices.getCountries);
   yield put(initFetchCommonDataDoneAction(countries))
 }
