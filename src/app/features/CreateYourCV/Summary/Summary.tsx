@@ -7,7 +7,7 @@ import storageService from '../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../core/enums/storage';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../core/enums/router';
-import { Select, Input, Form, Button, Rate, Row, Col } from 'antd';
+import { Button } from 'antd';
 import PreviewTemplate from '../../../common/layouts/PreviewTemplate';
 
 const Summary: React.FC = () => {
@@ -24,11 +24,13 @@ const Summary: React.FC = () => {
     if (!cv_template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
 
     const summary = cache[ProcessStepTextEnum.Summary] ?? {};
+    console.log('summary', summary)
   }, [])
 
   const handleSubmit = () => {
     if (editorRef.current) {
       const content = editorRef.current.getEditorContent();
+      console.log('content', content)
     }
   }
 

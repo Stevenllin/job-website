@@ -1,5 +1,5 @@
-// @ts-ignore
 import { useEffect, useRef } from "react";
+// @ts-ignore
 import jsVectorMap from "jsvectormap";
 import "jsvectormap/dist/maps/world.js";
 import { MapChartProps, JobValueMap, MapData } from "./types";
@@ -34,7 +34,7 @@ const MapChart: React.FC<MapChartProps> = (props) => {
       },
       labels: {
         markers: {
-          render(marker: { name?: string; labelName?: string }, index: number) {
+          render(marker: { name?: string; labelName?: string }) {
             return marker.name
           }
         }

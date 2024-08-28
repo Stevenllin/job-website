@@ -65,7 +65,7 @@ const BarChart: React.FC<BarChartProps> = ({ barChart }) => {
       },
     },
   };
-
+  // @ts-ignore
   return <Bar data={data} options={options} />;
 }
 

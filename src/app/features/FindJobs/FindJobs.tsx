@@ -62,9 +62,7 @@ const FindJobs: React.FC = () => {
     
     // 获取 'jobs' 集合的引用
     const jobsCollectionRef = collection(db, 'jobs');
-    
-    // 新增一笔数据到 'jobs' 集合
-    const docRef = await addDoc(jobsCollectionRef, jobData);
+    await addDoc(jobsCollectionRef, jobData);
   }
 
   const handleChange = (_: any, all: any) => {

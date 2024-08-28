@@ -4,13 +4,10 @@ import ProgressBarContext from '../ProgressBarContext';
 import { useNavigate } from 'react-router-dom';
 import storageService from '../../../../../core/services/storageService';
 import { StorageKeysEnum } from '../../../../../core/enums/storage';
-import { ProcessStepTextEnum } from '../../../../../features/CreateYourCV/types';
-import { useLocation } from 'react-router-dom';
 import { BiSolidError } from "react-icons/bi";
 import { IconSizeEnum } from '../../../../../core/enums/icon';
 
 const Item: React.FC<ItemProps> = (props) => {
-  const location = useLocation();
   const progressBarContext = useContext(ProgressBarContext);
   const isActive = progressBarContext.currentStep === props.value;
   const navigate = useNavigate()

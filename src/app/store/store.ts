@@ -8,6 +8,7 @@ const appReduxMiddlewares = applyMiddleware(reduxSagaMiddleware);
 
 let rootMiddleware;
 rootMiddleware = appReduxMiddlewares;
+// @ts-ignore
 const store = createStore(rootReducer, rootMiddleware);
 
 reduxSagaMiddleware.run(rootSaga);

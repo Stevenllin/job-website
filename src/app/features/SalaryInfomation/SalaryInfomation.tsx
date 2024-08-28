@@ -7,7 +7,7 @@ import DoughnutChart from '../../common/components/Chart/DoughnutChart';
 import { Jobs } from '../../features/FindJobs/types';
 import { LineChartState } from '../../common/components/Chart/LineChart/types';
 import { BarChartState } from '../../common/components/Chart/BarChart/types';
-import { IoMdArrowDropup, IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
+import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import { IconSizeEnum } from '../../core/enums/icon';
 import MapChart from '../../common/components/Chart/MapChart';
 import { useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ export interface JobMap {
 }
 
 const SalaryInfomation: React.FC = () => {
-  const { original, loading, group_job_type, group_location, group_published } = useGetJobs();
+  const { original, group_job_type, group_location } = useGetJobs();
   const country = useSelector((state: RootState) => state.common.country_flag);
 
   /** 選擇的 Country */
@@ -79,7 +79,7 @@ const SalaryInfomation: React.FC = () => {
   const doughnutValues: number[] = array_job_type.map((item: any[]) => item[1].length);
   const [doughnutColor, setDoughnutColor] = useState<string[]>(color);
 
-  const handleSelectPosition = (value: number, index: number) => {
+  const handleSelectPosition = (_: number, index: number) => {
     const selected = array_job_type.find(item => item[0] === doughnutLabels[index]);
     /** 整理 Bar Chart */
     if (selected) {
@@ -107,7 +107,7 @@ const SalaryInfomation: React.FC = () => {
         }
       }
       /** 設置 Doughnut 的顏色 */
-      setDoughnutColor(color.map((item, i) => {
+      setDoughnutColor(color.map((_, i) => {
         if (i === index) return '#0766bc'
         return '#dee2e8'
       }))
