@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import commonjs from '@rollup/plugin-commonjs'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
+      plugins: [
+        commonjs(),
+      ],
       onwarn(warning, warn) {
         // 忽略特定的警告
         if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
