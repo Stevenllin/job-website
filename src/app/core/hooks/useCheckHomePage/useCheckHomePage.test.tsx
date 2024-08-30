@@ -21,7 +21,7 @@ describe('useCheckHomePage', () => {
   it('當路由不是首頁時，應該返回 false', () => {
     const { result } = renderHook(() => useCheckHomePage(), {
       wrapper: ({ children }) => (
-        <MemoryRouter initialEntries={[ROUTES.FEATURES__CREATE_YOUR_CV]}>
+        <MemoryRouter initialEntries={[ROUTES.FEATURES__FAQ]}>
           {children}
         </MemoryRouter>
       ),

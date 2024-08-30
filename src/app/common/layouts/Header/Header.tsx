@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           <li>
             <Flex gap="large">
               <Link to={ROUTES.FEATURES__FIND_JOBS}>Find Jobs</Link>
-              <Link to={ROUTES.FEATURES__CREATE_YOUR_CV}>Create Your CV</Link>
+              <Link to={ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE}>Create Your CV</Link>
               <Link to={ROUTES.FEATURES__SALARY_INFORMATION}>Salary Information</Link>
               <Link to={ROUTES.FEATURES__FAQ}>FAQ</Link>
             </Flex>

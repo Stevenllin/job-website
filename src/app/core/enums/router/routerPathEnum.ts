@@ -9,7 +9,7 @@ export enum ROUTES {
   /** Salary Information 功能頁 */
   FEATURES__SALARY_INFORMATION = '/job-website/salary-information',
   /** Create Your CV 功能頁 */
-  FEATURES__CREATE_YOUR_CV = '/job-website/create-your-cv',
+  FEATURES__CREATE_YOUR_CV = '/job-website/create-your-cv/*',
   /** Choose Template 頁功能頁面 */
   FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE = '/job-website/create-your-cv/choose-template',
   /** General Info 功能頁 */

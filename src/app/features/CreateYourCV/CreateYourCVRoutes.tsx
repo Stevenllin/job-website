@@ -13,14 +13,14 @@ import Finalize from './Finalize';
 const CreateYourCVRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE} element={<ChooseTemplate/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__GENERAL_INFO} element={<GeneralInfo/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY} element={<WorkHistory/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY} element={<WorkSummary/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION} element={<Education/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS} element={<Skills/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__SUMMARY} element={<Summary/>} />
-      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__FINALIZE} element={<Finalize/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE.replace('/job-website/create-your-cv/', '')} element={<ChooseTemplate/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__GENERAL_INFO.replace('/job-website/create-your-cv/', '')} element={<GeneralInfo/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__WORK_HISTORY.replace('/job-website/create-your-cv/', '')} element={<WorkHistory/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__WORK_SUMMARY.replace('/job-website/create-your-cv/', '')} element={<WorkSummary/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION.replace('/job-website/create-your-cv/', '')} element={<Education/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__SKILLS.replace('/job-website/create-your-cv/', '')} element={<Skills/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__SUMMARY.replace('/job-website/create-your-cv/', '')} element={<Summary/>} />
+      <Route path={ROUTES.FEATURES__CREATE_YOUR_CV__FINALIZE.replace('/job-website/create-your-cv/', '')} element={<Finalize/>} />
       <Route path='*' element={<Navigate to={ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE} />} />
     </Routes>
   )

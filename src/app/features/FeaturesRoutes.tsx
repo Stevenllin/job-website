@@ -14,7 +14,7 @@ const FeaturesRoutes: React.FC = () => {
     <Suspense fallback={<CircularSpinner />}>
       <Routes>
         <Route path={ROUTES.FEATURES__HOME} element={<Home />} />
-        <Route path="*" element={<CreateYourCV />} />
+        <Route path={ROUTES.FEATURES__CREATE_YOUR_CV} element={<CreateYourCV />} />
         <Route path={ROUTES.FEATURES__FIND_JOBS} element={<FindJobs />} />
         <Route path={ROUTES.FEATURES__SALARY_INFORMATION} element={<SalaryInformation />} />
         <Route path={ROUTES.FEATURES__FAQ} element={<Faq />} />
