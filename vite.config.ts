@@ -12,9 +12,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      plugins: [
-        commonjs(),
-      ],
       onwarn(warning, warn) {
         // 忽略特定的警告
         if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
