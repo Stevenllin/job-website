@@ -11,6 +11,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     commonjsOptions: {
+      /** 處理 打包後第三方資源中引用 require */
       transformMixedEsModules: true,
     },
     rollupOptions: {

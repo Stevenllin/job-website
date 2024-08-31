@@ -188,6 +188,9 @@ textarea {
   &-0 {
     padding: 0px;
   }
+  &-1 {
+    padding: 8px;
+  }
   &-2 {
     padding: 16px;
   }
@@ -259,6 +262,9 @@ textarea {
 .fw {
   &-dark {
     font-weight: $fw-dark;
+  }
+  &-semi-dark {
+    font-weight: $fw-semi-dark;
   }
   &-light {
     font-weight: $fw-light;

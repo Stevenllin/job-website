@@ -32,14 +32,14 @@ const LineChart: React.FC<LineChartProps> = (props) => {
     plugins: {
       title: {
         display: true,
-        text: props.lineChart.title,
+        text: `Overview of ${props.lineChart.title}`,
         font: {
           size: 24
         },
         padding: {
           top: 10,
-          bottom: 20,
-        },
+          bottom: 30,
+        }
       },
       legend: {
         display: false,

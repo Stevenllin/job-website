@@ -17,6 +17,10 @@ import LineChart from '../../common/components/Chart/LineChart';
 import BarChart from '../../common/components/Chart/BarChart';
 import moment from 'moment';
 import { TfiClipboard } from "react-icons/tfi";
+import { RiRemoteControlLine } from "react-icons/ri";
+import { MdCalendarMonth } from "react-icons/md";
+import { AiOutlineFieldNumber } from "react-icons/ai";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 export interface JobMap {
   [string: string]: Jobs[];
@@ -33,7 +37,8 @@ const SalaryInformation: React.FC = () => {
   const [lineChart, setLineChart] = useState<LineChartState>({ title: '', labels: [], data: [], color: '', });
   const [barChart, setBarChart] = useState<BarChartState>({ labels: [], data: [] })
   const [selectedJobType, setSelectedJobType] = useState<JobMap>();
-
+  const [selectedPosition, setSelectedPosition] = useState<Jobs[]>([])
+  console.log('selectedPosition', selectedPosition)
   const countryList = useMemo(() => {
     return Object.keys(group_location)
   }, [group_location]);
@@ -85,6 +90,8 @@ const SalaryInformation: React.FC = () => {
     if (selected) {
       /** 該職缺的 Job List */
       const jobs = selected[1] as Jobs[];
+      setSelectedPosition(jobs)
+
       const groupedJobs = commonService.groupData(jobs, 'salary_max');
 
       const array_salary_distribution = Object.entries(groupedJobs);
@@ -147,7 +154,7 @@ const SalaryInformation: React.FC = () => {
             </div>
             <div className="d-flex align-center" style={{ color: '#fd3131' }}>
               <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
-              <span className="fw-dark">6.5%</span>
+              <p className="fw-dark">6.5% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -160,12 +167,12 @@ const SalaryInformation: React.FC = () => {
                 <p className="fs-4 fw-dark">{ commonService.formatCurrency(Math.floor((original.current.reduce((acc, job) => acc + job.salary_max, 0))/original.current.length)) }</p>
               </div>
               <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
-                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
+                <AiOutlineFieldNumber style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
             <div className="d-flex align-center" style={{ color: '#74c674' }}>
               <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
-              <span className="fw-dark">5.9%</span>
+              <p className="fw-dark">5.9% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -178,12 +185,12 @@ const SalaryInformation: React.FC = () => {
                 <p className="fs-4 fw-dark">{ original.current.filter(item => item.has_remote).length }</p>
               </div>
               <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
-                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
+                <RiRemoteControlLine style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
-            <div className="d-flex align-center" style={{ color: '#74c674' }}>
-              <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
-              <span className="fw-dark">6.6%</span>
+            <div className="d-flex align-center" style={{ color: '#fd3131' }}>
+              <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
+              <p className="fw-dark">6.6% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -196,12 +203,12 @@ const SalaryInformation: React.FC = () => {
                 <p className="fs-4 fw-dark">{ original.current.filter(item => moment(item.published).isAfter(moment().subtract(3, 'month'))).length }</p>
               </div>
               <div className="type-container pa-2 d-flex justify-center align-center" style={{ float: 'right', color: '#012643', width: 30, height: 30 }}>
-                <TfiClipboard style={{ fontSize: IconSizeEnum.Small }} />
+                <MdCalendarMonth style={{ fontSize: IconSizeEnum.Small }} />
               </div>
             </div>
             <div className="d-flex align-center" style={{ color: '#74c674' }}>
               <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
-              <span className="fw-dark">4.8%</span>
+              <p className="fw-dark">4.8% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -220,35 +227,56 @@ const SalaryInformation: React.FC = () => {
               />
             </div>
             <Row className="mt-3" justify="center">
-              {selectedJobType && Object.entries(selectedJobType).map(item => {
+              {selectedJobType ? Object.entries(selectedJobType).map(item => {
                 return (
-                  <Col span="7" key={item[0]} className="text-center type-container ma-1">
+                  <Col span="7" key={item[0]} className="text-center type-container pa-1" style={{ marginLeft: '8px', marginRight: '8px' }}>
                     <p className="fs-2">{item[0]}</p>
-                    <p className="fw-dark fs-4">{item[1].length}</p>
+                    <p className="fw-dark fs-4 my-1">{item[1].length}</p>
                   </Col>
                 )
-              })}
+              }) : (
+                <p className="fs-2 fw-dark">Please select a position</p>
+              )}
             </Row>
           </div>
         </Col>
         {/** Bar Chart */}
-        <Col span="18">
-          <div className="salary-card">
+        <Col span="14">
+          <div className="salary-card d-flex align-center">
             <LineChart lineChart={lineChart} />
+          </div>
+        </Col>
+        <Col span="4">
+          {/** ebf6ff */}
+          <div className="salary-card" style={{ backgroundColor: 'rgb(7 102 189)', overflowY: 'scroll', height: '600px' }}>
+            {selectedPosition.map((job, index) => (
+              // 0766bc
+              <div key={index} style={{ color: 'white' }}>
+                <p className="mb-0 fw-semi-dark">{job.title}</p>
+                <span>{job.company.name}</span>
+                <div className="d-flex justify-between align-center">
+                  <p className="mt-1">{commonService.formatCurrency(job.salary_max)}</p>
+                  <IoIosArrowRoundForward style={{ fontSize: IconSizeEnum.Medium }} />
+                </div>
+              </div>
+            ))}
           </div>
         </Col>
       </Row>
       <Row style={{ marginTop: '32px' }} gutter={32}>
         {/** MapChart */}
-        <Col span="17">
+        <Col span="18">
           <div className="salary-card">
             {/** 有資料時再渲染畫面 */}
             {mapData.length > 0 && <MapChart mapData={mapData} onSelectCountry={handleSelectCountry} />}
           </div>
         </Col>
-        <Col span="7">
-          <div className="salary-card">
-            <div style={{ width: '100%', backgroundSize: 'cover', overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
+        <Col span="6">
+          <div
+            className="salary-card"
+            style={{ flexDirection: 'column', display: 'flex', alignItems: 'center' }}
+          >
+            <div style={{ width: '85%', backgroundSize: 'cover', overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
               <img src={selectedCountry?.flag} style={{ width: '100%', borderRadius: '16px' }} />
             </div>
             <h4 className="text-center mt-2 fs-4">
