@@ -153,7 +153,7 @@ const SalaryInformation: React.FC = () => {
             </div>
             <div className="d-flex align-center" style={{ color: '#fd3131' }}>
               <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
-              <p className="fw-dark">6.5% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
+              <p className="fw-dark fs-3">6.5% <span className="fw-light fs-1" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -171,7 +171,7 @@ const SalaryInformation: React.FC = () => {
             </div>
             <div className="d-flex align-center" style={{ color: '#74c674' }}>
               <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
-              <p className="fw-dark">5.9% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
+              <p className="fw-dark fs-3">5.9% <span className="fw-light fs-1" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -189,7 +189,7 @@ const SalaryInformation: React.FC = () => {
             </div>
             <div className="d-flex align-center" style={{ color: '#fd3131' }}>
               <IoMdArrowDropup style={{ fontSize: IconSizeEnum.Medium }} />
-              <p className="fw-dark">6.6% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
+              <p className="fw-dark fs-3">6.6% <span className="fw-light fs-1" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>
@@ -207,7 +207,7 @@ const SalaryInformation: React.FC = () => {
             </div>
             <div className="d-flex align-center" style={{ color: '#74c674' }}>
               <IoMdArrowDropdown style={{ fontSize: IconSizeEnum.Medium }} />
-              <p className="fw-dark">4.8% <span className="fw-light" style={{ color: '#000000' }}>vs previous month</span></p>
+              <p className="fw-dark fs-3">4.8% <span className="fw-light fs-1" style={{ color: '#000000' }}>vs previous month</span></p>
             </div>
           </div>
         </Col>

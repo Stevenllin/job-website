@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 
   font-weight: $fw-light;
   letter-spacing: 1px;

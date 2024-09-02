@@ -3,8 +3,6 @@ import { GoLocation } from "react-icons/go";
 import { RiSearchLine } from "react-icons/ri";
 import { IconSizeEnum } from '../../core/enums/icon';
 import { Form, Slider, Col, Row, Select, Button, Input, Checkbox } from 'antd';
-import db from '../../core/services/firebaseService';
-import { collection, addDoc } from 'firebase/firestore';
 import { Jobs, Filters } from './types';
 import VirtualizedList from '../../common/layouts/VirtualizedList';
 import commonService from '../../core/services/commonService';
@@ -40,30 +38,6 @@ const FindJobs: React.FC = () => {
   useEffect(() => {
     setJobs(original.current)
   }, [original.current])
-
-  const handleCreateNew = async () => {
-    const jobData = {
-      has_remote: true,
-      location: "Switzerland",
-      published: "2024-06-25T14:00:00Z",
-      salary_max: 105000,
-      salary_min: 100000,
-      title: "Software Engineer - Research Expert",
-      job_type: "Software Engineer",
-      coords: [46.8182, 8.2275],
-      types: "Full Time",
-      company: {
-        linkedin_url: "https://www.linkedin.com/company/ericsson",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ericsson_logo.svg/368px-Ericsson-logo.svg.png",
-        name: "Ericsson",
-        website_url: "https://www.ericsson.com"
-      }
-    };
-    
-    // 获取 'jobs' 集合的引用
-    const jobsCollectionRef = collection(db, 'jobs');
-    await addDoc(jobsCollectionRef, jobData);
-  }
 
   const handleChange = (_: any, all: any) => {
     setFilters(prev => ({
@@ -196,7 +170,6 @@ const FindJobs: React.FC = () => {
           </Row>
         </Form>
       </section>
-      <Button onClick={handleCreateNew}>Create New</Button>
 
       <Row style={{ minHeight: 'calc(100vh - 205px)' }}>
         {/** Filter Sidebar */}

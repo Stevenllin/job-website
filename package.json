@@ -63,6 +63,7 @@
     "jsdom": "^25.0.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-imagemin": "^0.6.1"
   }
 }
