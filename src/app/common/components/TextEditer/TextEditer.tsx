@@ -4,6 +4,7 @@ import 'quill/dist/quill.snow.css'; // Add css for snow theme
 import { TextEditerProps, TextEditorHandle } from './types';
 import { OperationCodeEnum } from '../../../core/enums/operation';
 
+/** forwardRef：父組件直接操作子組件 */
 const TextEditer = forwardRef<TextEditorHandle, TextEditerProps>((props, ref) => {
   /** 設置 Toolbar */
   const modules = {

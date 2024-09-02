@@ -38,7 +38,7 @@ const SalaryInformation: React.FC = () => {
   const [barChart, setBarChart] = useState<BarChartState>({ labels: [], data: [] })
   const [selectedJobType, setSelectedJobType] = useState<JobMap>();
   const [selectedPosition, setSelectedPosition] = useState<Jobs[]>([])
-  console.log('selectedPosition', selectedPosition)
+
   const countryList = useMemo(() => {
     return Object.keys(group_location)
   }, [group_location]);
@@ -75,7 +75,6 @@ const SalaryInformation: React.FC = () => {
         data.push(average_salary);
       })
       setBarChart({ labels, data })
-      // setSelectedCountryData(jobLists)
     }
   }, [selectedCountry])
 
@@ -247,10 +246,8 @@ const SalaryInformation: React.FC = () => {
           </div>
         </Col>
         <Col span="4">
-          {/** ebf6ff */}
           <div className="salary-card" style={{ backgroundColor: 'rgb(7 102 189)', overflowY: 'scroll', height: '600px' }}>
             {selectedPosition.map((job, index) => (
-              // 0766bc
               <div key={index} style={{ color: 'white' }}>
                 <p className="mb-0 fw-semi-dark">{job.title}</p>
                 <span>{job.company.name}</span>
@@ -282,7 +279,6 @@ const SalaryInformation: React.FC = () => {
             <h4 className="text-center mt-2 fs-4">
               {selectedCountry?.name}
             </h4>
-            {/* Total Jobs: {selectedCountryData?.length} */}
             <BarChart barChart={barChart} />
           </div>
         </Col>

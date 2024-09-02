@@ -74,7 +74,7 @@ const Home: React.FC = () => {
             </Col>
           </Row>
         </div>
-        <img src={Rectangle2}></img>
+        <img src={Rectangle2} loading="lazy"></img>
       </section>
 
       {/** Step 區塊 */}
@@ -160,20 +160,20 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className="swiper-image-1">
-              <img src={Value1} width={300} height={400}></img>
+              <img src={Value1} width={300} height={400} loading="lazy"></img>
             </div>
             <div className="swiper-image-2">
-              <img src={Laptop} width={100} height={100}></img>
+              <img src={Laptop} width={100} height={100} loading="lazy"></img>
             </div>
             <div className="swiper-image-3">
-              <img src={Value2} width={200} height={300}></img>
+              <img src={Value2} width={200} height={300} loading="lazy"></img>
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <Row className="h-100">
               <Col span="12">
                 <div className="swiper-image-4">
-                  <img src={Value3} width={450}></img>
+                  <img src={Value3} width={450} loading="lazy"></img>
                 </div>
               </Col>
               <Col span="12" className="fs-3 p-relative">
@@ -205,8 +205,8 @@ const Home: React.FC = () => {
             </Row>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Shape1} width={350} style={{ top: '250px' }}></img>
-            <img src={Pic} width={350}></img>
+            <img src={Shape1} width={350} style={{ top: '250px' }} loading="lazy"></img>
+            <img src={Pic} width={350} loading="lazy"></img>
 
           </SwiperSlide>
         </Swiper>
@@ -285,7 +285,7 @@ const Home: React.FC = () => {
         <div className="holders">
           {/** Holder 1 */}
           <div className="holder" style={{ width: '100px', height: '100px', left: '5%', top: '15%' }}>
-            <img src={Holder1} style={{ width: '100px' }}></img>
+            <img src={Holder1} style={{ width: '100px' }} loading="lazy"></img>
           </div>
           <div className="text-container" style={{ left: '-10%', top: 'calc(15% + 120px)' }}>
             <h4 className="fs-3 text-center">Oliver Smith</h4>
@@ -294,7 +294,7 @@ const Home: React.FC = () => {
 
           {/** Holder 2 */}
           <div className="holder" style={{ width: '125px', height: '125px', left: '15%', bottom: '5%' }}>
-            <img src={Holder2} style={{ width: '125px' }}></img>
+            <img src={Holder2} style={{ width: '125px' }} loading="lazy"></img>
           </div>
           <div className="text-container" style={{ left: '', bottom: 'calc(5% + 150px)' }}>
             <h4 className="fs-3 text-center">Emily Brown</h4>
@@ -303,7 +303,7 @@ const Home: React.FC = () => {
 
           {/** Holder 3 */}
           <div className="holder" style={{ width: '85px', left: '55%', top: '30%', height: '85px', }}>
-            <img src={Holder3} style={{ width: '85px' }}></img>
+            <img src={Holder3} style={{ width: '85px' }} loading="lazy"></img>
           </div>
           <div className="text-container" style={{ left: '40%', top: 'calc(30% + 100px)' }}>
             <h4 className="fs-3 text-center">James Johnson</h4>
@@ -312,7 +312,7 @@ const Home: React.FC = () => {
 
           {/** Holder 4 */}
           <div className="holder" style={{ width: '125px', left: '45%', top: '5%', height: '125px' }}>
-            <img src={Holder4} style={{ width: '125px' }}></img>
+            <img src={Holder4} style={{ width: '125px' }} loading="lazy"></img>
           </div>
           <div className="text-container" style={{ left: '55%', top: '5%' }}>
             <h4 className="fs-3 text-center">William Harris</h4>
@@ -321,7 +321,7 @@ const Home: React.FC = () => {
 
           {/** Holder 5 */}
           <div className="holder" style={{ width: '150px', left: '85%', bottom: '35%', height: '150px' }}>
-            <img src={Holder5} style={{ width: '150px' }}></img>
+            <img src={Holder5} style={{ width: '150px' }} loading="lazy"></img>
           </div>
           <div className="text-container" style={{ left: '70%', bottom: '15%' }}>
             <h4 className="fs-3 text-center">Charlotte Brown</h4>
@@ -334,7 +334,7 @@ const Home: React.FC = () => {
       {/** Footer 區塊 */}
       
       <section id="other">
-        <img src={Other} />
+        <img src={Other} loading="lazy" />
       </section>
       {/* <div style={{ height: '40vh', background: '#012643' }}></div> */}
 
