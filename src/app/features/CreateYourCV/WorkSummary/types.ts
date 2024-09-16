@@ -6,4 +6,5 @@ export interface WorkHistory {
   end_date: string;
   start_date: string;
   errors?: any;
+  id: string;
 }

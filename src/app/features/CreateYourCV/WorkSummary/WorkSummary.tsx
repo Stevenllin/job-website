@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { ROUTES } from '../../../core/enums/router';
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
 import { useNavigate } from 'react-router-dom';
@@ -14,10 +14,21 @@ import { MdModeEditOutline } from "react-icons/md";
 import { IconSizeEnum } from '../../../core/enums/icon'
 import commonService from '../../../core/services/commonService';
 import { DateFormatEnum } from '../../../core/enums/date';
+import { RootState } from '../../../store/types';
+import { useSelector } from 'react-redux';
+import { CommonTypeEnum } from '../../../core/enums/modal/';
+import CommonModal from '../../../common/components/Modals/CommonModal';
+import useAppDispatch from '../../../core/hooks/useAppDispatch';
+import { ModalNameEnum } from '../../../core/enums/modal';
+import { setModalVisibleAction } from '../../../store/ui/actions';
 
 const WorkSummary: React.FC = () => {
   const [histories, setHistories] = useState<WorkHistory[]>([]);
+  const selected = useRef<string>();
   const navigate = useNavigate();
+  const reduxDispatch = useAppDispatch();
+  /** 取得 Modal 狀態 */
+  const modalsState = useSelector((state: RootState) => state.UI.modals);
 
   /**
    * @description 載入緩存並設置 Form 表單
@@ -44,8 +55,31 @@ const WorkSummary: React.FC = () => {
     navigate(ROUTES.FEATURES__CREATE_YOUR_CV__EDUCATION);
   }
 
+  const handleDelete = (history: WorkHistory) => {
+    reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true));
+    selected.current = history.id;
+  }
+
+  const handleConfirm = () => {
+    /** 取得緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    const current = cache[ProcessStepTextEnum.WorkHistory] ? cache[ProcessStepTextEnum.WorkHistory] : [];
+    const filtered = current.filter((item: WorkHistory) => item.id !== selected.current);
+    const updated = { ...cache, [ProcessStepTextEnum.WorkHistory]: filtered };
+    
+    storageService.setItem(StorageKeysEnum.Template, JSON.stringify(updated));
+    setHistories(filtered);
+  }
+
   return (
     <div id="work-summary">
+      <CommonModal
+        visible={modalsState.commonVisible}
+        title={CommonTypeEnum.Warning}
+        content="Are you sure you want to delete this work experience? This action cannot be undone. Please confirm before proceeding."
+        onConfirm={handleConfirm}
+      >
+      </CommonModal>
       <TemplateBackground
         title="Work History Summary"
         subtitle="Further Enhance Your Experience"
@@ -65,12 +99,12 @@ const WorkSummary: React.FC = () => {
                     <span></span>
                     <div className="icon-container">
                       <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />
-                      <FaTrash style={{ 'fontSize': IconSizeEnum.Medium }}  />
+                      <FaTrash style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleDelete(history)} />
                     </div>
                   </div>
                 ))}
               </div>
-              <Button type="text" className="add-position" onClick={handleAddPosition}>Add new position</Button>
+              <Button type="text" className="add-position" onClick={handleAddPosition}>ADD NEW POSITION</Button>
             </div>
           </div>
           {/** Preview Template */}

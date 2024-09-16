@@ -1,6 +1,6 @@
 import React from 'react'
 import TemplateBackground from '../../../common/layouts/TemplateBackground';
-import { Template1, Template2 } from '../../../../assets/image/images';
+import { Template1 } from '../../../../assets/image/images';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation} from 'swiper/modules';
 import { ROUTES } from '../../../core/enums/router';

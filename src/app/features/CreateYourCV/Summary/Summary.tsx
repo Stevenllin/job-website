@@ -24,12 +24,14 @@ const Summary: React.FC = () => {
     if (!cv_template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
 
     const summary = cache[ProcessStepTextEnum.Summary] ?? {};
+    console.log('summary', summary)
   }, [])
 
   const handleSubmit = () => {
     if (editorRef.current) {
       const content = editorRef.current.getEditorContent();
       navigate(ROUTES.FEATURES__CREATE_YOUR_CV__FINALIZE)
+      console.log('content', content)
     }
   }
 
