@@ -149,9 +149,31 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     const Summary = template[ProcessStepTextEnum.Summary];
     if (Summary) commonService.handleFilterText(Summary, (item) => drawHTMLFormat(item, TemplateSideEnum.Right))
 
+    context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
+
     /** Right Side: Experience */
     const WorkHistory = template[ProcessStepTextEnum.WorkHistory];
-    if (WorkHistory) drawTitle('Experience', 2, TemplateSideEnum.Right)
+    if (WorkHistory) {
+      drawTitle('Experience', 2, TemplateSideEnum.Right);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 2 * style.lineSpacing);
+
+      for (let i = 0; i < WorkHistory.length; i++) {
+        const { start_date, end_date, location, job_title, employer, job_description } = WorkHistory[i];
+        drawText(`${commonService.convertDateFormat(start_date, DateFormatEnum.YYYYMM)} `, TemplateSideEnum.Right, 280);
+        drawText(`${commonService.convertDateFormat(end_date, DateFormatEnum.YYYYMM)}`, TemplateSideEnum.Right, 280);
+        /** 因 drawText 移動四格 Line Spacing */
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 56, canvasDistance.leftY, canvasDistance.rightY);
+        drawText(job_title, TemplateSideEnum.Right, 438);
+        context.font = `italic ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
+        drawText(`${employer}, ${location}`, TemplateSideEnum.Right, 438);
+        context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
+        drawText(job_description, TemplateSideEnum.Right, 438)
+        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX - 56, canvasDistance.leftY, canvasDistance.rightY);
+      }
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - style.lineSpacing);
+      console.log('WorkHistory', WorkHistory)
+    }
     
     /** Right Side: Education */
     const Education = template[ProcessStepTextEnum.Education];
@@ -161,15 +183,14 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       const { degree, field, school_name, school_location, start_date, end_date, coursework } = Education;
       const title = `${degree} in ${field}`
       
-      context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
       drawText(`${commonService.convertDateFormat(start_date, DateFormatEnum.YYYYMM)} `, TemplateSideEnum.Right, 280);
       drawText(`${commonService.convertDateFormat(end_date, DateFormatEnum.YYYYMM)}`, TemplateSideEnum.Right, 280);
       /** 因 drawText 移動四格 Line Spacing */
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - 4 * style.lineSpacing);
-      context.font = `italic ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
-      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 48, canvasDistance.leftY, canvasDistance.rightY);
-      drawText(title, TemplateSideEnum.Right, 438);
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 56, canvasDistance.leftY, canvasDistance.rightY);
       drawText(`${school_name}, ${school_location}`, TemplateSideEnum.Right, 438);
+      context.font = `italic ${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
+      drawText(title, TemplateSideEnum.Right, 438);
 
       /** 根據 HTML 繪圖 */
       /** Item 是由 Foreach 中傳入 */

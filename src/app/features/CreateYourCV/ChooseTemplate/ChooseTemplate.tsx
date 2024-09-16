@@ -51,7 +51,7 @@ const ChooseTemplate: React.FC = () => {
               </div>
             </div>
           </SwiperSlide>
-          <SwiperSlide className="p-relative">
+          {/* <SwiperSlide className="p-relative">
             <div className="template-container">
               <img src={Template2} onClick={() => handleChooseTemplate(TemplateNameEnum.Cubic)}></img>
               <div className="text">
@@ -59,7 +59,7 @@ const ChooseTemplate: React.FC = () => {
                 <p className="text-center">Perfect CV template. Ideal readability for the densest of CVs.</p>
               </div>
             </div>
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
       </section>
 

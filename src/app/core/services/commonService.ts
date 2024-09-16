@@ -166,7 +166,7 @@ const checkSpelling = async (target: string[]) => {
     const response = await fetch(dictionaries);
     return await response.text();
   };
-  const [aff, dic] = await Promise.all([fetchText("/dictionaries/fr_FR/fr_FR.aff"), fetchText("/dictionaries/fr_FR/fr_FR.dic")]);
+  const [aff, dic] = await Promise.all([fetchText("/job-website/dictionaries/fr_FR/fr_FR.aff"), fetchText("/job-website/dictionaries/fr_FR/fr_FR.dic")]);
   const typo = new Typo("fr_FR", aff, dic);
   
   const result: SpellingResult[] = target.map(string => {

@@ -78,7 +78,7 @@ const Finalize: React.FC = () => {
     const template = cache[ProcessStepTextEnum.ChooseTemplate];
     if (!template) navigate(ROUTES.FEATURES__CREATE_YOUR_CV__CHOOSE_TEMPLATE)
     /** 設定 form */
-    setTemplateStyle(finalize);
+    if (finalize) setTemplateStyle(finalize);
   }, [])
 
   useEffect(() => {
@@ -123,10 +123,10 @@ const Finalize: React.FC = () => {
         </Select>
         {/** Paragraph Spacing */}
         <p>Paragraph Spacing</p>
-        <Slider min={8} max={24} defaultValue={templateStyle?.paragraphSpacing} onChange={(val) => updateTemplateStyle('paragraphSpacing', val)} />
+        <Slider min={6} max={24} defaultValue={templateStyle?.paragraphSpacing} onChange={(val) => updateTemplateStyle('paragraphSpacing', val)} />
         {/** Line Spacing */}
         <p>Line Spacing</p>
-        <Slider min={8} max={24} defaultValue={templateStyle?.lineSpacing} onChange={(val) => updateTemplateStyle('lineSpacing', val)} />
+        <Slider min={6} max={24} defaultValue={templateStyle?.lineSpacing} onChange={(val) => updateTemplateStyle('lineSpacing', val)} />
       </div>
     )
   }
@@ -135,7 +135,7 @@ const Finalize: React.FC = () => {
     let spellingResult: SpellingResult[] = [];
     const Summary = template[ProcessStepTextEnum.Summary];
     const Education = template[ProcessStepTextEnum.Education];
-  
+
     reduxDispatch(setSpinnerVisibleAction(true));
   
     try {
@@ -144,7 +144,7 @@ const Finalize: React.FC = () => {
       // 如果 Summary 存在，添加對應的 Promise
       if (Summary) promises.push(createCheckSpellingPromise(Summary));
       // 如果 Education.coursework 存在，添加對應的 Promise
-      if (Education.coursework) promises.push(createCheckSpellingPromise(Education.coursework));
+      if (Education?.coursework) promises.push(createCheckSpellingPromise(Education.coursework));
 
       await Promise.all(promises);
       setTemplateStyle({ ...finalize, typo: spellingResult });
@@ -226,7 +226,7 @@ const Finalize: React.FC = () => {
     const Education = template[ProcessStepTextEnum.Education];
 
     if (Summary) summary_text = Summary.replaceAll(origin, target);
-    if (Education.coursework) education_text = Education.coursework.replaceAll(origin, target);
+    if (Education?.coursework) education_text = Education?.coursework.replaceAll(origin, target);
 
     /** 更新緩存 */
     const updated = { ...cache,
@@ -300,10 +300,14 @@ const Finalize: React.FC = () => {
    * @description 執行 Actions
    */
   const handleExecuteActions = (action: TemplateActionEnum) => {
-    reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true));
+    /** 取得緩存 */
+    const cache = JSON.parse(storageService.getItem(StorageKeysEnum.Template) ?? '{}');
+    const inValid: string[] = commonService.handleCheckTemplatePage(cache, false);
+    if (inValid.length > 0) reduxDispatch(setModalVisibleAction(ModalNameEnum.Common, true));
+
     switch (action) {
       case TemplateActionEnum.Download: {
-        previewTemplateRef.current?.exportToPDF();
+        if (inValid.length === 0) previewTemplateRef.current?.exportToPDF();
         break;
       }
       case TemplateActionEnum.Print: {

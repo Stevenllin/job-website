@@ -61,7 +61,7 @@ const WorkSummary: React.FC = () => {
                     {/** Job title and Employer */}
                     <span className="fs-3 fw-dark">{history.job_title}, {history.employer}</span>
                     <br></br>
-                    <span>{history.location} | {commonService.convertDateFormat(history.start_date, DateFormatEnum.YYYYMM)} - {commonService.convertDateFormat(history.end_date, DateFormatEnum.YYYYMM)}</span>
+                    <span>{history.location} | {history.start_date && commonService.convertDateFormat(history.start_date, DateFormatEnum.YYYYMM)} - {history.end_date && commonService.convertDateFormat(history.end_date, DateFormatEnum.YYYYMM)}</span>
                     <span></span>
                     <div className="icon-container">
                       <MdModeEditOutline style={{ 'fontSize': IconSizeEnum.Medium }} onClick={() => handleEditPosition(history)} />

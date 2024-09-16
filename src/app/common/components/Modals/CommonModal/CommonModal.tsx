@@ -13,7 +13,6 @@ const CommonModal: React.FC<CommonModalProps> = (props) => {
       title={<RiErrorWarningFill style={{ fontSize: IconSizeEnum.Largest }} />}
       visible={props.visible}
       confirmBtnText="Confirm"
-      cancelBtnText="Cancel"
       onConfirm={props.onConfirm}
     >
       <div className="d-flex justify-center align-center h-100 fs-3">{props.content}</div>
