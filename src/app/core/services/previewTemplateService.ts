@@ -126,7 +126,8 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
       /** Profession */
       context.font = `${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]} ${style.fontStyle}`;
       if (profession) drawText(profession, TemplateSideEnum.Left, 130);
-      
+      canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
+
       /** Personal Info */
       drawTitle('Personal Info', 1, TemplateSideEnum.Left);
       if (email) drawPersonalInfo('Email', email, TemplateSideEnum.Left)
@@ -181,6 +182,7 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     const Education = template[ProcessStepTextEnum.Education];
     if (Education) {
       drawTitle('Education', 2, TemplateSideEnum.Right);
+      context.font = `${FontMappingDefines[FontSizeTypeEnum.Content][style.fontSize]} ${style.fontStyle}`;
       canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + 2 * style.lineSpacing);
       const { degree, field, school_name, school_location, start_date, end_date, coursework } = Education;
       const title = `${degree} in ${field}`
@@ -292,7 +294,6 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
     context.font = `${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]} ${style.fontStyle}`;
     switch (type) {
       case 1: {
-        canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + style.paragraphSpacing, canvasDistance.rightY);
         /** 繪製背影顏色，設置 Title */
         drawLine(ColorMappingDefines[colorEnum]?.Secondary ?? 'black', 20, { x: 0, y: canvasDistance.leftY }, { x: 130, y: canvasDistance.leftY })
         canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY + 3, canvasDistance.rightY);
@@ -339,13 +340,15 @@ const createCanvasService = (canvas: HTMLCanvasElement, context: CanvasRendering
           /** 组合最终的 font 樣式 */
           context.font = handleAddressFontStyle(li);
           /** 劃圓 */
+          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY + parseInt(`${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]}`)/10);
           drawCircle(TemplateSideEnum.Right)
+          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX, canvasDistance.leftY, canvasDistance.rightY - parseInt(`${FontMappingDefines[FontSizeTypeEnum.Title][style.fontSize]}`)/10);
 
           /** 增加 X 軸的距離 */
           canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX + 12, canvasDistance.leftY, canvasDistance.rightY);
           if (li.textContent?.trim()) drawText(li.textContent?.trim(), side, 438)
           /** 重置 X 軸的距離以及增加 Line Spacing */
-          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX - 12, canvasDistance.leftY, canvasDistance.rightY + style.lineSpacing);
+          canvasDistance.setDistances(canvasDistance.leftX, canvasDistance.rightX - 12, canvasDistance.leftY, canvasDistance.rightY);
         })
         break;
       }
