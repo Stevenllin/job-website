@@ -14,7 +14,7 @@ const useTemplateProgressBar = () => {
   useEffect(() => {
     /** 儲存已驗證成功的頁面 */
     const valid: string[] = commonService.handleCheckTemplatePage(cache, true)
-    setCurrentProgress(Math.ceil((valid.length/Object.keys(ProcessStepTextEnum).length)*100))
+    setCurrentProgress(Math.ceil((valid.length/(Object.keys(ProcessStepTextEnum).length-1))*100))
   }, [location.pathname])
 
   return currentProgress;
